@@ -10,7 +10,7 @@ const Root = () => {
   return (
     <>
       <IconRegistry icons={EvaIconsPack}/>
-      <ApplicationProvider {...eva} theme={eva.light}>
+      <ApplicationProvider {...eva} theme={eva.dark}>
         <MainNavigator />
       </ApplicationProvider>
     </>

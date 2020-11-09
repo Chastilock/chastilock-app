@@ -12,8 +12,8 @@ const TopTabBar = ({ navigation, state }) => (
   <TabBar
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
-    <Tab title='USERS'/>
-    <Tab title='ORDERS'/>
+    <Tab title='MY LOCKS'/>
+    <Tab title='MANAGED LOCKS'/>
   </TabBar>
 );
 
