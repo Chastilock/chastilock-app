@@ -3,7 +3,7 @@
    "name": "Chastilock",
    "icon": "./images/logo.png",
    "version": "1.0.0",
-   "slug": "Chastity lockbox manager",
+   "slug": "chastilock",
    "ios": {
      "bundleIdentifier": "com.github.chastilock",
      "buildNumber": "1.0.0"
