@@ -1,0 +1,16 @@
+{
+  "expo": {
+   "name": "Chastilock",
+   "icon": "./path/to/your/app-icon.png",
+   "version": "1.0.0",
+   "slug": "Chastity lockbox manager",
+   "ios": {
+     "bundleIdentifier": "com.github.chastilock",
+     "buildNumber": "1.0.0"
+   },
+   "android": {
+     "package": "com.github.chastilock",
+     "versionCode": 1
+   }
+  }
+}
