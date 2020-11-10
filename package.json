@@ -23,7 +23,8 @@
     "react-native-svg": "12.1.0",
     "react-native-tab-view": "^2.15.2",
     "react-native-ui-kitten": "^4.4.1",
-    "react-native-web": "0.13.13"
+    "react-native-web": "0.13.13",
+    "react-tracked": "^1.4.2"
   },
   "devDependencies": {
     "@babel/core": "7.9.0"

@@ -1,22 +1,20 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import { Button, Divider, Layout, TopNavigation } from '@ui-kitten/components';
+import { Text, Divider, Layout, TopNavigation } from '@ui-kitten/components';
 
-const Home = ({ navigation }) => {
+import { useTracked } from '../../state';
 
-  const navigateDetails = () => {
-    navigation.navigate('Details');
-  };
+const MyLocks = ({ navigation }) => {
+  // const [state, dispatch] = useTracked();
+  // console.log(state);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TopNavigation title='Chastilock - My Locks' alignment='center'/>
-      <Divider/>
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Button onPress={navigateDetails}>OPEN DETAILS</Button>
+        <Text>{/* JSON.stringify(state) */}</Text>
       </Layout>
     </SafeAreaView>
   );
 };
 
-export default Home;
+export default MyLocks;

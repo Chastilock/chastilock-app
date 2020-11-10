@@ -1,31 +1,23 @@
-import React from 'react';
-import { View, SafeAreaView, ActivityIndicator, Image, StyleSheet } from 'react-native';
-import { ApplicationProvider, Layout, Text, Button } from '@ui-kitten/components';
+import React, { memo } from 'react';
+import { StatusBar } from 'react-native';
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, IconRegistry, Text } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
-import TopNavigation from './components/TopNavigation';
-import Home from './views/home/MyLocks';
-// import { ApolloProvider, useQuery, gql } from '@apollo/client';
-
-// import { apolloClient } from './apollo';
-
-/* const GET_TWEET = gql`
-  query {
-    twitter {
-      tweet(id: "1261034643710775299") {
-        text
-        user {
-          name
-          screen_name
-          profile_image_url
-        }
-      }
-    }
-  }
-` */
+import { useTrackedState } from './state';
+import MainNavigator from './views/MainNavigator';
 
 const App = () => {
+  const state = useTrackedState();
+
   return (
-    <Home />
+    <>
+    <IconRegistry icons={EvaIconsPack}/>
+      <ApplicationProvider {...eva} theme={eva[state.settings.theme]}>
+      <StatusBar backgroundColor="black" barStyle="light-content" />
+      <MainNavigator />
+      </ApplicationProvider>
+    </>
   );
 }
 

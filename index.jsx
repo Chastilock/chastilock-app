@@ -1,19 +1,14 @@
 import React from 'react';
 import { registerRootComponent } from 'expo';
-import * as eva from '@eva-design/eva';
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
-import MainNavigator from './src/views/MainNavigator';
+import { StateProvider } from './src/state';
+import App from './src/App';
 
 const Root = () => {
   return (
-    <>
-      <IconRegistry icons={EvaIconsPack}/>
-      <ApplicationProvider {...eva} theme={eva.dark}>
-        <MainNavigator />
-      </ApplicationProvider>
-    </>
+    <StateProvider>
+      <App />
+    </StateProvider>
   );
 }
 
