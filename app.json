@@ -1,7 +1,7 @@
 {
   "expo": {
    "name": "Chastilock",
-   "icon": "./path/to/your/app-icon.png",
+   "icon": "./images/logo.png",
    "version": "1.0.0",
    "slug": "Chastity lockbox manager",
    "ios": {
