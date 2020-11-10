@@ -3,7 +3,7 @@ import { SafeAreaView, View, StyleSheet } from 'react-native';
 import { Button, Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle, Text } from '@ui-kitten/components';
 
 import { actions } from '../state/sections/settings';
-import { useTrackedState, useDispatch } from '../state';
+import { useTracked } from '../state';
 
 const CloseIcon = (props) => (
   <Icon {...props} name="close-outline" />
@@ -31,9 +31,7 @@ const SettingsView = ({ navigation }) => {
     dispatch(actions.setPublicStats(showPublicStats));
   }
 
-  const state = useTrackedState();
-  const dispatch = useDispatch();
-  console.log('Settings view render')
+  const [state, dispatch] = useTracked();
 
   const closeSettings = () => {
     navigation.goBack();
