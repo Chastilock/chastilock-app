@@ -1,4 +1,5 @@
 import React from 'react'
+import { View } from 'react-native'
 import { DefaultTheme, DarkTheme, NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -8,11 +9,16 @@ import { useTrackedState } from '../state'
 
 const { Navigator, Screen } = createStackNavigator()
 
-const HomeNavigator = (): React.ReactElement => (
-  <Navigator headerMode='none'>
-    <Screen name='Home' component={Home}/>
-    <Screen name='Settings' component={Settings}/>
-  </Navigator>
+interface HomeNavigatorProps {
+  backgroundColor: string
+}
+const HomeNavigator = (props: HomeNavigatorProps): React.ReactElement => (
+  <View style={{ flex: 1, backgroundColor: props.backgroundColor }}>
+    <Navigator headerMode='none' mode='modal'>
+      <Screen name='Home' component={Home}/>
+      <Screen name='Settings' component={Settings}/>
+    </Navigator>
+  </View>
 )
 
 const AppNavigator = (): React.ReactElement => {
@@ -21,7 +27,7 @@ const AppNavigator = (): React.ReactElement => {
 
   return (
     <NavigationContainer theme={theme}>
-      <HomeNavigator/>
+      <HomeNavigator backgroundColor={state.settings.theme === 'dark' ? '#222B45' : '#FFFFFF'} />
     </NavigationContainer>
   )
 }
