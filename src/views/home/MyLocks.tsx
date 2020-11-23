@@ -1,10 +1,8 @@
-import React from 'react';
-import { SafeAreaView } from 'react-native';
-import { Text, Divider, Layout, TopNavigation } from '@ui-kitten/components';
+import React from 'react'
+import { SafeAreaView } from 'react-native'
+import { Text, Layout } from '@ui-kitten/components'
 
-import { useTracked } from '../../state';
-
-const MyLocks = ({ navigation }) => {
+const MyLocks = (): React.ReactElement => {
   // const [state, dispatch] = useTracked();
   // console.log(state);
 
@@ -14,7 +12,7 @@ const MyLocks = ({ navigation }) => {
         <Text>{/* JSON.stringify(state) */}</Text>
       </Layout>
     </SafeAreaView>
-  );
-};
+  )
+}
 
-export default MyLocks;
+export default MyLocks
