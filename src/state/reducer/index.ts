@@ -1,4 +1,4 @@
-import settings, { SettingsState } from '../sections/settings'
+import settings, { SettingsState } from 'state/sections/settings'
 
 export interface StateType {
   settings: SettingsState

@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import Home from './HomeView'
 import Settings from './SettingsView'
-import { useTrackedState } from '../state'
+import { useTrackedState } from 'state'
 
 const { Navigator, Screen } = createStackNavigator()
 

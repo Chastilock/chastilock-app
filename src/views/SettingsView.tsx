@@ -1,10 +1,10 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet } from 'react-native'
 import { Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle, Text } from '@ui-kitten/components'
-
-import { actions } from '../state/sections/settings'
-import { useTracked } from '../state'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
+
+import { actions } from 'state/sections/settings'
+import { useTracked } from 'state'
 
 const CloseIcon = (props: any): React.ReactElement => (
   <Icon {...props} name="close-outline" />

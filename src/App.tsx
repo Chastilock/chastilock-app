@@ -4,8 +4,8 @@ import * as eva from '@eva-design/eva'
 import { ApplicationProvider, IconRegistry, ThemeType } from '@ui-kitten/components'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
 
-import { useTrackedState } from './state'
-import MainNavigator from './views/MainNavigator'
+import { useTrackedState } from 'state'
+import MainNavigator from 'views/MainNavigator'
 
 const App = (): React.ReactElement => {
   const state = useTrackedState()

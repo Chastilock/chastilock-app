@@ -1,5 +1,5 @@
 import { ActionType } from 'state/reducer'
-import { Settings } from '../reducer/types'
+import { Settings } from 'state/reducer/types'
 
 export interface SettingsState {
   theme: string
