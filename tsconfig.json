@@ -5,7 +5,10 @@
     "module": "commonjs",
     "sourceMap": true,
     "rootDir": "./src",
-    "baseUrl": "./src",
+    "baseUrl": "./",
+    "paths": {
+      "@chastilock/*": ["src/*/index", "src/*"]
+    },
     "allowSyntheticDefaultImports": true,
     "jsx": "react-native",
     "lib": ["dom", "esnext"],
