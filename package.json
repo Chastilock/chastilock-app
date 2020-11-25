@@ -14,6 +14,7 @@
     "@types/react-native": "^0.63.36",
     "@ui-kitten/components": "^5.0.0",
     "@ui-kitten/eva-icons": "^5.0.0",
+    "chastilock-cardgame": "https://github.com/Chastilock/chastilock-cardgame/archive/v1.0.0.tar.gz",
     "cross-env": "^7.0.2",
     "eslint": "7",
     "eslint-config-standard-with-typescript": "^19.0.1",
