@@ -10,7 +10,8 @@ const { Navigator, Screen } = createMaterialTopTabNavigator()
 const TopTabBar = ({ navigation, state }: MaterialTopTabBarProps): React.ReactElement => (
   <TabBar
     selectedIndex={state.index}
-    onSelect={index => navigation.navigate(state.routeNames[index])}>
+    onSelect={index => navigation.navigate(state.routeNames[index])}
+    style={{ height: 50 }}>
     <Tab title='MY LOCKS'/>
     <Tab title='MANAGED LOCKS'/>
   </TabBar>
