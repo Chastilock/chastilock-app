@@ -14,7 +14,7 @@
     "@types/react-native": "^0.63.36",
     "@ui-kitten/components": "^5.0.0",
     "@ui-kitten/eva-icons": "^5.0.0",
-    "chastilock-cardgame": "https://github.com/Chastilock/chastilock-cardgame/archive/v1.1.0.tar.gz",
+    "chastilock-cardgame": "https://github.com/Chastilock/chastilock-cardgame/archive/v1.1.1.tar.gz",
     "expo": "~39.0.0",
     "graphql": "^15.0.0",
     "react": "~16.13.0",

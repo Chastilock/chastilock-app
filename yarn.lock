@@ -3322,9 +3322,9 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
-"chastilock-cardgame@https://github.com/Chastilock/chastilock-cardgame/archive/v1.1.0.tar.gz":
+"chastilock-cardgame@https://github.com/Chastilock/chastilock-cardgame/archive/v1.1.1.tar.gz":
   version "1.0.0"
-  resolved "https://github.com/Chastilock/chastilock-cardgame/archive/v1.1.0.tar.gz#e3127ec4cc2395fb269a1bde5cfc64e8fac7df74"
+  resolved "https://github.com/Chastilock/chastilock-cardgame/archive/v1.1.1.tar.gz#ccddfb76c50408622bd4d5cb4fea88036f9595c9"
 
 chokidar@^2.1.8:
   version "2.1.8"
