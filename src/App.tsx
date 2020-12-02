@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { StatusBar } from 'react-native'
 import * as eva from '@eva-design/eva'
-import { ApplicationProvider, IconRegistry, ThemeType } from '@ui-kitten/components'
+import { ApplicationProvider, IconRegistry, Text, ThemeType } from '@ui-kitten/components'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
 
 import { useDispatch, useTrackedState } from '@chastilock/state'
@@ -20,7 +20,7 @@ const App = (): React.ReactElement => {
 
   // Check if state is already set up
   if (state.status !== StateStatus.READY) {
-    return <>Loading</>
+    return <Text>Loading</Text>
   }
 
   const theme: ThemeType = (eva as any)[state.settings.theme]
