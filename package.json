@@ -7,6 +7,7 @@
     "@apollo/link-context": "^2.0.0-beta.3",
     "@eva-design/eva": "^2.0.0",
     "@expo/webpack-config": "^0.12.43",
+    "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/material-top-tabs": "^5.3.8",
     "@react-navigation/native": "^5.8.8",
@@ -28,7 +29,8 @@
     "react-native-tab-view": "^2.15.2",
     "react-native-ui-kitten": "^4.4.1",
     "react-native-web": "0.13.13",
-    "react-tracked": "^1.4.2"
+    "react-tracked": "^1.4.2",
+    "use-reducer-async": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",

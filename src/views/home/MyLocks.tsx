@@ -16,6 +16,7 @@ const MyLocks = (): React.ReactElement => {
 
   const locks: LockModel[] = [
     {
+      id: 1,
       name: 'test',
       nextDraw: new Date(new Date().getTime() + 1000 * 3600),
       lock: new LockData({
@@ -35,7 +36,7 @@ const MyLocks = (): React.ReactElement => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        {locks.map(lock => <Lock lock={lock} />)}
+        {locks.map(lock => <Lock key={lock.id} lock={lock} />)}
       </Layout>
     </SafeAreaView>
   )

@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StatusBar } from 'react-native'
 import * as eva from '@eva-design/eva'
 import { ApplicationProvider, IconRegistry, ThemeType } from '@ui-kitten/components'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
 
-import { useTrackedState } from '@chastilock/state'
+import { useDispatch, useTrackedState } from '@chastilock/state'
+import { initializeAction, StateStatus } from '@chastilock/state/reducer'
 import MainNavigator from '@chastilock/views/MainNavigator'
 
 const App = (): React.ReactElement => {
   const state = useTrackedState()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (state.status === StateStatus.UNINITIALIZED) {
+      dispatch(initializeAction)
+    }
+  })
+
+  // Check if state is already set up
+  if (state.status !== StateStatus.READY) {
+    return <>Loading</>
+  }
 
   const theme: ThemeType = (eva as any)[state.settings.theme]
 
