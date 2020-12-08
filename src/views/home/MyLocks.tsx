@@ -4,17 +4,14 @@ import { Layout } from '@ui-kitten/components'
 import { CardMapping, CardType, Lock as LockData } from 'chastilock-cardgame'
 
 import Lock from './lock'
-import LockModel from './lock/LockModel'
+import { CardLockModel, LockType } from './lock/LockModel'
 
 const MyLocks = (): React.ReactElement => {
-  // const [state, dispatch] = useTracked();
-  // console.log(state);
-
   const cardMapping = new CardMapping()
   cardMapping.setCardsOfType(CardType.GREEN, 10)
   cardMapping.setCardsOfType(CardType.RED, 100)
 
-  const locks: LockModel[] = [
+  const locks: CardLockModel[] = [
     {
       id: 1,
       name: 'test',
@@ -29,13 +26,14 @@ const MyLocks = (): React.ReactElement => {
         },
         intervalMinutes: 5,
         multipleGreensRequired: true
-      })
+      }),
+      type: LockType.CARD
     }
   ]
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Layout style={{ flex: 1, padding: 10 }}>
         {locks.map(lock => <Lock key={lock.id} lock={lock} />)}
       </Layout>
     </SafeAreaView>

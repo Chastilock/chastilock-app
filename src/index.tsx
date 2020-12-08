@@ -1,10 +1,10 @@
 import React from 'react'
 import { registerRootComponent } from 'expo'
 
-import { StateProvider } from './src/state'
-import App from './src/App'
+import { StateProvider } from './state'
+import App from './App'
 
-const Root = () => {
+const Root = (): React.ReactElement => {
   return (
     <StateProvider>
       <App />

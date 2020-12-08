@@ -1,31 +1,19 @@
 import React from 'react'
-import { View } from 'react-native'
-import { Card, Text } from '@ui-kitten/components'
 
-import LockModel from './LockModel'
-
-const renderHeader = (headerProps: any, lock: LockModel): React.ReactElement => {
-  return (
-    <View {...headerProps}>
-      <Text category="h6">
-        {lock.name}
-      </Text>
-    </View>
-  )
-}
+import LockModel, { LockType } from './LockModel'
+import CardLock from './CardLock'
 
 interface LockProps {
   lock: LockModel
 }
-const Lock = (props: LockProps): React.ReactElement => {
-  return (
-    <View>
-      <Card
-        header={headerProps => renderHeader(headerProps, props.lock)}>
-        <Text>My Lock</Text>
-      </Card>
-    </View>
-  )
+const Lock = (props: LockProps): React.ReactElement | null => {
+  if (props.lock.type === LockType.CARD) {
+    return <CardLock />
+  } else if (props.lock.type === LockType.FIXED) {
+    return null
+  } else {
+    return null
+  }
 }
 
 export default Lock

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import { StatusBar } from 'react-native'
+import { StatusBar, Text } from 'react-native'
 import * as eva from '@eva-design/eva'
-import { ApplicationProvider, IconRegistry, Text, ThemeType } from '@ui-kitten/components'
+import { ApplicationProvider, IconRegistry, ThemeType } from '@ui-kitten/components'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
 
 import { useDispatch, useTrackedState } from '@chastilock/state'

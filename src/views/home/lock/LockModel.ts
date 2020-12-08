@@ -1,10 +1,21 @@
 import { Lock as LockData } from 'chastilock-cardgame'
 
-interface LockModel {
+export default interface LockModel {
   id: number
-  lock: LockData
   name: string
+  type: LockType
+}
+
+export enum LockType {
+  CARD = 'card',
+  FIXED = 'fixed'
+}
+
+export type CardLockModel = LockModel & {
+  lock: LockData
   nextDraw: Date
 }
 
-export default LockModel
+export type FixedLockModel = LockModel & {
+  unlockDate: Date
+}
