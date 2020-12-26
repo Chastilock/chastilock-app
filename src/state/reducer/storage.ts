@@ -3,6 +3,12 @@ import { StateType } from '.'
 
 const STORAGE_KEY = 'chastilock_persisted_state'
 
+/**
+ * This function filters a state so that only information is contained
+ * that needs to be stored.
+ * @param state the current state
+ * @return an object containing only the desired state
+ */
 export const getStoredState = (state: StateType): any => ({
   settings: state.settings
 })

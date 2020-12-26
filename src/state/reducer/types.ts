@@ -8,6 +8,11 @@ export enum Settings {
   setShowPublicStats = 'settings/set_show_public_stats'
 }
 
+export enum Confirmation {
+  showConfirmation = 'confirmation/show',
+  closeConfirmation = 'confirmation/close'
+}
+
 export default {
   Global,
   Settings
