@@ -49,9 +49,9 @@ const ConfirmationPopup = (props: ConfirmationPopupProps): React.ReactElement =>
       }}
       onBackdropPress={dismiss}>
       <Card disabled>
-        <Text>{props.title}</Text>
+        <Text category="s1">{props.title}</Text>
         {props.text !== undefined && <Text>{props.text}</Text>}
-        {props.onOk !== undefined && <Button onPress={ok}>Ok</Button>}
+        {props.onOk !== undefined && <Button onPress={ok} style={{ marginTop: 10 }}>Ok</Button>}
       </Card>
     </Modal>
   )
