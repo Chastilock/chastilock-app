@@ -2,8 +2,11 @@ import { Text } from '@ui-kitten/components'
 import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import moment from 'moment'
+import momentDurationFormatSetup from 'moment-duration-format'
 
 import { CardLockModel } from './LockModel'
+
+momentDurationFormatSetup(moment)
 
 interface CardLockProps {
   lock: CardLockModel
@@ -27,10 +30,9 @@ const CardLock = (props: CardLockProps): React.ReactElement => {
   return (
     <View style={{ borderWidth: 1, borderColor: 'grey', padding: 5 }}>
       <Text>{props.lock.name}</Text>
-      {!canDraw && <View>
-        <Text>{countdown.hours()}</Text>
-        <Text>{countdown.minutes()}</Text>
-        <Text>{countdown.seconds()}</Text>
+      {!canDraw && <View style={{ flexDirection: 'row' }}>
+        <Text>Next draw in: </Text>
+        <Text>{countdown.format('HH:mm:ss')}</Text>
       </View>}
     </View>
   )
