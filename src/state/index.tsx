@@ -1,11 +1,14 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import { createContainer } from 'react-tracked'
 
-import reducer, { ActionType, StateType } from './reducer'
+import useAsyncReducer from './useAsyncReducer'
+import reducer, { ActionType, StateStatus, StateType } from './reducer'
 
-export const initialState = reducer()
+export const initialState = {
+  status: StateStatus.UNINITIALIZED
+}
 
-const useValue = (): any => useReducer(reducer, initialState)
+const useValue = (): any => useAsyncReducer(reducer, initialState)
 const {
   Provider,
   useTracked,
@@ -15,7 +18,7 @@ const {
   Provider: React.FC
   useTracked: () => [StateType, (action: ActionType) => void]
   useTrackedState: () => StateType
-  useUpdate: () => (action: ActionType) => void
+  useUpdate: () => (action: any) => void
 } = createContainer(useValue)
 
 interface StateProviderProps { children?: React.ReactElement }
