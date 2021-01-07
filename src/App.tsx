@@ -8,6 +8,7 @@ import { useDispatch, useTrackedState } from '@chastilock/state'
 import { initializeAction, StateStatus } from '@chastilock/state/reducer'
 import MainNavigator from '@chastilock/views/MainNavigator'
 import ConfirmationPopup from '@chastilock/views/common/ConfirmationPopup'
+import SetupView from '@chastilock/views/SetupView'
 
 const App = (): React.ReactElement => {
   const state = useTrackedState()
@@ -31,7 +32,8 @@ const App = (): React.ReactElement => {
       <IconRegistry icons={EvaIconsPack}/>
       <ApplicationProvider {...eva} theme={theme}>
         <StatusBar backgroundColor="black" barStyle="light-content" />
-        <MainNavigator />
+        {state.account.isSignedIn && <MainNavigator />}
+        {!state.account.isSignedIn && <SetupView />}
         {state.confirmation.visible && <ConfirmationPopup {...state.confirmation.modalProps} />}
       </ApplicationProvider>
     </>

@@ -13,6 +13,11 @@ export enum Confirmation {
   closeConfirmation = 'confirmation/close'
 }
 
+export enum Account {
+  signIn = 'account/sign_in',
+  signOut = 'account/sign_out'
+}
+
 export default {
   Global,
   Settings

@@ -1,8 +1,9 @@
 import * as Storage from './storage'
-import * as ActionTypes from './types'
+import * as ActionTypes from '../types'
 
 import settings, { SettingsState } from '@chastilock/state/sections/settings'
 import confirmation, { ConfirmationState } from '@chastilock/state/sections/confirmation'
+import account, { AccountState } from '@chastilock/state/sections/account'
 
 export enum StateStatus {
   UNINITIALIZED = 'uninitialized',
@@ -14,6 +15,7 @@ export interface StateType {
   settings: SettingsState
   status: StateStatus
   confirmation: ConfirmationState
+  account: AccountState
 }
 
 export interface ActionType {
@@ -22,7 +24,8 @@ export interface ActionType {
 
 export const reducers = [
   settings,
-  confirmation
+  confirmation,
+  account
 ]
 
 export const initializeAction = async (dispatch: (action: any) => void): Promise<void> => {

@@ -1,5 +1,5 @@
 import { ActionType } from '@chastilock/state/reducer'
-import { Confirmation } from '@chastilock/state/reducer/types'
+import { Confirmation } from '@chastilock/state/types'
 import { ConfirmationPopupProps } from '@chastilock/views/common/ConfirmationPopup'
 
 export interface ConfirmationState {
