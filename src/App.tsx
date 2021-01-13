@@ -8,7 +8,7 @@ import { useDispatch, useTrackedState } from '@chastilock/state'
 import { initializeAction, StateStatus } from '@chastilock/state/reducer'
 import MainNavigator from '@chastilock/views/MainNavigator'
 import ConfirmationPopup from '@chastilock/views/common/ConfirmationPopup'
-import SetupView from '@chastilock/views/SetupView'
+import SetupView from '@chastilock/views/setup/SetupView'
 
 const App = (): React.ReactElement => {
   const state = useTrackedState()

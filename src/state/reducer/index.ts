@@ -40,7 +40,9 @@ const rootReducer = (state: any = { status: 'initializing' }, action: any = { ty
     status: state.status
   }
 
-  reducers.forEach(reducer => { newState[reducer.reducerName] = reducer(action, state.settings) })
+  reducers.forEach(reducer => { newState[reducer.reducerName] = reducer(action, state[reducer.reducerName]) })
+
+  console.log(newState)
 
   // Store data
   if (action.type === ActionTypes.Global.initialize) {
