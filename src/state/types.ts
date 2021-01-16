@@ -1,6 +1,7 @@
 export enum Global {
   initialize = 'global/initialize',
-  loadState = 'global/load_state'
+  loadState = 'global/load_state',
+  internalSetState = 'global/internal_set_state'
 }
 
 export enum Settings {

@@ -3,7 +3,7 @@ import { ActionType } from './reducer'
 
 export type DispatchType = (action: ActionType | DispatchType) => void
 
-const useAsyncReducer = (reducer: any, initialState: any): any => {
+const useAsyncReducer = (reducer: any, initialState: any): [any, (action: any) => void] => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const dispatchProxy = (action: ActionType | DispatchType): void => {
