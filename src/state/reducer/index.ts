@@ -66,7 +66,6 @@ const rootReducer = (state: any = { status: 'initializing' }, action: any = { ty
   if (action.type !== ActionTypes.Global.internalSetState) {
     sendAction(action, newState)
   }
-  console.log(newState)
 
   return newState
 }
