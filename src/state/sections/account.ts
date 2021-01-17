@@ -49,4 +49,8 @@ export const actions = {
   })
 }
 
+export const selectors = {
+  isAnonymous: (state: AccountState): boolean => state.user?.email === undefined
+}
+
 export default accountReducer

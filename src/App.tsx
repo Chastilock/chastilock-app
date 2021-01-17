@@ -34,7 +34,7 @@ const App = (): React.ReactElement => {
         <StatusBar backgroundColor="black" barStyle="light-content" />
         {state.account.isSignedIn && <MainNavigator />}
         {!state.account.isSignedIn && <SetupView />}
-        {state.confirmation.visible && <ConfirmationPopup {...state.confirmation.modalProps} />}
+        <ConfirmationPopup {...state.confirmation.modalProps} isVisible={state.confirmation.visible} />
       </ApplicationProvider>
     </>
   )
