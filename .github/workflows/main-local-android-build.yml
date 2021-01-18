@@ -23,6 +23,7 @@ jobs:
       - name: Build
         run: |
           yarn global add turtle-cli
+          export PATH=$(yarn bin):$PATH
           yarn
           turtle setup:android
           echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
