@@ -33,6 +33,8 @@ jobs:
         env:
           EXPO_ANDROID_KEYSTORE_BASE64: ${{ secrets.EXPO_ANDROID_KEYSTORE_BASE64 }}
           EXPO_ANDROID_KEYSTORE_ALIAS: ${{ secrets.EXPO_ANDROID_KEYSTORE_ALIAS }}
+          EXPO_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
+          EXPO_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
       - uses: actions/upload-artifact@v2
         with:
           name: chastilock.apk
