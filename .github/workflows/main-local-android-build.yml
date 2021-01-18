@@ -23,6 +23,7 @@ jobs:
       - name: Build
         run: |
           yarn global add turtle-cli
+          yarn turtle --version
           export PATH=$(yarn bin):$PATH
           yarn
           turtle setup:android
