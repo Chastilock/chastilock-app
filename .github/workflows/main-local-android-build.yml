@@ -22,8 +22,8 @@ jobs:
       #    expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - name: Build
         run: |
-          yarn global add turtle-cli
-          yarn turtle --version
+          npm install -g turtle-cli
+          turtle --version
           export PATH=$(yarn bin):$PATH
           yarn
           turtle setup:android
@@ -35,5 +35,5 @@ jobs:
           EXPO_ANDROID_KEYSTORE_ALIAS: ${{ secrets.EXPO_ANDROID_KEYSTORE_ALIAS }}
       - uses: actions/upload-artifact@v2
         with:
-          name: chastilock-app-android
-          path: chastilock.apk
+          name: chastilock.apk
+          path: ./chastilock.apk
