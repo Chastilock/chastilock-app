@@ -43,8 +43,8 @@ const SettingsGroup = (props: SettingsGroupProps): React.ReactElement => (
 const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
   const [state, dispatch] = useTracked()
 
-  const updateTheme = (isDark: boolean): void => {
-    dispatch(actions.changeTheme(isDark ? 'dark' : 'light'))
+  const toggleTheme = (): void => {
+    dispatch(actions.changeTheme(state.settings.theme !== 'dark' ? 'dark' : 'light'))
   }
   const updateShowPublicStats = (showPublicStats: boolean): void => {
     dispatch(actions.setPublicStats(showPublicStats))
@@ -83,7 +83,7 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
       <Layout style={{ flex: 1, padding: 20 }}>
         <SettingsGroup title="Appearance">
           <FormGroup text="Dark mode">
-            <Toggle checked={state.settings.theme === 'dark'} onChange={updateTheme} />
+            <Toggle checked={state.settings.theme === 'dark'} onPress={() => toggleTheme()} />
           </FormGroup>
         </SettingsGroup>
         <SettingsGroup title="Account">

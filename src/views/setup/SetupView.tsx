@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 
 import { actions as confirmActions } from '@chastilock/state/sections/confirmation'
 import { actions as accountActions } from '@chastilock/state/sections/account'
@@ -17,7 +17,7 @@ const SetupView = (): React.ReactElement | null => {
   const dispatch = useDispatch()
   const [setupState, setSetupState] = useState(SetupState.SETUP_SELECTION)
 
-  const createAnonymousAccount = (): void => {
+  const createAnonymousAccount = useMemo(() => (): void => {
     dispatch(confirmActions.showConfirmation({
       title: 'Anonymous account',
       text: 'An anonymous account will be created for you. You should really back up your unique id that is presented to you next (preferably in cloud storage). You can also always upgrade the account later on.',
@@ -25,7 +25,7 @@ const SetupView = (): React.ReactElement | null => {
         setSetupState(SetupState.ANONYMOUS_ACCOUNT_BACKUP)
       }
     }))
-  }
+  }, [setSetupState])
 
   const complete = (): void => {
     dispatch(accountActions.signIn({
