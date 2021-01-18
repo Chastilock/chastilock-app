@@ -10,7 +10,8 @@ const STORAGE_KEY = 'chastilock_persisted_state'
  * @return an object containing only the desired state
  */
 export const getStoredState = (state: StateType): any => ({
-  settings: state.settings
+  settings: state.settings,
+  account: state.account
 })
 
 export const store = async (state: StateType): Promise<void> => {

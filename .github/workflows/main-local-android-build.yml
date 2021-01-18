@@ -1,0 +1,37 @@
+name: Local Android Build
+
+on: [workflow_dispatch]
+
+jobs:
+  publish:
+    name: Install and build for android
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      #- uses: expo/expo-github-action@v5
+      #  with:
+      #    expo-version: 3.x
+      #    expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+      #    expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+      - name: Build
+        run: |
+          yarn global add turtle-cli
+          yarn
+          turtle setup:android
+          echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
+          base64 --decode expo-project.jks.base64 > expo-project.jks
+          turtle build:android --keystore-path ./expo-project.jks --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS --type apk -o chastilock.apk
+        env:
+          EXPO_ANDROID_KEYSTORE_BASE64: ${{ secrets.EXPO_ANDROID_KEYSTORE_BASE64 }}
+          EXPO_ANDROID_KEYSTORE_ALIAS: ${{ secrets.EXPO_ANDROID_KEYSTORE_ALIAS }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: chastilock-app-android
+          path: chastilock.apk

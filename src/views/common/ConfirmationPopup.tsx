@@ -7,6 +7,7 @@ import { actions } from '@chastilock/state/sections/confirmation'
 export interface ConfirmationPopupProps {
   title: string
   text?: string
+  isVisible?: boolean
   onYes?: () => void
   onNo?: () => void
   onDismiss?: () => void
@@ -43,7 +44,7 @@ const ConfirmationPopup = (props: ConfirmationPopupProps): React.ReactElement =>
 
   return (
     <Modal
-      visible
+      visible={props.isVisible}
       backdropStyle={{
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
       }}

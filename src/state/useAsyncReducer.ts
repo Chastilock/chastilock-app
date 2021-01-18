@@ -1,18 +1,18 @@
-import { useReducer } from 'react'
+import { useReducer, useMemo } from 'react'
 import { ActionType } from './reducer'
 
 export type DispatchType = (action: ActionType | DispatchType) => void
 
-const useAsyncReducer = (reducer: any, initialState: any): any => {
+const useAsyncReducer = (reducer: any, initialState: any): [any, (action: any) => void] => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const dispatchProxy = (action: ActionType | DispatchType): void => {
+  const dispatchProxy = useMemo(() => (action: ActionType | DispatchType): void => {
     if (typeof action === 'function') {
       action(dispatchProxy)
     } else {
       (dispatch as any)(action)
     }
-  }
+  }, [dispatch])
 
   return [state, dispatchProxy]
 }

@@ -1,5 +1,5 @@
 import { ActionType } from '@chastilock/state/reducer'
-import { Settings } from '@chastilock/state/reducer/types'
+import { Settings } from '@chastilock/state/types'
 
 export interface SettingsState {
   theme: string

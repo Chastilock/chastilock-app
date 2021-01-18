@@ -1,8 +1,10 @@
 import * as Storage from './storage'
-import * as ActionTypes from './types'
+import * as ActionTypes from '../types'
 
 import settings, { SettingsState } from '@chastilock/state/sections/settings'
 import confirmation, { ConfirmationState } from '@chastilock/state/sections/confirmation'
+import account, { AccountState } from '@chastilock/state/sections/account'
+import { sendAction } from './devTools'
 
 export enum StateStatus {
   UNINITIALIZED = 'uninitialized',
@@ -14,6 +16,7 @@ export interface StateType {
   settings: SettingsState
   status: StateStatus
   confirmation: ConfirmationState
+  account: AccountState
 }
 
 export interface ActionType {
@@ -22,7 +25,8 @@ export interface ActionType {
 
 export const reducers = [
   settings,
-  confirmation
+  confirmation,
+  account
 ]
 
 export const initializeAction = async (dispatch: (action: any) => void): Promise<void> => {
@@ -37,7 +41,12 @@ const rootReducer = (state: any = { status: 'initializing' }, action: any = { ty
     status: state.status
   }
 
-  reducers.forEach(reducer => { newState[reducer.reducerName] = reducer(action, state.settings) })
+  // Set internal state
+  if (action.type === ActionTypes.Global.internalSetState) {
+    return action.newState
+  }
+
+  reducers.forEach(reducer => { newState[reducer.reducerName] = reducer(action, state[reducer.reducerName]) })
 
   // Store data
   if (action.type === ActionTypes.Global.initialize) {
@@ -52,6 +61,11 @@ const rootReducer = (state: any = { status: 'initializing' }, action: any = { ty
     newState.status = StateStatus.READY
   }
   Storage.store(newState).then(() => {}).catch(e => console.log('Failed to store data', e))
+
+  // Send to dev tools
+  if (action.type !== ActionTypes.Global.internalSetState) {
+    sendAction(action, newState)
+  }
 
   return newState
 }

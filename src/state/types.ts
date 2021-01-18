@@ -1,6 +1,7 @@
 export enum Global {
   initialize = 'global/initialize',
-  loadState = 'global/load_state'
+  loadState = 'global/load_state',
+  internalSetState = 'global/internal_set_state'
 }
 
 export enum Settings {
@@ -11,6 +12,11 @@ export enum Settings {
 export enum Confirmation {
   showConfirmation = 'confirmation/show',
   closeConfirmation = 'confirmation/close'
+}
+
+export enum Account {
+  signIn = 'account/sign_in',
+  signOut = 'account/sign_out'
 }
 
 export default {

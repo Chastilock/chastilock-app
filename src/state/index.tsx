@@ -3,12 +3,27 @@ import { createContainer } from 'react-tracked'
 
 import useAsyncReducer from './useAsyncReducer'
 import reducer, { ActionType, StateStatus, StateType } from './reducer'
+import { notifyOnChange, sendInit } from './reducer/devTools'
+import { Global } from './types'
 
 export const initialState = {
   status: StateStatus.UNINITIALIZED
 }
 
-const useValue = (): any => useAsyncReducer(reducer, initialState)
+sendInit(initialState)
+
+const useValue = (): [any, (action: any) => void] => {
+  const [state, dispatch] = useAsyncReducer(reducer, initialState)
+
+  notifyOnChange((newState) => {
+    dispatch({
+      type: Global.internalSetState,
+      newState
+    })
+  })
+
+  return [state, dispatch]
+}
 const {
   Provider,
   useTracked,
