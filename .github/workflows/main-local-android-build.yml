@@ -43,5 +43,5 @@ jobs:
           EXPO_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
       - uses: actions/upload-artifact@v2
         with:
-          name: chastilock.apk
+          name: chastilock
           path: ./chastilock.apk
