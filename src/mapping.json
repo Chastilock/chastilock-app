@@ -1,0 +1,13 @@
+{
+  "strict": {
+    "text-font-family": "OpenSans-Regular",
+
+    "text-heading-1-font-family": "OpenSans-Bold",
+    "text-heading-2-font-family": "OpenSans-Bold",
+    "text-heading-3-font-family": "OpenSans-Bold",
+    "text-heading-4-font-family": "OpenSans-Bold",
+    "text-heading-5-font-family": "OpenSans-Bold",
+    "text-heading-6-font-family": "OpenSans-Bold"
+  },
+  "components": {}
+}

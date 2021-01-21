@@ -1,8 +1,9 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet } from 'react-native'
-import { Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle, Text, Button } from '@ui-kitten/components'
+import { Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle, Button } from '@ui-kitten/components'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 
+import { Text, TextType } from '@chastilock/components'
 import { actions } from '@chastilock/state/sections/settings'
 import { actions as accountActions, selectors as accountSelectors } from '@chastilock/state/sections/account'
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
@@ -35,7 +36,7 @@ interface SettingsGroupProps {
 }
 const SettingsGroup = (props: SettingsGroupProps): React.ReactElement => (
   <View>
-    <Text category="s1">{props.title}</Text>
+    <Text category={TextType.HEADING5}>{props.title}</Text>
     {props.children}
   </View>
 )
@@ -75,7 +76,7 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title='Chastilock - Settings'
+        title={() => <Text category={TextType.HEADING6}>Chastilock - Settings</Text>}
         alignment='center'
         accessoryRight={CloseAction}
       />
