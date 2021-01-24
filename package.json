@@ -65,6 +65,7 @@
     "setuphooks": "git config --local core.hooksPath .hooks",
     "hooks:pre-commit": "yarn lint && yarn build",
     "build": "ttsc",
-    "test": "echo no tests currently"
+    "test": "echo no tests currently",
+    "turtle": "turtle"
   }
 }
