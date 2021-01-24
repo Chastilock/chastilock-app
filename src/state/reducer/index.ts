@@ -4,6 +4,7 @@ import * as ActionTypes from '../types'
 import settings, { SettingsState } from '@chastilock/state/sections/settings'
 import confirmation, { ConfirmationState } from '@chastilock/state/sections/confirmation'
 import account, { AccountState } from '@chastilock/state/sections/account'
+import i18n, { I18nState, actions as i18nActions } from '@chastilock/state/sections/i18n'
 import { sendAction } from './devTools'
 
 export enum StateStatus {
@@ -17,6 +18,7 @@ export interface StateType {
   status: StateStatus
   confirmation: ConfirmationState
   account: AccountState
+  i18n: I18nState
 }
 
 export interface ActionType {
@@ -26,7 +28,8 @@ export interface ActionType {
 export const reducers = [
   settings,
   confirmation,
-  account
+  account,
+  i18n
 ]
 
 export const initializeAction = async (dispatch: (action: any) => void): Promise<void> => {
@@ -34,6 +37,7 @@ export const initializeAction = async (dispatch: (action: any) => void): Promise
 
   const state = await Storage.load()
   dispatch({ type: ActionTypes.Global.loadState, state })
+  dispatch(i18nActions.initialLoad())
 }
 
 const rootReducer = (state: any = { status: 'initializing' }, action: any = { type: '' }): StateType => {

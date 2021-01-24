@@ -84,7 +84,7 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
       <Layout style={{ flex: 1, padding: 20 }}>
         <SettingsGroup title="Appearance">
           <FormGroup text="Dark mode">
-            <Toggle checked={state.settings.theme === 'dark'} onPress={() => toggleTheme()} />
+            <Toggle checked={state.settings.theme === 'dark'} onChange={() => toggleTheme()} />
           </FormGroup>
         </SettingsGroup>
         <SettingsGroup title="Account">

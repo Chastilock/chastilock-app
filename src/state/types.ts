@@ -19,6 +19,11 @@ export enum Account {
   signOut = 'account/sign_out'
 }
 
+export enum I18n {
+  setLanguage = 'i18n/set_language',
+  initialLoad = 'i18n/initial_load'
+}
+
 export default {
   Global,
   Settings

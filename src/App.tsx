@@ -44,7 +44,8 @@ const App = (): React.ReactElement | null => {
     'OpenSans-Bold': require('./assets/fonts/OpenSans-Bold.ttf')
   })
 
-  if (!loaded) {
+  if (window === undefined && !loaded) {
+    console.log('nok')
     return null
   }
 

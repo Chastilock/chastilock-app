@@ -34,7 +34,7 @@ const Home = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title={() => <Text category={TextType.HEADING6}>Chastilock - Settings</Text>}
+        title={() => <Text category={TextType.HEADING6} translationKey='main.title' />}
         alignment="center"
         accessoryLeft={CreateLockAction}
         accessoryRight={SettingsAction}
