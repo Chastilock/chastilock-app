@@ -1,9 +1,8 @@
 import React from 'react'
 
 import { Text as KittenText } from '@ui-kitten/components'
-import { useTrackedState } from '@chastilock/state'
 
-import defaultTranslations from '../assets/translations/english_gb.json'
+import { useTranslation } from '.'
 
 export enum TextType {
   HEADING1 = 'h1',
@@ -23,27 +22,22 @@ export interface TextProps {
   category?: TextType
   children?: string
   translationKey?: string
+  center?: boolean
 }
 export const Text = (props: TextProps): React.ReactElement => {
-  const state = useTrackedState()
+  const [translator] = useTranslation()
 
   let text = props.children
   if (props.translationKey !== undefined) {
-    if (state.i18n.translations[props.translationKey] !== undefined) {
-      text = state.i18n.translations[props.translationKey]
-    }
-    if (text === undefined) {
-      text = (defaultTranslations as any)[props.translationKey]
-    }
-    if (text === undefined) {
-      // now something is not right
-      text = 'UNKNOWN'
-      console.error('Found invalid translation key: ' + props.translationKey)
+    if (translator(props.translationKey) !== undefined) {
+      text = translator(props.translationKey)
     }
   }
 
+  const textAlign = props.center === true ? 'center' : undefined
+
   return (
-    <KittenText category={props.category}>{text}</KittenText>
+    <KittenText category={props.category} style={{ textAlign }}>{text}</KittenText>
   )
 }
 

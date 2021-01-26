@@ -10,6 +10,10 @@ export const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ !== undefined ? wind
 
 export const sendAction = (action: ActionType, newState: any): void => {
   if (devTools === null) { return }
+
+  // Redact translations, since they only clutter in debug view
+  newState.i18n.translations = {}
+
   devTools.send(action, newState)
 }
 

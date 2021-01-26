@@ -1,9 +1,10 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet } from 'react-native'
-import { Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle, Text } from '@ui-kitten/components'
+import { Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle } from '@ui-kitten/components'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
+import { Text, TextType } from '@chastilock/components'
 import { useTracked } from '@chastilock/state'
 
 const CloseIcon = (props: any): React.ReactElement => (
@@ -27,7 +28,7 @@ interface SettingsGroupProps {
 }
 const CreateLockGroup = (props: SettingsGroupProps): React.ReactElement => (
   <View>
-    <Text category="s1">{props.title}</Text>
+    <Text category={TextType.HEADING4} translationKey={props.title} />
     {props.children}
   </View>
 )
@@ -50,7 +51,7 @@ const CreateLockView = ({ navigation }: MaterialTopTabBarProps): React.ReactElem
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title='Chastilock - Create Lock'
+        title={() => <Text category={TextType.HEADING6} translationKey='create.title' />}
         alignment='center'
         accessoryRight={CloseAction}
       />

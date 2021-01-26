@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button, Card, Modal, Text } from '@ui-kitten/components'
+import { Button, Card, Modal } from '@ui-kitten/components'
 
+import { Text, TextType, useTranslation } from '@chastilock/components'
 import { useDispatch } from '@chastilock/state'
 import { actions } from '@chastilock/state/sections/confirmation'
 
@@ -16,6 +17,7 @@ export interface ConfirmationPopupProps {
 }
 const ConfirmationPopup = (props: ConfirmationPopupProps): React.ReactElement => {
   const dispatch = useDispatch()
+  const [translator] = useTranslation()
 
   const close = (): void => {
     props.onClose?.()
@@ -50,9 +52,9 @@ const ConfirmationPopup = (props: ConfirmationPopupProps): React.ReactElement =>
       }}
       onBackdropPress={dismiss}>
       <Card disabled>
-        <Text category="s1">{props.title}</Text>
-        {props.text !== undefined && <Text>{props.text}</Text>}
-        {props.onOk !== undefined && <Button onPress={ok} style={{ marginTop: 10 }}>Ok</Button>}
+        <Text category={TextType.HEADING5} center>{props.title}</Text>
+        {props.text !== undefined && <Text center>{props.text}</Text>}
+        {props.onOk !== undefined && <Button onPress={ok} style={{ marginTop: 10 }}>{translator('confirmation.ok')}</Button>}
       </Card>
     </Modal>
   )

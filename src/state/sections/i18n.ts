@@ -1,6 +1,8 @@
 import { ActionType } from '@chastilock/state/reducer'
 import { I18n } from '@chastilock/state/types'
 
+import translations from '@chastilock/assets/translations'
+
 export interface I18nState {
   translations: {
     [name: string]: string
@@ -8,12 +10,9 @@ export interface I18nState {
   language: string
 }
 
-export const AVAILABLE_LANGUAGES = [
-  'English GB',
-  'German'
-]
-
+export const AVAILABLE_LANGUAGES = Object.keys(translations)
 export const DEFAULT_LANGUAGE = 'English GB'
+
 export const initialState: I18nState = {
   translations: {},
   language: DEFAULT_LANGUAGE
@@ -29,12 +28,12 @@ const i18nReducer = (action: ActionType, state: I18nState = initialState): I18nS
       newLanguage = (action as SetLanguageAction).language
       return {
         language: newLanguage,
-        translations: require('../../assets/translations/' + getLanguageFileName(newLanguage))
+        translations: (translations as any)[newLanguage]
       }
     case I18n.initialLoad:
       return {
         ...state,
-        translations: require('../../assets/translations/' + getLanguageFileName(state.language))
+        translations: (translations as any)[state.language]
       }
   }
   return state

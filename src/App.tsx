@@ -45,7 +45,6 @@ const App = (): React.ReactElement | null => {
   })
 
   if (window === undefined && !loaded) {
-    console.log('nok')
     return null
   }
 

@@ -1,3 +1,17 @@
 {
-  "main.title": "Chastilock"
+  "main.title": "Chastilock",
+
+  "confirmation.ok": "Ok",
+
+  "settings.appearance": "Appearance",
+  "settings.appearance.dark_mode": "Dark mode",
+  "settings.account": "Account",
+  "settings.account.username": "Username",
+  "settings.notifications": "Notifications",
+  "settings.security": "Security",
+  "settings.privacy": "Privacy",
+  "settings.privacy.show_public_stats": "Show public stats on my profile",
+
+  "settings.confirm.logout_anonymous.title": "Anonymous account",
+  "settings.confirm.logout_anonymous.content": "IMPORTANT: You are trying to sign out of an anonymous account. If you have not backed up your user id, you will never be able to log in to that account again. Are you sure?"
 }
