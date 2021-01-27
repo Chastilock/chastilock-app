@@ -23,6 +23,7 @@ export interface StateType {
 
 export interface ActionType {
   type: string
+  [name: string]: any
 }
 
 export const reducers = [

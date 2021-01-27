@@ -13,5 +13,12 @@
   "settings.privacy.show_public_stats": "Show public stats on my profile",
 
   "settings.confirm.logout_anonymous.title": "Anonymous account",
-  "settings.confirm.logout_anonymous.content": "IMPORTANT: You are trying to sign out of an anonymous account. If you have not backed up your user id, you will never be able to log in to that account again. Are you sure?"
+  "settings.confirm.logout_anonymous.content": "IMPORTANT: You are trying to sign out of an anonymous account. If you have not backed up your user id, you will never be able to log in to that account again. Are you sure?",
+
+  "setup.backup.title": "Anonymous Account Backup",
+  "setup.backup.info": "We allow the creation of anonymous accounts. Those are just accounts, that are only identified by you by a random key. There is no automatic recovery option available, therefore you will need to make sure on your own that you back up your user id in a safe space.",
+  "setup.backup.info_upgrade_later": "You can also always upgrade your account later on by adding an email or connecting it to a social account.",
+  "setup.backup.info_screenshot": "We also recommend to take a screenshot of your code. You can also always show this page again in the app settings.",
+  "setup.backup.your_id": "Your User ID:",
+  "setup.backup.ok": "Ok!"
 }

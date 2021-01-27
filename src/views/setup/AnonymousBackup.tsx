@@ -1,11 +1,19 @@
 import React from 'react'
-import { TopNavigation, Divider, Text, Button } from '@ui-kitten/components'
+import { TopNavigation, Divider, Button, Input } from '@ui-kitten/components'
 import { SafeAreaView, View } from 'react-native'
 
-export interface AnonymousBackupProps {
-  onOkay: () => void
-}
-const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement => {
+import { Text, TextType, useTranslation } from '@chastilock/components'
+import { useTracked } from '@chastilock/state'
+import { actions as accountActions, User } from '@chastilock/state/sections/account'
+
+const AnonymousBackup = (): React.ReactElement => {
+  const [state, dispatch] = useTracked()
+  const [translator] = useTranslation()
+
+  const complete = (): void => {
+    dispatch(accountActions.signIn(state.account.temporaryUser as User))
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
       <TopNavigation
@@ -14,13 +22,15 @@ const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement => {
       />
       <Divider/>
       <View style={{ padding: 20 }}>
-        <Text style={{ textAlign: 'center', fontSize: 30 }}>Anonymous Account: Backup</Text>
-        <Text style={{ textAlign: 'center' }}>We allow the creation of anonymous accounts. Those are just accounts, that are only identified by you by a random key.
-        There is no automatic recovery option available, therefore you will need to make sure on your own that you back up your user id in a safe space.</Text>
-        <Text style={{ textAlign: 'center' }}>You can also always upgrade your account later on by adding an email or connecting it to a social account.</Text>
-        <Text style={{ textAlign: 'center' }}>We also recommend to take a screenshot of your code. You can also always show this page again in the app settings.</Text>
+        <Text translationKey="setup.backup.title" category={TextType.HEADING4} center />
+        <Text translationKey="setup.backup.info" center />
+        <Text translationKey="setup.backup.info_upgrade_later" center />
+        <Text translationKey="setup.backup.info_screenshot" center />
 
-        <Button style={{ marginTop: 10 }} onPress={props.onOkay}>Okay!</Button>
+        <Text translationKey="setup.backup.your_id" category={TextType.HEADING4} center />
+        <Input value={state.account.temporaryUser?.uuid} />
+
+        <Button style={{ marginTop: 10 }} onPress={complete}>{translator('setup.backup.ok')}</Button>
       </View>
     </SafeAreaView>
   )
