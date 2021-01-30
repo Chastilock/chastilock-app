@@ -15,6 +15,9 @@
   "settings.confirm.logout_anonymous.title": "Anonymous account",
   "settings.confirm.logout_anonymous.content": "IMPORTANT: You are trying to sign out of an anonymous account. If you have not backed up your user id, you will never be able to log in to that account again. Are you sure?",
 
+  "settings.anonymous_warning.title": "Anonymous account",
+  "settings.anonymous_warning.content": "An anonymous account will be created for you. You should really back up your unique id that is presented to you next (preferably in cloud storage). You can also always upgrade the account later on.",
+
   "setup.backup.title": "Anonymous Account Backup",
   "setup.backup.info": "We allow the creation of anonymous accounts. Those are just accounts, that are only identified by you by a random key. There is no automatic recovery option available, therefore you will need to make sure on your own that you back up your user id in a safe space.",
   "setup.backup.info_upgrade_later": "You can also always upgrade your account later on by adding an email or connecting it to a social account.",
