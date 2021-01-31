@@ -26,13 +26,17 @@ const SetupView = (): React.ReactElement | null => {
       text: translate('settings.anonymous_warning.content'),
       onOk: () => {
         setSetupState(SetupState.ANONYMOUS_ACCOUNT_BACKUP)
-        dispatch(apiActions.createAnonymousAccount)
+        dispatch(apiActions.createAnonymousAccount.execute)
       }
     }))
   }, [setSetupState])
 
   const recover = (): void => {
     setSetupState(SetupState.RECOVER)
+  }
+
+  const back = (): void => {
+    setSetupState(SetupState.SETUP_SELECTION)
   }
 
   switch (setupState) {
@@ -48,7 +52,7 @@ const SetupView = (): React.ReactElement | null => {
     case SetupState.ANONYMOUS_ACCOUNT_BACKUP:
       return <AnonymousBackup isInitial />
     case SetupState.RECOVER:
-      return <AnonymousRecover />
+      return <AnonymousRecover onBack={back} />
     default:
       return null
   }

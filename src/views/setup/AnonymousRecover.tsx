@@ -5,14 +5,18 @@ import { SafeAreaView, View } from 'react-native'
 import { Text, TextType, useTranslation } from '@chastilock/components'
 import { useDispatch } from '@chastilock/state'
 import apiActions from '@chastilock/api/actions'
+import { BackButtonAccessory } from '../common/Accessories'
 
-export const AnonymousRecover = (): React.ReactElement => {
+interface AnonymousRecoverProps {
+  onBack: () => void
+}
+export const AnonymousRecover = (props: AnonymousRecoverProps): React.ReactElement => {
   const dispatch = useDispatch()
   const [translate] = useTranslation()
   const [uuid, setUuid] = React.useState('')
 
   const complete = (): void => {
-    dispatch(apiActions.loginAnon(uuid))
+    dispatch(apiActions.loginAnon(uuid).execute)
     // dispatch(accountActions.signIn(state.account.temporaryUser as User))
   }
 
@@ -21,6 +25,7 @@ export const AnonymousRecover = (): React.ReactElement => {
       <TopNavigation
         title="Chastilock - Recover"
         alignment="center"
+        accessoryLeft={() => <BackButtonAccessory onPress={props.onBack} />}
       />
       <Divider/>
       <View style={{ padding: 20 }}>

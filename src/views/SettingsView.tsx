@@ -1,6 +1,6 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet } from 'react-native'
-import { Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle, Button } from '@ui-kitten/components'
+import { Divider, Layout, TopNavigation, Toggle, Button } from '@ui-kitten/components'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 
 import { Text, TextType, useTranslation } from '@chastilock/components'
@@ -9,10 +9,7 @@ import { actions as accountActions, selectors as accountSelectors } from '@chast
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
 import { useTracked } from '@chastilock/state'
 import AnonymousBackup from './setup/AnonymousBackup'
-
-const CloseIcon = (props: any): React.ReactElement => (
-  <Icon {...props} name="close-outline" />
-)
+import { CloseButtonAccessory } from './common/Accessories'
 
 interface FormGroupProps {
   text: string
@@ -76,10 +73,6 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
     navigation.goBack()
   }
 
-  const CloseAction = (): React.ReactElement => (
-    <TopNavigationAction icon={CloseIcon} onPress={closeSettings} />
-  )
-
   if (isShowingBackup) {
     return <AnonymousBackup onClose={() => setShowBackup(false)} />
   }
@@ -89,7 +82,7 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
       <TopNavigation
         title={() => <Text category={TextType.HEADING6}>Chastilock - Settings</Text>}
         alignment='center'
-        accessoryRight={CloseAction}
+        accessoryRight={() => <CloseButtonAccessory onPress={closeSettings} />}
       />
       <Divider/>
       <Layout style={{ flex: 1, padding: 20 }}>
