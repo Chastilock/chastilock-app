@@ -2,7 +2,7 @@ import React from 'react'
 import { createContainer } from 'react-tracked'
 
 import useAsyncReducer from './useAsyncReducer'
-import reducer, { ActionType, StateStatus, StateType } from './reducer'
+import reducer, { StateStatus, StateType } from './reducer'
 import { notifyOnChange, sendInit } from './reducer/devTools'
 import { Global } from './types'
 
