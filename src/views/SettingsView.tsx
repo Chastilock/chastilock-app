@@ -8,6 +8,7 @@ import { actions } from '@chastilock/state/sections/settings'
 import { actions as accountActions, selectors as accountSelectors } from '@chastilock/state/sections/account'
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
 import { useTracked } from '@chastilock/state'
+import AnonymousBackup from './setup/AnonymousBackup'
 
 const CloseIcon = (props: any): React.ReactElement => (
   <Icon {...props} name="close-outline" />
@@ -44,6 +45,7 @@ const SettingsGroup = (props: SettingsGroupProps): React.ReactElement => (
 const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
   const [state, dispatch] = useTracked()
   const [translator] = useTranslation()
+  const [isShowingBackup, setShowBackup] = React.useState(false)
 
   const toggleTheme = (): void => {
     dispatch(actions.changeTheme(state.settings.theme !== 'dark' ? 'dark' : 'light'))
@@ -66,6 +68,10 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
     }
   }
 
+  const showBackup = (): void => {
+    setShowBackup(true)
+  }
+
   const closeSettings = (): void => {
     navigation.goBack()
   }
@@ -73,6 +79,10 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
   const CloseAction = (): React.ReactElement => (
     <TopNavigationAction icon={CloseIcon} onPress={closeSettings} />
   )
+
+  if (isShowingBackup) {
+    return <AnonymousBackup onClose={() => setShowBackup(false)} />
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -92,6 +102,12 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
           <FormGroup text="settings.account.username">
             <Toggle />
           </FormGroup>
+          <FormGroup text="settings.account.type">
+            <Text category={TextType.SUBTITLE1} translationKey="settings.account.type.anonymous" />
+          </FormGroup>
+          <FormButton onPress={showBackup} appearance='outline'>
+            Show user id
+          </FormButton>
           <FormButton onPress={signOut} appearance='outline'>
             Sign out
           </FormButton>

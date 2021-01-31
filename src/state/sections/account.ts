@@ -1,4 +1,5 @@
-import { KEY_RECEIVE } from '@chastilock/api/actions/createAnonymousAccount'
+import { KEY_RECEIVE as CREATE_ACCOUNT } from '@chastilock/api/actions/createAnonymousAccount'
+import { KEY_RECEIVE as LOGIN_ANON } from '@chastilock/api/actions/loginAnon'
 import { ActionType } from '@chastilock/state/reducer'
 import { Account } from '@chastilock/state/types'
 
@@ -31,10 +32,15 @@ const accountReducer = (action: ActionType, state: AccountState = initialState):
       return {
         isSignedIn: false
       }
-    case KEY_RECEIVE:
+    case CREATE_ACCOUNT:
       return {
         ...state,
         temporaryUser: action.user
+      }
+    case LOGIN_ANON:
+      return {
+        isSignedIn: true,
+        user: action.user
       }
   }
   return state

@@ -6,6 +6,7 @@ import apiActions from '@chastilock/api/actions'
 import SetupSelection from './SetupSelection'
 import AnonymousBackup from './AnonymousBackup'
 import { useTranslation } from '@chastilock/components'
+import AnonymousRecover from './AnonymousRecover'
 
 enum SetupState {
   SETUP_SELECTION,
@@ -30,6 +31,10 @@ const SetupView = (): React.ReactElement | null => {
     }))
   }, [setSetupState])
 
+  const recover = (): void => {
+    setSetupState(SetupState.RECOVER)
+  }
+
   switch (setupState) {
     case SetupState.SETUP_SELECTION:
       return (
@@ -37,11 +42,13 @@ const SetupView = (): React.ReactElement | null => {
           onRegister={() => {}}
           onDirect={createAnonymousAccount}
           onSignIn={() => {}}
-          onRecover={() => {}}
+          onRecover={recover}
         />
       )
     case SetupState.ANONYMOUS_ACCOUNT_BACKUP:
-      return <AnonymousBackup />
+      return <AnonymousBackup isInitial />
+    case SetupState.RECOVER:
+      return <AnonymousRecover />
     default:
       return null
   }

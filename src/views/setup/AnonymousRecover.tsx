@@ -3,29 +3,23 @@ import { TopNavigation, Divider, Button, Input } from '@ui-kitten/components'
 import { SafeAreaView, View } from 'react-native'
 
 import { Text, TextType, useTranslation } from '@chastilock/components'
-import { useTracked } from '@chastilock/state'
-import { actions as accountActions, User } from '@chastilock/state/sections/account'
+import { useDispatch } from '@chastilock/state'
+import apiActions from '@chastilock/api/actions'
 
-export interface AnonymousBackupProps {
-  isInitial?: boolean
-  onClose?: () => void
-}
-export const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement => {
-  const [state, dispatch] = useTracked()
-  const [translator] = useTranslation()
+export const AnonymousRecover = (): React.ReactElement => {
+  const dispatch = useDispatch()
+  const [translate] = useTranslation()
+  const [uuid, setUuid] = React.useState('')
 
   const complete = (): void => {
-    if (props.isInitial === true) {
-      dispatch(accountActions.signIn(state.account.temporaryUser as User))
-    } else {
-      props.onClose?.()
-    }
+    dispatch(apiActions.loginAnon(uuid))
+    // dispatch(accountActions.signIn(state.account.temporaryUser as User))
   }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
       <TopNavigation
-        title="Chastilock - Backup"
+        title="Chastilock - Recover"
         alignment="center"
       />
       <Divider/>
@@ -36,12 +30,12 @@ export const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement
         <Text translationKey="setup.backup.info_screenshot" center />
 
         <Text translationKey="setup.backup.your_id" category={TextType.HEADING4} center />
-        <Input value={props.isInitial === true ? state.account.temporaryUser?.uuid : state.account.user?.uuid} />
+        <Input value={uuid} onChange={e => setUuid((e.target as any).value)} placeholder='Chastilock user id' />
 
-        <Button style={{ marginTop: 10 }} onPress={complete}>{translator('setup.backup.ok')}</Button>
+        <Button style={{ marginTop: 10 }} onPress={complete}>{translate('setup.backup.ok')}</Button>
       </View>
     </SafeAreaView>
   )
 }
 
-export default AnonymousBackup
+export default AnonymousRecover

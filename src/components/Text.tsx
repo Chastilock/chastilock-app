@@ -23,6 +23,7 @@ export interface TextProps {
   children?: string
   translationKey?: string
   center?: boolean
+  [name: string]: any
 }
 export const Text = (props: TextProps): React.ReactElement => {
   const [translator] = useTranslation()
@@ -37,7 +38,7 @@ export const Text = (props: TextProps): React.ReactElement => {
   const textAlign = props.center === true ? 'center' : undefined
 
   return (
-    <KittenText category={props.category} style={{ textAlign }}>{text}</KittenText>
+    <KittenText category={props.category} style={{ ...props.style, textAlign }}>{text}</KittenText>
   )
 }
 

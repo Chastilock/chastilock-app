@@ -5,10 +5,16 @@
 
   "settings.appearance": "Appearance",
   "settings.appearance.dark_mode": "Dark mode",
+
   "settings.account": "Account",
   "settings.account.username": "Username",
+  "settings.account.type": "Account type",
+  "settings.account.type.anonymous": "Anonymous",
+
   "settings.notifications": "Notifications",
+
   "settings.security": "Security",
+
   "settings.privacy": "Privacy",
   "settings.privacy.show_public_stats": "Show public stats on my profile",
 

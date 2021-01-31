@@ -31,7 +31,7 @@ const {
   useUpdate: useDispatch
 }: {
   Provider: React.FC
-  useTracked: () => [StateType, (action: ActionType) => void]
+  useTracked: () => [StateType, (action: any) => void]
   useTrackedState: () => StateType
   useUpdate: () => (action: any) => void
 } = createContainer(useValue)
