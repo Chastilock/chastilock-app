@@ -29,5 +29,12 @@
   "setup.backup.info_upgrade_later": "You can also always upgrade your account later on by adding an email or connecting it to a social account.",
   "setup.backup.info_screenshot": "We also recommend to take a screenshot of your code. You can also always show this page again in the app settings.",
   "setup.backup.your_id": "Your User ID:",
-  "setup.backup.ok": "Ok!"
+  "setup.backup.ok": "Ok!",
+
+  "setup.login.title": "Login",
+  "setup.login.info": "Please sign in using your username and password.",
+  "setup.login.username": "Username",
+  "setup.login.password": "Password",
+  "setup.login.ok": "Sign in",
+  "setup.login.error": "Login error"
 }

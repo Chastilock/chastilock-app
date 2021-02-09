@@ -11,7 +11,10 @@ const STORAGE_KEY = 'chastilock_persisted_state'
  */
 export const getStoredState = (state: StateType): any => ({
   settings: state.settings,
-  account: state.account
+  account: {
+    user: state.account.user,
+    isSignedIn: state.account.isSignedIn
+  }
 })
 
 export const store = async (state: StateType): Promise<void> => {

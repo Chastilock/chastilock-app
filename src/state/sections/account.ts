@@ -1,5 +1,5 @@
 import createAnonAccountAction from '@chastilock/api/actions/createAnonymousAccount'
-import loginAnonAction from '@chastilock/api/actions/loginAnon'
+import apiActions from '@chastilock/api/actions'
 import { ActionType } from '@chastilock/state/reducer'
 import { Account } from '@chastilock/state/types'
 
@@ -7,6 +7,7 @@ export interface AccountState {
   isSignedIn: boolean
   user?: User
   temporaryUser?: User
+  signInError?: string
 }
 
 export interface User {
@@ -37,10 +38,20 @@ const accountReducer = (action: ActionType, state: AccountState = initialState):
         ...state,
         temporaryUser: action.user
       }
-    case loginAnonAction().KEY_RECEIVE:
+    case apiActions.loginAnon().KEY_RECEIVE:
       return {
         isSignedIn: true,
         user: action.user
+      }
+    case apiActions.login().KEY_RECEIVE:
+      return {
+        isSignedIn: true,
+        user: action.user
+      }
+    case apiActions.login().KEY_ERROR:
+      return {
+        ...state,
+        signInError: action.error.message
       }
   }
   return state

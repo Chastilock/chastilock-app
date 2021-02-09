@@ -3,10 +3,11 @@ import React, { useState, useMemo } from 'react'
 import { actions as confirmActions } from '@chastilock/state/sections/confirmation'
 import { useDispatch } from '@chastilock/state'
 import apiActions from '@chastilock/api/actions'
+import { useTranslation } from '@chastilock/components'
 import SetupSelection from './SetupSelection'
 import AnonymousBackup from './AnonymousBackup'
-import { useTranslation } from '@chastilock/components'
 import AnonymousRecover from './AnonymousRecover'
+import Login from './Login'
 
 enum SetupState {
   SETUP_SELECTION,
@@ -31,6 +32,10 @@ const SetupView = (): React.ReactElement | null => {
     }))
   }, [setSetupState])
 
+  const signIn = (): void => {
+    setSetupState(SetupState.SIGN_IN)
+  }
+
   const recover = (): void => {
     setSetupState(SetupState.RECOVER)
   }
@@ -45,10 +50,12 @@ const SetupView = (): React.ReactElement | null => {
         <SetupSelection
           onRegister={() => {}}
           onDirect={createAnonymousAccount}
-          onSignIn={() => {}}
+          onSignIn={signIn}
           onRecover={recover}
         />
       )
+    case SetupState.SIGN_IN:
+      return <Login onBack={back} />
     case SetupState.ANONYMOUS_ACCOUNT_BACKUP:
       return <AnonymousBackup isInitial />
     case SetupState.RECOVER:
