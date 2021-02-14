@@ -5,6 +5,7 @@ import settings, { SettingsState } from '@chastilock/state/sections/settings'
 import confirmation, { ConfirmationState } from '@chastilock/state/sections/confirmation'
 import account, { AccountState } from '@chastilock/state/sections/account'
 import i18n, { I18nState, actions as i18nActions } from '@chastilock/state/sections/i18n'
+import global, { GlobalState } from '../sections/global'
 import { sendAction } from './devTools'
 
 export enum StateStatus {
@@ -19,6 +20,7 @@ export interface StateType {
   confirmation: ConfirmationState
   account: AccountState
   i18n: I18nState
+  global: GlobalState
 }
 
 export interface ActionType {
@@ -30,7 +32,8 @@ export const reducers = [
   settings,
   confirmation,
   account,
-  i18n
+  i18n,
+  global
 ]
 
 export const initializeAction = async (dispatch: (action: any) => void): Promise<void> => {

@@ -34,7 +34,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 export const client = new ApolloClient({
-  link: httpLink.concat(errorLink),
+  link: errorLink.concat(httpLink),
   cache: new InMemoryCache()
 })
 

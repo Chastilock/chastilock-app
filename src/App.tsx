@@ -7,6 +7,8 @@ import { useFonts } from 'expo-font'
 
 import { useDispatch, useTrackedState } from '@chastilock/state'
 import { initializeAction, StateStatus } from '@chastilock/state/reducer'
+import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
+import apiActions from '@chastilock/api/actions'
 import MainNavigator from '@chastilock/views/MainNavigator'
 import ConfirmationPopup, { ConfirmationPopupProps } from '@chastilock/views/common/ConfirmationPopup'
 import SetupView from '@chastilock/views/setup/SetupView'
@@ -35,8 +37,22 @@ const App = (): React.ReactElement | null => {
   useEffect(() => {
     if (state.status === StateStatus.UNINITIALIZED) {
       dispatch(initializeAction)
+      apiActions.checkStatus().execute(dispatch) as any
     }
   })
+
+  useEffect(() => {
+    // todo this needs to be optimized so that we don't show a modal at all while we are connecting, it should only pop up after connection has failed.
+    if (state.status === StateStatus.READY && !state.global.isConnected) {
+      dispatch(confirmationActions.showConfirmation({
+        title: 'Unable to connect to server',
+        text: 'The connection to the server could not be established. A raccoon broke into the wiring and caused mayhem. And since all our operations are server-based, the app cannot be used right now.\n\nTechnical error: ' + state.global.connectionError
+      }))
+    }
+    if (state.status === StateStatus.READY && state.global.isConnected) {
+      dispatch(confirmationActions.closeConfirmation())
+    }
+  }, [state.status, state.global?.isConnected, state.global?.connectionError])
 
   const [loaded] = useFonts({
     'OpenSans-Regular': require('./assets/fonts/OpenSans-Regular.ttf'),
