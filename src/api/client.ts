@@ -10,7 +10,6 @@ export const AUTH_VARIABLES = {
 export const httpLink = createHttpLink({
   uri: Constants.manifest.extra.backendEndpoint,
   fetch: async function (): Promise<Response> {
-    console.log('hi')
     const parsedBody = JSON.parse(arguments[1].body)
     parsedBody.APIKey = AUTH_VARIABLES.apiKey
     parsedBody.APISecret = AUTH_VARIABLES.apiSecret
