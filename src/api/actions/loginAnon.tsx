@@ -1,19 +1,17 @@
 import { createAction, ApiAction } from './genericAction'
 
 import { User } from '@chastilock/state/sections/account'
-import { AUTH_VARIABLES } from '../client'
 
 export default (uuid?: string): ApiAction => createAction({
   actionName: 'login_anon',
   query: `
-    mutation LoginAnon($apiKey: String!, $apiSecret: String!, $uuid: String!) {
-      loginAnon(APIKey: $apiKey, APISecret: $apiSecret, UUID: $uuid) {
+    mutation LoginAnon($uuid: String!) {
+      loginAnon(UUID: $uuid) {
         User { UUID, User_ID }
       }
     }
   `,
   getVariables: () => ({
-    ...AUTH_VARIABLES,
     uuid
   }),
   handleResponse: (options) => {

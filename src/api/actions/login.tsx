@@ -1,19 +1,17 @@
 import { createAction, ApiAction } from './genericAction'
 
 import { User } from '@chastilock/state/sections/account'
-import { AUTH_VARIABLES } from '../client'
 
 export default (username?: string, password?: string): ApiAction => createAction({
   actionName: 'login',
   query: `
-    mutation Login($apiKey: String!, $apiSecret: String!, $username: String!, $password: String!) {
-      login(APIKey: $apiKey, APISecret: $apiSecret, Username: $username, Password: $password) {
+    mutation Login($username: String!, $password: String!) {
+      login(Username: $username, Password: $password) {
         User { UUID, User_ID }
       }
     }
   `,
   getVariables: () => ({
-    ...AUTH_VARIABLES,
     username,
     password
   }),
