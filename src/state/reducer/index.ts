@@ -7,11 +7,14 @@ import account, { AccountState } from '@chastilock/state/sections/account'
 import i18n, { I18nState, actions as i18nActions } from '@chastilock/state/sections/i18n'
 import global, { GlobalState } from '../sections/global'
 import { sendAction } from './devTools'
+import apiActions from '@chastilock/api/actions'
 
 export enum StateStatus {
   UNINITIALIZED = 'uninitialized',
   INITIALIZING = 'initializing',
-  READY = 'ready'
+  CONNECTING = 'connecting',
+  READY = 'ready',
+  NETWORK_ERROR = 'network_error'
 }
 
 export interface StateType {
@@ -66,9 +69,18 @@ const rootReducer = (state: any = { status: 'initializing' }, action: any = { ty
     Object.keys(action.state).forEach((key: string) => {
       newState[key] = action.state[key]
     })
-    newState.status = StateStatus.READY
+    newState.status = StateStatus.CONNECTING
   }
   Storage.store(newState).then(() => {}).catch(e => console.log('Failed to store data', e))
+
+  // After network is connected
+  if (action.type === apiActions.checkStatus().KEY_RECEIVE) {
+    newState.status = StateStatus.READY
+  }
+  // When network connection fails
+  if (action.type === apiActions.checkStatus().KEY_ERROR) {
+    newState.status = StateStatus.NETWORK_ERROR
+  }
 
   // Send to dev tools
   if (action.type !== ActionTypes.Global.internalSetState) {

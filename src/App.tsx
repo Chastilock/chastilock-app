@@ -43,16 +43,21 @@ const App = (): React.ReactElement | null => {
 
   useEffect(() => {
     // todo this needs to be optimized so that we don't show a modal at all while we are connecting, it should only pop up after connection has failed.
-    if (state.status === StateStatus.READY && !state.global.isConnected) {
+    if (state.status === StateStatus.NETWORK_ERROR) {
       dispatch(confirmationActions.showConfirmation({
         title: 'Unable to connect to server',
-        text: 'The connection to the server could not be established. A raccoon broke into the wiring and caused mayhem. And since all our operations are server-based, the app cannot be used right now.\n\nTechnical error: ' + state.global.connectionError
+        text: 'The connection to the server could not be established. A raccoon broke into the wiring and caused mayhem. And since all our operations are server-based, the app cannot be used right now.\n\nTechnical error: ' + state.global.connectionError,
+        isForced: true
       }))
-    }
-    if (state.status === StateStatus.READY && state.global.isConnected) {
+    } else if (state.status === StateStatus.CONNECTING) {
+      dispatch(confirmationActions.showConfirmation({
+        title: 'Connecting to the server...',
+        isForced: true
+      }))
+    } else {
       dispatch(confirmationActions.closeConfirmation())
     }
-  }, [state.status, state.global?.isConnected, state.global?.connectionError])
+  }, [state.status, state.global?.connectionError])
 
   const [loaded] = useFonts({
     'OpenSans-Regular': require('./assets/fonts/OpenSans-Regular.ttf'),
@@ -65,7 +70,7 @@ const App = (): React.ReactElement | null => {
   }
 
   // Check if state is already set up
-  if (state.status !== StateStatus.READY) {
+  if (state.status === StateStatus.UNINITIALIZED || state.status === StateStatus.INITIALIZING) {
     return <Text>Loading</Text>
   }
 

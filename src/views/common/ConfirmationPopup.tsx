@@ -9,6 +9,7 @@ export interface ConfirmationPopupProps {
   title: string
   text?: string
   isVisible?: boolean
+  isForced?: boolean
   onYes?: () => void
   onNo?: () => void
   onDismiss?: () => void
@@ -40,6 +41,12 @@ const ConfirmationPopup = (props: ConfirmationPopupProps): React.ReactElement =>
   }
 
   const dismiss = (): void => {
+    // Closing a forced popup is not allowed
+    // We know this is annoying, but this is for example if the connection is interrupted
+    if (props.isForced === true) {
+      return
+    }
+
     close()
     props.onDismiss?.()
   }
