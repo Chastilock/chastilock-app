@@ -4,7 +4,7 @@ import { User } from '@chastilock/state/sections/account'
 export default (email: string, password: string, username: string): ApiAction => createAction({
   actionName: 'register',
   query: `
-    mutation RegisterAccount($email: String, $password: String, $username: String) {
+    mutation RegisterAccount($email: String!, $password: String!, $username: String!) {
       createUser(Email: $email, Password: $password, Username: $username) {
         UUID, User_ID
       }

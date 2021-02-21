@@ -4,7 +4,7 @@ import { User } from '@chastilock/state/sections/account'
 export default (email: string, password: string, username: string): ApiAction => createAction({
   actionName: 'upgrade_account',
   query: `
-    mutation UpgradeAccount($email: String, $password: String, $username: String) {
+    mutation UpgradeAccount($email: String!, $password: String!, $username: String!) {
       upgradeAccount(Email: $email, Password: $password, Username: $username) {
         UUID, User_ID
       }
