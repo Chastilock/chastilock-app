@@ -9,6 +9,7 @@ import { actions as accountActions, selectors as accountSelectors } from '@chast
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
 import { useTracked } from '@chastilock/state'
 import AnonymousBackup from './setup/AnonymousBackup'
+import Register from './setup/Register'
 import { CloseButtonAccessory } from './common/Accessories'
 
 interface FormGroupProps {
@@ -43,6 +44,7 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
   const [state, dispatch] = useTracked()
   const [translator] = useTranslation()
   const [isShowingBackup, setShowBackup] = React.useState(false)
+  const [isShowingUpgrade, setShowUpgrade] = React.useState(false)
 
   const toggleTheme = (): void => {
     dispatch(actions.changeTheme(state.settings.theme !== 'dark' ? 'dark' : 'light'))
@@ -69,12 +71,20 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
     setShowBackup(true)
   }
 
+  const showUpgrade = (): void => {
+    setShowUpgrade(true)
+  }
+
   const closeSettings = (): void => {
     navigation.goBack()
   }
 
   if (isShowingBackup) {
     return <AnonymousBackup onClose={() => setShowBackup(false)} />
+  }
+
+  if (isShowingUpgrade) {
+    return <Register onComplete={() => setShowUpgrade(false)} onBack={() => setShowUpgrade(false)} />
   }
 
   return (
@@ -99,10 +109,13 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
             <Text category={TextType.SUBTITLE1} translationKey="settings.account.type.anonymous" />
           </FormGroup>
           <FormButton onPress={showBackup} appearance='outline'>
-            Show user id
+            {translator('settings.account.show_user_id')}
+          </FormButton>
+          <FormButton onPress={showUpgrade} appearance='outline'>
+            {translator('settings.account.upgrade')}
           </FormButton>
           <FormButton onPress={signOut} appearance='outline'>
-            Sign out
+            {translator('settings.account.sign_out')}
           </FormButton>
         </SettingsGroup>
         <SettingsGroup title="settings.notifications">

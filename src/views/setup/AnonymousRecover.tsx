@@ -9,15 +9,19 @@ import { BackButtonAccessory } from '../common/Accessories'
 
 interface AnonymousRecoverProps {
   onBack: () => void
+  onComplete?: () => void
 }
 export const AnonymousRecover = (props: AnonymousRecoverProps): React.ReactElement => {
   const dispatch = useDispatch()
   const [translate] = useTranslation()
   const [uuid, setUuid] = React.useState('')
 
-  const complete = (): void => {
-    dispatch(apiActions.loginAnon(uuid).execute)
-    // dispatch(accountActions.signIn(state.account.temporaryUser as User))
+  const complete = async (): Promise<void> => {
+    await dispatch(apiActions.loginAnon(uuid).execute)
+
+    if (props.onComplete !== undefined) {
+      props.onComplete()
+    }
   }
 
   return (

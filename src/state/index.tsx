@@ -1,8 +1,8 @@
 import React from 'react'
 import { createContainer } from 'react-tracked'
 
-import useAsyncReducer from './useAsyncReducer'
-import reducer, { StateStatus, StateType } from './reducer'
+import useAsyncReducer, { DispatchType } from './useAsyncReducer'
+import reducer, { ActionType, StateStatus, StateType } from './reducer'
 import { notifyOnChange, sendInit } from './reducer/devTools'
 import { Global } from './types'
 
@@ -12,7 +12,7 @@ export const initialState = {
 
 sendInit(initialState)
 
-const useValue = (): [any, (action: any) => void] => {
+const useValue = (): [any, (action: any) => void | Promise<void>] => {
   const [state, dispatch] = useAsyncReducer(reducer, initialState)
 
   notifyOnChange((newState) => {
@@ -28,13 +28,13 @@ const {
   Provider,
   useTracked,
   useTrackedState,
-  useUpdate: useDispatch
+  useUpdate
 }: {
   Provider: React.FC
   useTracked: () => [StateType, (action: any) => void]
   useTrackedState: () => StateType
-  useUpdate: () => (action: any) => void
-} = createContainer(useValue)
+  useUpdate: () => (action: any) => void | Promise<void>
+} = createContainer<any, (action: any) => void | Promise<void>, any>(useValue)
 
 interface StateProviderProps { children?: React.ReactElement }
 export const StateProvider = (props: StateProviderProps): React.ReactElement => (
@@ -42,5 +42,19 @@ export const StateProvider = (props: StateProviderProps): React.ReactElement => 
     {props.children}
   </Provider>
 )
+
+const useDispatch = (): (action: any) => any => {
+  const dispatch = useUpdate()
+
+  const dispatchProxy = React.useMemo(() => (action: ActionType | DispatchType): void => {
+    if (typeof action === 'function') {
+      return action(dispatchProxy)
+    } else {
+      return (dispatch as any)(action)
+    }
+  }, [dispatch])
+
+  return dispatchProxy
+}
 
 export { useTracked, useTrackedState, useDispatch }

@@ -1,5 +1,4 @@
 import { createAction, ApiAction } from './genericAction'
-
 import { User } from '@chastilock/state/sections/account'
 
 export default (uuid?: string): ApiAction => createAction({

@@ -9,7 +9,7 @@ export interface ApiAction {
   KEY_RECEIVE: string
   KEY_ERROR: string
 
-  execute: (dispatch: DispatchType) => Promise<void>
+  execute: (dispatch: DispatchType) => Promise<any>
 }
 
 export interface ApiActionOptions {
@@ -50,11 +50,14 @@ export const createAction = (options: ApiActionOptions): ApiAction => {
           response,
           KEY_RECEIVE
         })
+
+        return response
       } catch (error) {
         dispatch({
           type: KEY_ERROR,
           error
         })
+        throw error
       }
     }
   }

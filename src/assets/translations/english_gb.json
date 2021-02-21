@@ -10,6 +10,9 @@
   "settings.account.username": "Username",
   "settings.account.type": "Account type",
   "settings.account.type.anonymous": "Anonymous",
+  "settings.account.show_user_id": "Show my user id",
+  "settings.account.upgrade": "Upgrade account",
+  "settings.account.sign_out": "Sign out",
 
   "settings.notifications": "Notifications",
 
