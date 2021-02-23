@@ -12,7 +12,7 @@ export interface AnonymousBackupProps {
 }
 export const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement => {
   const [state, dispatch] = useTracked()
-  const [translator] = useTranslation()
+  const [translate] = useTranslation()
 
   const complete = (): void => {
     if (props.isInitial === true) {
@@ -25,7 +25,7 @@ export const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
       <TopNavigation
-        title="Chastilock - Backup"
+        title={translate('setup.backup.title')}
         alignment="center"
       />
       <Divider/>
@@ -38,7 +38,7 @@ export const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement
         <Text translationKey="setup.backup.your_id" category={TextType.HEADING4} center />
         <Input value={props.isInitial === true ? state.account.temporaryUser?.uuid : state.account.user?.uuid} />
 
-        <Button style={{ marginTop: 10 }} onPress={complete}>{translator('setup.backup.ok')}</Button>
+        <Button style={{ marginTop: 10 }} onPress={complete}>{translate('setup.backup.ok')}</Button>
       </View>
     </SafeAreaView>
   )

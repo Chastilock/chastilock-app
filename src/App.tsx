@@ -13,6 +13,7 @@ import MainNavigator from '@chastilock/views/MainNavigator'
 import ConfirmationPopup, { ConfirmationPopupProps } from '@chastilock/views/common/ConfirmationPopup'
 import SetupView from '@chastilock/views/setup/SetupView'
 import mapping from './mapping.json'
+import { useTranslation } from './components'
 
 interface AppContentProps {
   isSignedIn: boolean
@@ -33,6 +34,7 @@ const AppContent = memo((props: AppContentProps): React.ReactElement => {
 const App = (): React.ReactElement | null => {
   const state = useTrackedState()
   const dispatch = useDispatch()
+  const [translate] = useTranslation()
 
   useEffect(() => {
     if (state.status === StateStatus.UNINITIALIZED) {
@@ -42,16 +44,15 @@ const App = (): React.ReactElement | null => {
   })
 
   useEffect(() => {
-    // todo this needs to be optimized so that we don't show a modal at all while we are connecting, it should only pop up after connection has failed.
     if (state.status === StateStatus.NETWORK_ERROR) {
       dispatch(confirmationActions.showConfirmation({
-        title: 'Unable to connect to server',
-        text: 'The connection to the server could not be established. A raccoon broke into the wiring and caused mayhem. And since all our operations are server-based, the app cannot be used right now.\n\nTechnical error: ' + state.global.connectionError,
+        title: translate('general.connection_failed.title'),
+        text: `${translate('general.connection_failed.text')}\n\n${state.global.connectionError}`,
         isForced: true
       }))
     } else if (state.status === StateStatus.CONNECTING) {
       dispatch(confirmationActions.showConfirmation({
-        title: 'Connecting to the server...',
+        title: translate('general.connecting.title'),
         isForced: true
       }))
     } else {

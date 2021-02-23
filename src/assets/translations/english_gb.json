@@ -1,6 +1,10 @@
 {
   "main.title": "Chastilock",
 
+  "general.connection_failed.title": "Unable to connect to server",
+  "general.connection_failed.text": "The connection to the server could not be established. A raccoon broke into the wiring and caused mayhem. And since all our operations are server-based, the app cannot be used right now.",
+  "general.connecting.title": "Connecting to the server...",
+
   "confirmation.ok": "Ok",
 
   "settings.appearance": "Appearance",
@@ -39,5 +43,11 @@
   "setup.login.username": "Username",
   "setup.login.password": "Password",
   "setup.login.ok": "Sign in",
-  "setup.login.error": "Login error"
+  "setup.login.error": "Login error",
+
+  "setup.recover.title": "Recover Account",
+  "setup.recover.info": "It is possible to recover your anonymous account using your user id (which is in UUID format). Please note that recover by UUID will stop working once you upgrade your account.",
+  "setup.recover.your_id": "Your id:",
+  "setup.recover.your_id.placeholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "setup.recover.ok": "Ok!"
 }

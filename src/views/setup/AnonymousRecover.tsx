@@ -15,33 +15,38 @@ export const AnonymousRecover = (props: AnonymousRecoverProps): React.ReactEleme
   const dispatch = useDispatch()
   const [translate] = useTranslation()
   const [uuid, setUuid] = React.useState('')
+  const [error, setError] = React.useState('')
 
   const complete = async (): Promise<void> => {
-    await dispatch(apiActions.loginAnon(uuid).execute)
+    try {
+      await dispatch(apiActions.loginAnon(uuid).execute)
 
-    if (props.onComplete !== undefined) {
-      props.onComplete()
+      if (props.onComplete !== undefined) {
+        props.onComplete()
+      }
+    } catch (e) {
+      setError(e.message)
     }
   }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
       <TopNavigation
-        title="Chastilock - Recover"
+        title={translate('setup.recover.title')}
         alignment="center"
         accessoryLeft={() => <BackButtonAccessory onPress={props.onBack} />}
       />
       <Divider/>
       <View style={{ padding: 20 }}>
-        <Text translationKey="setup.backup.title" category={TextType.HEADING4} center />
-        <Text translationKey="setup.backup.info" center />
-        <Text translationKey="setup.backup.info_upgrade_later" center />
-        <Text translationKey="setup.backup.info_screenshot" center />
+        <Text translationKey="setup.recover.title" category={TextType.HEADING4} center />
+        <Text translationKey="setup.recover.info" center />
 
-        <Text translationKey="setup.backup.your_id" category={TextType.HEADING4} center />
-        <Input value={uuid} onChange={e => setUuid((e.target as any).value)} placeholder='Chastilock user id' />
+        <Text translationKey="setup.recover.your_id" category={TextType.HEADING4} center />
+        <Input value={uuid} onChange={e => setUuid((e.target as any).value)} placeholder={translate('setup.recover.your_id.placeholder')} />
 
-        <Button style={{ marginTop: 10 }} onPress={complete}>{translate('setup.backup.ok')}</Button>
+        {error !== '' && <Text style={{ color: 'red' }}>{error}</Text>}
+
+        <Button style={{ marginTop: 10 }} onPress={complete}>{translate('setup.recover.ok')}</Button>
       </View>
     </SafeAreaView>
   )
