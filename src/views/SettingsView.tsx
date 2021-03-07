@@ -10,6 +10,7 @@ import { actions as confirmationActions } from '@chastilock/state/sections/confi
 import { useTracked } from '@chastilock/state'
 import AnonymousBackup from './setup/AnonymousBackup'
 import Register from './setup/Register'
+import CkMigration from './setup/CkMigration'
 import { CloseButtonAccessory } from './common/Accessories'
 
 interface FormGroupProps {
@@ -24,7 +25,7 @@ const FormGroup = (props: FormGroupProps): React.ReactElement => (
 )
 
 const FormButton = (props: any): React.ReactElement => (
-  <View style={{ ...styles.formGroup, marginVertical: 10 }}>
+  <View style={{ ...styles.formGroup, marginBottom: 5 }}>
     <Button {...props} style={{ flex: 1 }} />
   </View>
 )
@@ -45,6 +46,7 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
   const [translator] = useTranslation()
   const [isShowingBackup, setShowBackup] = React.useState(false)
   const [isShowingUpgrade, setShowUpgrade] = React.useState(false)
+  const [isShowingCkMigration, setShowCkMigration] = React.useState(false)
 
   const toggleTheme = (): void => {
     dispatch(actions.changeTheme(state.settings.theme !== 'dark' ? 'dark' : 'light'))
@@ -75,6 +77,10 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
     setShowUpgrade(true)
   }
 
+  const showCkMigrate = (): void => {
+    setShowCkMigration(true)
+  }
+
   const closeSettings = (): void => {
     navigation.goBack()
   }
@@ -85,6 +91,10 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
 
   if (isShowingUpgrade) {
     return <Register onComplete={() => setShowUpgrade(false)} onBack={() => setShowUpgrade(false)} />
+  }
+
+  if (isShowingCkMigration) {
+    return <CkMigration onOk={() => setShowCkMigration(false)} onBack={() => setShowCkMigration(false)} />
   }
 
   return (
@@ -110,6 +120,9 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
           </FormGroup>
           <FormButton onPress={showBackup} appearance='outline'>
             {translator('settings.account.show_user_id')}
+          </FormButton>
+          <FormButton onPress={showCkMigrate} appearance='outline'>
+            {translator('settings.account.ck_migrate')}
           </FormButton>
           <FormButton onPress={showUpgrade} appearance='outline'>
             {translator('settings.account.upgrade')}

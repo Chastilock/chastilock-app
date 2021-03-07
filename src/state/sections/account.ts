@@ -4,7 +4,7 @@ import { ActionType } from '@chastilock/state/reducer'
 import { Account } from '@chastilock/state/types'
 
 export interface AccountState {
-  isSignedIn: boolean
+  isSetUp: boolean
   user?: User
   temporaryUser?: User
   signInError?: string
@@ -19,19 +19,24 @@ export interface User {
 }
 
 export const initialState: AccountState = {
-  isSignedIn: false
+  isSetUp: false
 }
 
 const accountReducer = (action: ActionType, state: AccountState = initialState): AccountState => {
   switch (action.type) {
     case Account.signIn:
       return {
-        isSignedIn: true,
+        ...state,
         user: action.user
       }
     case Account.signOut:
       return {
-        isSignedIn: false
+        isSetUp: false
+      }
+    case Account.setup:
+      return {
+        ...state,
+        isSetUp: true
       }
     case createAnonAccountAction.KEY_RECEIVE:
       return {
@@ -40,12 +45,12 @@ const accountReducer = (action: ActionType, state: AccountState = initialState):
       }
     case apiActions.loginAnon().KEY_RECEIVE:
       return {
-        isSignedIn: true,
+        ...state,
         user: action.user
       }
     case apiActions.login().KEY_RECEIVE:
       return {
-        isSignedIn: true,
+        ...state,
         user: action.user
       }
     case apiActions.login().KEY_ERROR:
@@ -70,6 +75,9 @@ export const actions = {
   }),
   signOut: (): ActionType => ({
     type: Account.signOut
+  }),
+  setup: (): ActionType => ({
+    type: Account.setup
   })
 }
 

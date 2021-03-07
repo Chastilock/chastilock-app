@@ -17,9 +17,8 @@ export const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement
   const complete = (): void => {
     if (props.isInitial === true) {
       dispatch(accountActions.signIn(state.account.temporaryUser as User))
-    } else {
-      props.onClose?.()
     }
+    props.onClose?.()
   }
 
   return (

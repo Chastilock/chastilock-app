@@ -16,7 +16,8 @@ export enum Confirmation {
 
 export enum Account {
   signIn = 'account/sign_in',
-  signOut = 'account/sign_out'
+  signOut = 'account/sign_out',
+  setup = 'account/setup'
 }
 
 export enum I18n {

@@ -13,7 +13,7 @@ export const getStoredState = (state: StateType): any => ({
   settings: state.settings,
   account: {
     user: state.account.user,
-    isSignedIn: state.account.isSignedIn
+    isSetUp: state.account.isSetUp
   }
 })
 

@@ -16,7 +16,7 @@ import mapping from './mapping.json'
 import { useTranslation } from './components'
 
 interface AppContentProps {
-  isSignedIn: boolean
+  isSetUp: boolean
   modalProps: ConfirmationPopupProps
   modalVisible: boolean
 }
@@ -24,8 +24,8 @@ const AppContent = memo((props: AppContentProps): React.ReactElement => {
   return (
     <>
       <StatusBar backgroundColor="black" barStyle="light-content" />
-      {props.isSignedIn && <MainNavigator />}
-      {!props.isSignedIn && <SetupView />}
+      {props.isSetUp && <MainNavigator />}
+      {!props.isSetUp && <SetupView />}
       <ConfirmationPopup {...props.modalProps} isVisible={props.modalVisible} />
     </>
   )
@@ -81,7 +81,7 @@ const App = (): React.ReactElement | null => {
     <>
       <IconRegistry icons={EvaIconsPack}/>
       <ApplicationProvider customMapping={mapping} theme={theme} {...eva}>
-        <AppContent isSignedIn={state.account.isSignedIn} modalProps={state.confirmation.modalProps} modalVisible={state.confirmation.visible} />
+        <AppContent isSetUp={state.account.isSetUp} modalProps={state.confirmation.modalProps} modalVisible={state.confirmation.visible} />
       </ApplicationProvider>
     </>
   )

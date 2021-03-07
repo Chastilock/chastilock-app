@@ -16,6 +16,7 @@
   "settings.account.type.anonymous": "Anonymous",
   "settings.account.show_user_id": "Show my user id",
   "settings.account.upgrade": "Upgrade account",
+  "settings.account.ck_migrate": "Start migration from ChastiKey",
   "settings.account.sign_out": "Sign out",
 
   "settings.notifications": "Notifications",
@@ -49,5 +50,16 @@
   "setup.recover.info": "It is possible to recover your anonymous account using your user id (which is in UUID format). Please note that recover by UUID will stop working once you upgrade your account.",
   "setup.recover.your_id": "Your id:",
   "setup.recover.your_id.placeholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-  "setup.recover.ok": "Ok!"
+  "setup.recover.ok": "Ok!",
+
+  "setup.ck_migrate.title": "ChastiKey Migration",
+  "setup.ck_migrate.info": "Welcome ChastiKey Users!\n\nWe're excited to share with you that we have closely worked together with the ChastiKey app to allow a seemingless transition.\nTo import your data, you need to enter your ChastiKey username, and a one time transfer code that you can fetch inside the app.",
+  "setup.ck_migrate.ck_username": "Your ChastiKey username",
+  "setup.ck_migrate.transfer_code": "Your 8-digit transfer code",
+  "setup.ck_migrate": "Migrate!",
+
+  "setup.finish.title": "Welcome!",
+  "setup.finish.info": "Welcome to Chastilock!\n\nIf you are coming from ChastiKey, you can use the button below to migrate your data! You can still migrate from a latter stage from the settings page.",
+  "setup.finish.ck_migrate": "I want to migrate from ChastiKey!",
+  "setup.finish.ok": "Let me in!"
 }
