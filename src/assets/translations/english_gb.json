@@ -58,6 +58,13 @@
   "setup.ck_migrate.transfer_code": "Your 8-digit transfer code",
   "setup.ck_migrate": "Migrate!",
 
+  "setup.ck_migrate.selection.title": "ChastiKey Migration Selection",
+  "setup.ck_migrate.selection.info": "Here you can select exactly what data you want to import from ChastiKey. Please make sure you read the notes so you understand how the process works with keyheld locks.",
+  "setup.ck_migrate.selection.lockee": "Lockee",
+  "setup.ck_migrate.selection.keyholder": "Keyholder",
+  "setup.ck_migrate.selection.kh_lock_info": "[TODO] Info on how the process works with KH-locks",
+  "setup.ck_migrate.selection.ok": "Finish migration from ChastiKey!",
+
   "setup.finish.title": "Welcome!",
   "setup.finish.info": "Welcome to Chastilock!\n\nIf you are coming from ChastiKey, you can use the button below to migrate your data! You can still migrate from a latter stage from the settings page.",
   "setup.finish.ck_migrate": "I want to migrate from ChastiKey!",
