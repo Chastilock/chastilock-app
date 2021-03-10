@@ -3,7 +3,8 @@ import { TopNavigation, Divider, Button, Input } from '@ui-kitten/components'
 import { SafeAreaView, View } from 'react-native'
 
 import { Text, TextType, useTranslation } from '@chastilock/components'
-import { useDispatch } from '@chastilock/state'
+import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
+import { useTracked } from '@chastilock/state'
 import apiActions from '@chastilock/api/actions'
 import { BackButtonAccessory } from '../common/Accessories'
 
@@ -12,7 +13,7 @@ interface AnonymousRecoverProps {
   onComplete?: () => void
 }
 export const AnonymousRecover = (props: AnonymousRecoverProps): React.ReactElement => {
-  const dispatch = useDispatch()
+  const [state, dispatch] = useTracked()
   const [translate] = useTranslation()
   const [uuid, setUuid] = React.useState('')
   const [error, setError] = React.useState('')
@@ -30,7 +31,7 @@ export const AnonymousRecover = (props: AnonymousRecoverProps): React.ReactEleme
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
         title={translate('setup.recover.title')}
         alignment="center"

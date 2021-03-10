@@ -2,6 +2,9 @@ import React from 'react'
 import { TopNavigation, Divider, Text, Button } from '@ui-kitten/components'
 import { SafeAreaView, View } from 'react-native'
 
+import { useTrackedState } from '@chastilock/state'
+import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
+
 export interface SetupSelectionProps {
   onRegister: () => void
   onDirect: () => void
@@ -9,8 +12,10 @@ export interface SetupSelectionProps {
   onRecover: () => void
 }
 const SetupSelection = (props: SetupSelectionProps): React.ReactElement => {
+  const state = useTrackedState()
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
         title="Chastilock"
         alignment="center"

@@ -5,6 +5,7 @@ import { SafeAreaView, View } from 'react-native'
 import { Text, TextType, useTranslation } from '@chastilock/components'
 import { useTracked } from '@chastilock/state'
 import { actions as accountActions, User } from '@chastilock/state/sections/account'
+import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
 
 export interface AnonymousBackupProps {
   isInitial?: boolean
@@ -22,7 +23,7 @@ export const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
         title={translate('setup.backup.title')}
         alignment="center"

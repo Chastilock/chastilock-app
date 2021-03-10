@@ -71,5 +71,7 @@
   "setup.finish.title": "Welcome!",
   "setup.finish.info": "Welcome to Chastilock!\n\nIf you are coming from ChastiKey, you can use the button below to migrate your data! You can still migrate from a latter stage from the settings page.",
   "setup.finish.ck_migrate": "I want to migrate from ChastiKey!",
-  "setup.finish.ok": "Let me in!"
+  "setup.finish.ok": "Let me in!",
+
+  "create.title": "Create Lock"
 }

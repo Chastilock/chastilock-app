@@ -4,6 +4,7 @@ import { SafeAreaView, View } from 'react-native'
 
 import { Text, useTranslation } from '@chastilock/components'
 import { useDispatch, useTrackedState } from '@chastilock/state'
+import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
 import apiActions from '@chastilock/api/actions'
 import { BackButtonAccessory } from '../common/Accessories'
 
@@ -21,11 +22,10 @@ export const Register = (props: RegisterProps): React.ReactElement => {
 
   const complete = async (): Promise<void> => {
     await dispatch(apiActions.register(email, password, username).execute)
-    console.log('fertig!')
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
         title={translate('setup.register.title')}
         alignment="center"

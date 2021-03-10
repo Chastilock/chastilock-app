@@ -49,4 +49,8 @@ export const actions = {
   })
 }
 
+export const selectors = {
+  getThemeBackground: (state: SettingsState): string => state.theme === 'dark' ? '#222B45' : '#FFFFFF'
+}
+
 export default settingsReducer

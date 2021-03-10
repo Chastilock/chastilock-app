@@ -3,6 +3,8 @@ import { TopNavigation, Divider, Button } from '@ui-kitten/components'
 import { SafeAreaView, View } from 'react-native'
 
 import { Text, useTranslation } from '@chastilock/components'
+import { useTrackedState } from '@chastilock/state'
+import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
 
 interface FinishSetupProps {
   onOk: () => void
@@ -10,9 +12,10 @@ interface FinishSetupProps {
 }
 export const FinishSetup = (props: FinishSetupProps): React.ReactElement => {
   const [translate] = useTranslation()
+  const state = useTrackedState()
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
         title={translate('setup.finish.title')}
         alignment="center"

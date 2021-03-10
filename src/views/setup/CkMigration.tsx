@@ -4,12 +4,15 @@ import { SafeAreaView, View } from 'react-native'
 
 import { Text, TextType, useTranslation } from '@chastilock/components'
 import { BackButtonAccessory } from '../common/Accessories'
+import { useTrackedState } from '@chastilock/state'
+import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
 
 interface CkMigrationProps {
   onOk: () => void
   onBack?: () => void
 }
 export const CkMigration = (props: CkMigrationProps): React.ReactElement => {
+  const state = useTrackedState()
   const [translate] = useTranslation()
   const [username, setUsername] = React.useState('')
   const [transferCode, setTransferCode] = React.useState('')
@@ -25,7 +28,7 @@ export const CkMigration = (props: CkMigrationProps): React.ReactElement => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
         title={translate('setup.ck_migrate.title')}
         alignment="center"
@@ -51,9 +54,10 @@ interface CkMigrationSelectionProps {
 }
 export const CkMigrationSelection = (props: CkMigrationSelectionProps): React.ReactElement => {
   const [translate] = useTranslation()
+  const state = useTrackedState()
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
         title={translate('setup.ck_migrate.selection.title')}
         alignment="center"
