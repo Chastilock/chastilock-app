@@ -77,7 +77,7 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title={() => <Text category={TextType.HEADING6}>Chastilock - Settings</Text>}
+        title={() => <Text category={TextType.HEADING6} translationKey="settings.title" />}
         alignment='center'
         accessoryRight={() => <CloseButtonAccessory onPress={closeSettings} />}
       />
@@ -90,7 +90,7 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
         </TitleGroup>
         <TitleGroup title="settings.account">
           <FormGroup text="settings.account.username">
-            <Input value={name} disabled={isAnonymous} placeholder='Only available on regular' onChange={e => setName((e.target as any).value)} />
+            <Input value={name} disabled={isAnonymous} placeholder={translator('settings.account.username.placeholder')} onChange={e => setName((e.target as any).value)} />
           </FormGroup>
           <FormGroup text="settings.account.type">
             <Text category={TextType.SUBTITLE1} translationKey="settings.account.type.anonymous" />
