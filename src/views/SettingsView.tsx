@@ -1,9 +1,9 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet } from 'react-native'
-import { Divider, Layout, TopNavigation, Toggle, Button } from '@ui-kitten/components'
+import { SafeAreaView } from 'react-native'
+import { Divider, Layout, TopNavigation, Toggle, Input } from '@ui-kitten/components'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 
-import { Text, TextType, useTranslation } from '@chastilock/components'
+import { Text, TextType, useTranslation, FormButton, FormGroup, TitleGroup } from '@chastilock/components'
 import { actions } from '@chastilock/state/sections/settings'
 import { actions as accountActions, selectors as accountSelectors } from '@chastilock/state/sections/account'
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
@@ -13,40 +13,15 @@ import Register from './setup/Register'
 import CkMigration from './setup/CkMigration'
 import { CloseButtonAccessory } from './common/Accessories'
 
-interface FormGroupProps {
-  text: string
-  children?: React.ReactElement
-}
-const FormGroup = (props: FormGroupProps): React.ReactElement => (
-  <View style={styles.formGroup}>
-    <Text translationKey={props.text} />
-    <View>{props.children}</View>
-  </View>
-)
-
-const FormButton = (props: any): React.ReactElement => (
-  <View style={{ ...styles.formGroup, marginBottom: 5 }}>
-    <Button {...props} style={{ flex: 1 }} />
-  </View>
-)
-
-interface SettingsGroupProps {
-  title: string
-  children?: React.ReactElement | React.ReactElement[]
-}
-const SettingsGroup = (props: SettingsGroupProps): React.ReactElement => (
-  <View>
-    <Text category={TextType.HEADING5} translationKey={props.title} />
-    {props.children}
-  </View>
-)
-
 const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
   const [state, dispatch] = useTracked()
   const [translator] = useTranslation()
   const [isShowingBackup, setShowBackup] = React.useState(false)
   const [isShowingUpgrade, setShowUpgrade] = React.useState(false)
   const [isShowingCkMigration, setShowCkMigration] = React.useState(false)
+
+  // Settings
+  const [name, setName] = React.useState(state.account.user?.username)
 
   const toggleTheme = (): void => {
     dispatch(actions.changeTheme(state.settings.theme !== 'dark' ? 'dark' : 'light'))
@@ -97,6 +72,8 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
     return <CkMigration onOk={() => setShowCkMigration(false)} onBack={() => setShowCkMigration(false)} />
   }
 
+  const isAnonymous = accountSelectors.isAnonymous(state.account)
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
@@ -106,14 +83,14 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
       />
       <Divider/>
       <Layout style={{ flex: 1, padding: 20 }}>
-        <SettingsGroup title="settings.appearance">
+        <TitleGroup title="settings.appearance">
           <FormGroup text="settings.appearance.dark_mode">
             <Toggle checked={state.settings.theme === 'dark'} onChange={() => toggleTheme()} />
           </FormGroup>
-        </SettingsGroup>
-        <SettingsGroup title="settings.account">
+        </TitleGroup>
+        <TitleGroup title="settings.account">
           <FormGroup text="settings.account.username">
-            <Toggle />
+            <Input value={name} disabled={isAnonymous} placeholder='Only available on regular' onChange={e => setName((e.target as any).value)} />
           </FormGroup>
           <FormGroup text="settings.account.type">
             <Text category={TextType.SUBTITLE1} translationKey="settings.account.type.anonymous" />
@@ -130,35 +107,25 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
           <FormButton onPress={signOut} appearance='outline'>
             {translator('settings.account.sign_out')}
           </FormButton>
-        </SettingsGroup>
-        <SettingsGroup title="settings.notifications">
+        </TitleGroup>
+        <TitleGroup title="settings.notifications">
           <FormGroup text="settings.account.username">
             <Toggle />
           </FormGroup>
-        </SettingsGroup>
-        <SettingsGroup title="settings.security">
+        </TitleGroup>
+        <TitleGroup title="settings.security">
           <FormGroup text="settings.account.username">
             <Toggle />
           </FormGroup>
-        </SettingsGroup>
-        <SettingsGroup title="settings.privacy">
+        </TitleGroup>
+        <TitleGroup title="settings.privacy">
           <FormGroup text="settings.privacy.show_public_stats">
             <Toggle checked={state.settings.publicStats} onChange={updateShowPublicStats} />
           </FormGroup>
-        </SettingsGroup>
+        </TitleGroup>
       </Layout>
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  formGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: 40,
-    width: '100%'
-  }
-})
 
 export default SettingsView
