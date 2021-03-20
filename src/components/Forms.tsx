@@ -6,7 +6,6 @@ import { Text, TextType } from '@chastilock/components'
 
 const styles = StyleSheet.create({
   formGroup: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 40
@@ -15,10 +14,11 @@ const styles = StyleSheet.create({
 
 interface FormGroupProps {
   text: string
+  centered?: boolean
   children?: React.ReactElement
 }
 export const FormGroup = (props: FormGroupProps): React.ReactElement => (
-  <View style={styles.formGroup}>
+  <View style={{ ...styles.formGroup, flexDirection: props.centered === true ? 'column' : 'row' }}>
     <Text translationKey={props.text} />
     <View>{props.children}</View>
   </View>

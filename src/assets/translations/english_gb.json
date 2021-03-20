@@ -49,6 +49,13 @@
   "setup.login.ok": "Sign in",
   "setup.login.error": "Login error",
 
+  "setup.register.title": "Register",
+  "setup.register.info": "This will allow you to create a regular account. This allows for easier recovery. Please note that all the information you enter is kept confidential and only used for identification purposes.",
+  "setup.register.username": "Username",
+  "setup.register.password": "Password",
+  "setup.register.email": "Email",
+  "setup.register.ok": "Create account",
+
   "setup.recover.title": "Recover Account",
   "setup.recover.info": "It is possible to recover your anonymous account using your user id (which is in UUID format). Please note that recover by UUID will stop working once you upgrade your account.",
   "setup.recover.your_id": "Your id:",
@@ -56,7 +63,7 @@
   "setup.recover.ok": "Ok!",
 
   "setup.ck_migrate.title": "ChastiKey Migration",
-  "setup.ck_migrate.info": "Welcome ChastiKey Users!\n\nWe're excited to share with you that we have closely worked together with the ChastiKey app to allow a seemingless transition.\nTo import your data, you need to enter your ChastiKey username, and a one time transfer code that you can fetch inside the app.",
+  "setup.ck_migrate.info": "Welcome ChastiKey Users!\n\nWe're excited to share with you that we have closely worked together with the ChastiKey app to allow a seamless transition.\nTo import your data, you need to enter your ChastiKey username, and a one time transfer code that you can fetch inside the app.",
   "setup.ck_migrate.ck_username": "Your ChastiKey username",
   "setup.ck_migrate.transfer_code": "Your 8-digit transfer code",
   "setup.ck_migrate": "Migrate!",
@@ -73,5 +80,23 @@
   "setup.finish.ck_migrate": "I want to migrate from ChastiKey!",
   "setup.finish.ok": "Let me in!",
 
-  "create.title": "Create Lock"
+  "createedit.create_title": "Create Lock",
+  "createedit.edit_title": "Edit Lock",
+  "createedit.warning_unsaved.title": "You have unsaved changes!",
+  "createedit.warning_unsaved.text": "You have not yet saved this lock. If you close it now without saving, you may loose the settings.",
+
+  "createedit.lock_type.title": "Lock type",
+  "createedit.lock_type.label": "Type",
+  "createedit.lock_type.type_info": "Currently only card lock supported.",
+
+  "createedit.card.title": "Card settings",
+  "createedit.card.chance_regularity.label": "Chance regularity",
+  "createedit.card.chance_regularity.option.24h": "24h",
+  "createedit.card.chance_regularity.option.12h": "12h",
+  "createedit.card.chance_regularity.option.6h": "6h",
+  "createedit.card.chance_regularity.option.3h": "3h",
+  "createedit.card.chance_regularity.option.1h": "1h",
+  "createedit.card.chance_regularity.option.30m": "30m",
+  "createedit.card.chance_regularity.option.15m": "15m",
+  "createedit.card.chance_regularity.option.1m": "1m"
 }

@@ -4,20 +4,29 @@ import { Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle } fro
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
-import { Text, TextType, FormGroup, TitleGroup } from '@chastilock/components'
+import { Text, TextType, FormGroup, TitleGroup, useTranslation, ButtonSelection } from '@chastilock/components'
 import { useTracked } from '@chastilock/state'
 
 const CloseIcon = (props: any): React.ReactElement => (
   <Icon {...props} name="close-outline" />
 )
 
-const CreateLockView = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
+const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
   const [state, dispatch] = useTracked()
+  const [translate] = useTranslation()
+
+  // Lock state
+  const lockChanceRegularities = [['24h', 86400], ['12h', 43200], ['6h', 21600], ['3h', 10800], ['1h', 3600], ['30m', 1800], ['15m', 900], ['1m', 60]].map(regularity => ({
+    value: regularity[0] as string,
+    text: `createedit.card.chance_regularity.option.${regularity[0]}`,
+    time: regularity[1]
+  }))
+  const [lockChanceRegularity/*, lockSetChanceRegularity */] = React.useState(lockChanceRegularities[0])
 
   const closeSettings = (): void => {
     dispatch(confirmationActions.showConfirmation({
-      title: 'You have unsaved changes!',
-      text: 'You have not yet saved this lock. If you close it now without saving, you may loose the settings.',
+      title: translate('createedit.warning_unsaved.title'),
+      text: translate('createedit.warning_unsaved.text'),
       onOk: () => navigation.goBack()
     }))
   }
@@ -29,20 +38,20 @@ const CreateLockView = ({ navigation }: MaterialTopTabBarProps): React.ReactElem
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title={() => <Text category={TextType.HEADING6} translationKey='create.title' />}
+        title={() => <Text category={TextType.HEADING6} translationKey='createedit.create_title' />}
         alignment='center'
         accessoryRight={CloseAction}
       />
       <Divider/>
       <Layout style={{ flex: 1, padding: 20 }}>
-        <TitleGroup title="Appearance">
-          <FormGroup text="Dark mode">
-            <Toggle checked={state.settings.theme === 'dark'} />
+        <TitleGroup title="createedit.lock_type.title">
+          <FormGroup text="createedit.lock_type.label">
+            <Text translationKey="createedit.lock_type.type_info" />
           </FormGroup>
         </TitleGroup>
-        <TitleGroup title="Account">
-          <FormGroup text="Username">
-            <Toggle />
+        <TitleGroup title="createedit.card.title">
+          <FormGroup text="createedit.card.chance_regularity.label" centered>
+            <ButtonSelection selected={lockChanceRegularity.value} options={lockChanceRegularities} translate compact />
           </FormGroup>
         </TitleGroup>
         <TitleGroup title="Notifications">
@@ -65,4 +74,4 @@ const CreateLockView = ({ navigation }: MaterialTopTabBarProps): React.ReactElem
   )
 }
 
-export default CreateLockView
+export default CreateEditLockView

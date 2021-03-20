@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import Home from './HomeView'
 import Settings from './SettingsView'
-import CreateLock from './CreateLockView'
+import CreateLock from './CreateEditLockView'
 import { useTrackedState } from '@chastilock/state'
 
 const { Navigator, Screen } = createStackNavigator()
