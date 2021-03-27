@@ -87,7 +87,9 @@
 
   "createedit.lock_type.title": "Lock type",
   "createedit.lock_type.label": "Type",
-  "createedit.lock_type.type_info": "Currently only card lock supported.",
+  "createedit.lock_type.type_info": "Currently only card (variable) lock supported.",
+  "createedit.lock_type.test": "Is this a test lock? (Will not count towards stats)",
+  "createedit.lock_type.combination_digits": "Number of digits in combination lock:",
 
   "createedit.card.title": "Card settings",
   "createedit.card.chance_regularity.label": "Chance regularity",
@@ -98,5 +100,8 @@
   "createedit.card.chance_regularity.option.1h": "1h",
   "createedit.card.chance_regularity.option.30m": "30m",
   "createedit.card.chance_regularity.option.15m": "15m",
-  "createedit.card.chance_regularity.option.1m": "1m"
+  "createedit.card.chance_regularity.option.1m": "1m",
+  "createedit.card.cumulative": "Should drawing chances be cumulated?",
+  "createedit.card.red.min": "Red minimum:",
+  "createedit.card.red.max": "Red maximum:"
 }

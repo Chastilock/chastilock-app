@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   formGroup: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 40
+    flexDirection: 'row'
   }
 })
 
@@ -18,14 +18,14 @@ interface FormGroupProps {
   children?: React.ReactElement
 }
 export const FormGroup = (props: FormGroupProps): React.ReactElement => (
-  <View style={{ ...styles.formGroup, flexDirection: props.centered === true ? 'column' : 'row' }}>
-    <Text translationKey={props.text} />
+  <View style={[styles.formGroup, { flexDirection: props.centered === true ? 'column' : 'row', marginBottom: 5 }]}>
+    <Text translationKey={props.text} style={{ width: '100%' }} />
     <View>{props.children}</View>
   </View>
 )
 
 export const FormButton = (props: any): React.ReactElement => (
-  <View style={{ ...styles.formGroup, marginBottom: 5 }}>
+  <View style={{ marginBottom: 5 }}>
     <Button {...props} style={{ flex: 1 }} />
   </View>
 )

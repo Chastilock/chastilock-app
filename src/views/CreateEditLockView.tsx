@@ -1,18 +1,18 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native'
-import { Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle } from '@ui-kitten/components'
+import { Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle, Input } from '@ui-kitten/components'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
 import { Text, TextType, FormGroup, TitleGroup, useTranslation, ButtonSelection } from '@chastilock/components'
-import { useTracked } from '@chastilock/state'
+import { useDispatch } from '@chastilock/state'
 
 const CloseIcon = (props: any): React.ReactElement => (
   <Icon {...props} name="close-outline" />
 )
 
 const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
-  const [state, dispatch] = useTracked()
+  const dispatch = useDispatch()
   const [translate] = useTranslation()
 
   // Lock state
@@ -21,7 +21,14 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
     text: `createedit.card.chance_regularity.option.${regularity[0]}`,
     time: regularity[1]
   }))
-  const [lockChanceRegularity/*, lockSetChanceRegularity */] = React.useState(lockChanceRegularities[0])
+  const [lockChanceRegularity, lockSetChanceRegularity] = React.useState(lockChanceRegularities[0])
+  const [lockDigits, lockSetDigits] = React.useState(4)
+
+  const [lockIsTest, lockSetIsTest] = React.useState(false)
+  const [lockIsCumulative, lockSetIsCumulative] = React.useState(true)
+
+  const [lockRedMin, lockSetRedMin] = React.useState(0)
+  const [lockRedMax, lockSetRedMax] = React.useState(0)
 
   const closeSettings = (): void => {
     dispatch(confirmationActions.showConfirmation({
@@ -46,27 +53,27 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
       <Layout style={{ flex: 1, padding: 20 }}>
         <TitleGroup title="createedit.lock_type.title">
           <FormGroup text="createedit.lock_type.label">
-            <Text translationKey="createedit.lock_type.type_info" />
+            <Text translationKey="createedit.lock_type.type_info" category={TextType.SUBTITLE1} />
+          </FormGroup>
+          <FormGroup text="createedit.lock_type.test">
+            <Toggle checked={lockIsTest} onChange={() => lockSetIsTest(!lockIsTest)} />
+          </FormGroup>
+          <FormGroup text="createedit.lock_type.combination_digits">
+            <Input keyboardType="numeric" value={lockDigits.toString()} onChange={(e: any) => e.target.value !== '' && lockSetDigits(parseInt(e.target.value))} />
           </FormGroup>
         </TitleGroup>
         <TitleGroup title="createedit.card.title">
           <FormGroup text="createedit.card.chance_regularity.label" centered>
-            <ButtonSelection selected={lockChanceRegularity.value} options={lockChanceRegularities} translate compact />
+            <ButtonSelection selected={lockChanceRegularity.value} options={lockChanceRegularities} onSelect={option => lockSetChanceRegularity(option)} translate compact />
           </FormGroup>
-        </TitleGroup>
-        <TitleGroup title="Notifications">
-          <FormGroup text="Username">
-            <Toggle />
+          <FormGroup text="createedit.card.cumulative">
+            <Toggle checked={lockIsCumulative} onChange={() => lockSetIsCumulative(!lockIsCumulative)} />
           </FormGroup>
-        </TitleGroup>
-        <TitleGroup title="Security">
-          <FormGroup text="Username">
-            <Toggle />
+          <FormGroup text="createedit.card.red.min">
+            <Input keyboardType="numeric" value={lockRedMin.toString()} onChange={(e: any) => e.target.value !== '' && lockSetRedMin(parseInt(e.target.value))} />
           </FormGroup>
-        </TitleGroup>
-        <TitleGroup title="Privacy">
-          <FormGroup text="Show public stats on my profile">
-            <Toggle checked={state.settings.publicStats} />
+          <FormGroup text="createedit.card.red.max">
+            <Input keyboardType="numeric" value={lockRedMax.toString()} onChange={(e: any) => e.target.value !== '' && lockSetRedMax(parseInt(e.target.value))} />
           </FormGroup>
         </TitleGroup>
       </Layout>
