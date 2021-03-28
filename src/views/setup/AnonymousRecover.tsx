@@ -4,7 +4,7 @@ import { SafeAreaView, View } from 'react-native'
 
 import { Text, TextType, useTranslation } from '@chastilock/components'
 import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
-import { useTracked } from '@chastilock/state'
+import { useTrackedState, useDispatch } from '@chastilock/state'
 import apiActions from '@chastilock/api/actions'
 import { BackButtonAccessory } from '../common/Accessories'
 
@@ -13,12 +13,14 @@ interface AnonymousRecoverProps {
   onComplete?: () => void
 }
 export const AnonymousRecover = (props: AnonymousRecoverProps): React.ReactElement => {
-  const [state, dispatch] = useTracked()
+  const state = useTrackedState()
+  const dispatch = useDispatch()
   const [translate] = useTranslation()
   const [uuid, setUuid] = React.useState('')
   const [error, setError] = React.useState('')
 
   const complete = async (): Promise<void> => {
+    setError('')
     try {
       await dispatch(apiActions.loginAnon(uuid).execute)
 
@@ -33,7 +35,7 @@ export const AnonymousRecover = (props: AnonymousRecoverProps): React.ReactEleme
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
-        title={translate('setup.recover.title')}
+        title={() => <Text category={TextType.HEADING6} translationKey='setup.recover.title' />}
         alignment="center"
         accessoryLeft={() => <BackButtonAccessory onPress={props.onBack} />}
       />

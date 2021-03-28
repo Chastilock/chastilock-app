@@ -30,7 +30,7 @@ export const CkMigration = (props: CkMigrationProps): React.ReactElement => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
-        title={translate('setup.ck_migrate.title')}
+        title={() => <Text category={TextType.HEADING6} translationKey='setup.ck_migrate.title' />}
         alignment="center"
         accessoryLeft={() => <BackButtonAccessory onPress={() => props.onBack?.()} />}
       />
@@ -59,7 +59,7 @@ export const CkMigrationSelection = (props: CkMigrationSelectionProps): React.Re
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
-        title={translate('setup.ck_migrate.selection.title')}
+        title={() => <Text category={TextType.HEADING6} translationKey='setup.ck_migrate.selection.title' />}
         alignment="center"
         accessoryLeft={() => <BackButtonAccessory onPress={() => props.onBack?.()} />}
       />

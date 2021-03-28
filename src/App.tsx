@@ -12,7 +12,7 @@ import apiActions from '@chastilock/api/actions'
 import MainNavigator from '@chastilock/views/MainNavigator'
 import ConfirmationPopup, { ConfirmationPopupProps } from '@chastilock/views/common/ConfirmationPopup'
 import SetupView from '@chastilock/views/setup/SetupView'
-import mapping from './mapping.json'
+import customMapping from './mapping.json'
 import { useTranslation } from './components'
 
 interface AppContentProps {
@@ -62,7 +62,7 @@ const App = (): React.ReactElement | null => {
 
   const [loaded] = useFonts({
     'OpenSans-Regular': require('./assets/fonts/OpenSans-Regular.ttf'),
-    '$text-font-family': require('./assets/fonts/OpenSans-Regular.ttf'),
+    /* '$text-font-family': require('./assets/fonts/OpenSans-Regular.ttf'), */
     'OpenSans-Bold': require('./assets/fonts/OpenSans-Bold.ttf')
   })
 
@@ -80,7 +80,7 @@ const App = (): React.ReactElement | null => {
   return (
     <>
       <IconRegistry icons={EvaIconsPack}/>
-      <ApplicationProvider customMapping={mapping} theme={theme} {...eva}>
+      <ApplicationProvider customMapping={customMapping} theme={theme} {...eva}>
         <AppContent isSetUp={state.account.isSetUp} modalProps={state.confirmation.modalProps} modalVisible={state.confirmation.visible} />
       </ApplicationProvider>
     </>

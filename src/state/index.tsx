@@ -26,12 +26,10 @@ const useValue = (): [any, (action: any) => void | Promise<void>] => {
 }
 const {
   Provider,
-  useTracked,
   useTrackedState,
   useUpdate
 }: {
   Provider: React.FC
-  useTracked: () => [StateType, (action: any) => void]
   useTrackedState: () => StateType
   useUpdate: () => (action: any) => void | Promise<void>
 } = createContainer<any, (action: any) => void | Promise<void>, any>(useValue)
@@ -57,4 +55,4 @@ const useDispatch = (): (action: any) => any => {
   return dispatchProxy
 }
 
-export { useTracked, useTrackedState, useDispatch }
+export { useTrackedState, useDispatch }

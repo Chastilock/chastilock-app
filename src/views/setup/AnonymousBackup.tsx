@@ -3,7 +3,7 @@ import { TopNavigation, Divider, Button, Input } from '@ui-kitten/components'
 import { SafeAreaView, View } from 'react-native'
 
 import { Text, TextType, useTranslation } from '@chastilock/components'
-import { useTracked } from '@chastilock/state'
+import { useTrackedState, useDispatch } from '@chastilock/state'
 import { actions as accountActions, User } from '@chastilock/state/sections/account'
 import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
 
@@ -12,7 +12,8 @@ export interface AnonymousBackupProps {
   onClose?: () => void
 }
 export const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement => {
-  const [state, dispatch] = useTracked()
+  const state = useTrackedState()
+  const dispatch = useDispatch()
   const [translate] = useTranslation()
 
   const complete = (): void => {
@@ -25,7 +26,7 @@ export const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
-        title={translate('setup.backup.title')}
+        title={() => <Text category={TextType.HEADING6} translationKey='setup.backup.title' />}
         alignment="center"
       />
       <Divider/>

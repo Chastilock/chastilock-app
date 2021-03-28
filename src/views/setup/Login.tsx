@@ -2,8 +2,8 @@ import React from 'react'
 import { TopNavigation, Divider, Button, Input } from '@ui-kitten/components'
 import { SafeAreaView, View } from 'react-native'
 
-import { Text, useTranslation } from '@chastilock/components'
-import { useTracked } from '@chastilock/state'
+import { Text, TextType, useTranslation } from '@chastilock/components'
+import { useTrackedState, useDispatch } from '@chastilock/state'
 import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
 import apiActions from '@chastilock/api/actions'
 import { BackButtonAccessory } from '../common/Accessories'
@@ -12,7 +12,8 @@ interface LoginProps {
   onBack: () => void
 }
 export const Login = (props: LoginProps): React.ReactElement => {
-  const [state, dispatch] = useTracked()
+  const state = useTrackedState()
+  const dispatch = useDispatch()
   const [translate] = useTranslation()
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
@@ -29,7 +30,7 @@ export const Login = (props: LoginProps): React.ReactElement => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
-        title={translate('setup.login.title')}
+        title={() => <Text category={TextType.HEADING6} translationKey='setup.login.title' />}
         alignment="center"
         accessoryLeft={() => <BackButtonAccessory onPress={props.onBack} />}
       />

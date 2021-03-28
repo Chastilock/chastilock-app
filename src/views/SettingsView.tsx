@@ -7,14 +7,15 @@ import { Text, TextType, useTranslation, FormButton, FormGroup, TitleGroup } fro
 import { actions } from '@chastilock/state/sections/settings'
 import { actions as accountActions, selectors as accountSelectors } from '@chastilock/state/sections/account'
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
-import { useTracked } from '@chastilock/state'
+import { useTrackedState, useDispatch } from '@chastilock/state'
 import AnonymousBackup from './setup/AnonymousBackup'
 import Register from './setup/Register'
 import CkMigration from './setup/CkMigration'
 import { CloseButtonAccessory } from './common/Accessories'
 
 const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
-  const [state, dispatch] = useTracked()
+  const state = useTrackedState()
+  const dispatch = useDispatch()
   const [translator] = useTranslation()
   const [isShowingBackup, setShowBackup] = React.useState(false)
   const [isShowingUpgrade, setShowUpgrade] = React.useState(false)

@@ -76,7 +76,7 @@ const SetupView = (): React.ReactElement | null => {
     case SetupState.ANONYMOUS_ACCOUNT_BACKUP:
       return <AnonymousBackup isInitial onClose={finishing} />
     case SetupState.RECOVER:
-      return <AnonymousRecover onBack={back} />
+      return <AnonymousRecover onBack={back} onComplete={finish} />
     case SetupState.FINISHING:
       return <FinishSetup onOk={finish} onCkMigrate={ckMigrate} />
     case SetupState.CK_MIGRATE:
