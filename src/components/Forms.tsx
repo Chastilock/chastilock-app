@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Button } from '@ui-kitten/components'
 
-import { Text, TextType } from '@chastilock/components'
+import { Text, TextType } from '@chastilock/components/Text'
 
 const styles = StyleSheet.create({
   formGroup: {

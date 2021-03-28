@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react'
-import { StatusBar, Text } from 'react-native'
+import { StatusBar, Text, Platform } from 'react-native'
 import * as eva from '@eva-design/eva'
 import { ApplicationProvider, IconRegistry, ThemeType } from '@ui-kitten/components'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
@@ -66,7 +66,7 @@ const App = (): React.ReactElement | null => {
     'OpenSans-Bold': require('./assets/fonts/OpenSans-Bold.ttf')
   })
 
-  if (window === undefined && !loaded) {
+  if (Platform.OS !== 'web' && !loaded) {
     return null
   }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, ButtonGroup, useTheme } from '@ui-kitten/components'
-import { useTranslation } from '.'
+
+import useTranslation from './useTranslation'
 
 export interface ButtonSelectionProps {
   options: any[]

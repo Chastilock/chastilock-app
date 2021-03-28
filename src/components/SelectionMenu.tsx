@@ -1,6 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
-import { useTranslation, Text } from '.'
+
+import useTranslation from './useTranslation'
+import Text from './Text'
 
 export interface SelectionMenuProps {
   options: any[]

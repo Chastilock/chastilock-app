@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Text as KittenText } from '@ui-kitten/components'
 
-import { useTranslation } from '.'
+import { useTranslation } from './useTranslation'
 
 export enum TextType {
   HEADING1 = 'h1',
