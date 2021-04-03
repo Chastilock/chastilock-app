@@ -26,6 +26,13 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
 
   const [lockIsTest, lockSetIsTest] = React.useState(false)
   const [lockIsCumulative, lockSetIsCumulative] = React.useState(true)
+  const [lockName, lockSetName] = React.useState('')
+  const [lockIsShared, lockSetIsShared] = React.useState(false)
+
+  // Shared
+  const [lockRequireDm, lockSetRequireDm] = React.useState(false)
+  const [lockRequireTrusted, lockSetRequireTrusted] = React.useState(false)
+  const [lockBlockStatsHidden, lockSetBlockStatsHidden] = React.useState(false)
 
   const [lockRedMin, lockSetRedMin] = React.useState(0)
   const [lockRedMax, lockSetRedMax] = React.useState(0)
@@ -55,13 +62,30 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
           <FormGroup text="createedit.lock_type.label">
             <Text translationKey="createedit.lock_type.type_info" category={TextType.SUBTITLE1} />
           </FormGroup>
+          <FormGroup text="createedit.lock_type.name">
+            <Input value={lockName} onChange={(e: any) => e.target.value !== '' && lockSetName(e.target.value)} />
+          </FormGroup>
           <FormGroup text="createedit.lock_type.test">
             <Toggle checked={lockIsTest} onChange={() => lockSetIsTest(!lockIsTest)} />
+          </FormGroup>
+          <FormGroup text="createedit.lock_type.shared">
+            <Toggle checked={lockIsShared} onChange={() => lockSetIsShared(!lockIsShared)} />
           </FormGroup>
           <FormGroup text="createedit.lock_type.combination_digits">
             <Input keyboardType="numeric" value={lockDigits.toString()} onChange={(e: any) => e.target.value !== '' && lockSetDigits(parseInt(e.target.value))} />
           </FormGroup>
         </TitleGroup>
+        {lockIsShared && <TitleGroup title="createedit.shared.title">
+          <FormGroup text="createedit.shared.require_dm">
+            <Toggle checked={lockRequireDm} onChange={() => lockSetRequireDm(!lockRequireDm)} />
+          </FormGroup>
+          <FormGroup text="createedit.shared.require_trusted">
+            <Toggle checked={lockRequireTrusted} onChange={() => lockSetRequireTrusted(!lockRequireTrusted)} />
+          </FormGroup>
+          <FormGroup text="createedit.shared.block_stats_hidden">
+            <Toggle checked={lockBlockStatsHidden} onChange={() => lockSetBlockStatsHidden(!lockBlockStatsHidden)} />
+          </FormGroup>
+        </TitleGroup>}
         <TitleGroup title="createedit.card.title">
           <FormGroup text="createedit.card.chance_regularity.label" centered>
             <ButtonSelection selected={lockChanceRegularity.value} options={lockChanceRegularities} onSelect={option => lockSetChanceRegularity(option)} translate compact />

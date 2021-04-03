@@ -87,9 +87,16 @@
 
   "createedit.lock_type.title": "Lock type",
   "createedit.lock_type.label": "Type",
-  "createedit.lock_type.type_info": "Currently only card (variable) lock supported.",
+  "createedit.lock_type.type_info": "Variable (only supported)",
+  "createedit.lock_type.name": "Name",
   "createedit.lock_type.test": "Is this a test lock? (Will not count towards stats)",
+  "createedit.lock_type.shared": "Do you intend to share this lock with others?",
   "createedit.lock_type.combination_digits": "Number of digits in combination lock:",
+
+  "createedit.shared.title": "Shared lock settings",
+  "createedit.shared.require_dm": "Require DM check",
+  "createedit.shared.require_trusted": "Require trusted",
+  "createedit.shared.block_stats_hidden": "Block users with stats hidden",
 
   "createedit.card.title": "Card settings",
   "createedit.card.chance_regularity.label": "Chance regularity",
