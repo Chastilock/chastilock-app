@@ -4,7 +4,7 @@ import { Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle, Inpu
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
-import { Text, TextType, FormGroup, TitleGroup, useTranslation, ButtonSelection } from '@chastilock/components'
+import { Text, TextType, FormGroup, TitleGroup, useTranslation, ButtonSelection, NumberSelection } from '@chastilock/components'
 import { useDispatch } from '@chastilock/state'
 
 const CloseIcon = (props: any): React.ReactElement => (
@@ -34,8 +34,22 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
   const [lockRequireTrusted, lockSetRequireTrusted] = React.useState(false)
   const [lockBlockStatsHidden, lockSetBlockStatsHidden] = React.useState(false)
 
+  // Min / max
+  const cardBoundaries = {
+    red: { min: 0, max: 599 },
+    yellow_random: { min: 0, max: 299 },
+    yellow_remove: { min: 0, max: 299 },
+    yellow_add: { min: 0, max: 299 }
+  }
+
   const [lockRedMin, lockSetRedMin] = React.useState(0)
   const [lockRedMax, lockSetRedMax] = React.useState(0)
+  const [lockYellowRandomMin, lockSetYellowRandomMin] = React.useState(0)
+  const [lockYellowRandomMax, lockSetYellowRandomMax] = React.useState(0)
+  const [lockYellowRemoveMin, lockSetYellowRemoveMin] = React.useState(0)
+  const [lockYellowRemoveMax, lockSetYellowRemoveMax] = React.useState(0)
+  const [lockYellowAddMin, lockSetYellowAddMin] = React.useState(0)
+  const [lockYellowAddMax, lockSetYellowAddMax] = React.useState(0)
 
   const closeSettings = (): void => {
     dispatch(confirmationActions.showConfirmation({
@@ -72,7 +86,7 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
             <Toggle checked={lockIsShared} onChange={() => lockSetIsShared(!lockIsShared)} />
           </FormGroup>
           <FormGroup text="createedit.lock_type.combination_digits">
-            <Input keyboardType="numeric" value={lockDigits.toString()} onChange={(e: any) => e.target.value !== '' && lockSetDigits(parseInt(e.target.value))} />
+            <NumberSelection value={lockDigits} onChange={num => lockSetDigits(num)} min={0} max={16} />
           </FormGroup>
         </TitleGroup>
         {lockIsShared && <TitleGroup title="createedit.shared.title">
@@ -93,11 +107,33 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
           <FormGroup text="createedit.card.cumulative">
             <Toggle checked={lockIsCumulative} onChange={() => lockSetIsCumulative(!lockIsCumulative)} />
           </FormGroup>
-          <FormGroup text="createedit.card.red.min">
-            <Input keyboardType="numeric" value={lockRedMin.toString()} onChange={(e: any) => e.target.value !== '' && lockSetRedMin(parseInt(e.target.value))} />
-          </FormGroup>
+          {/* Red */}
           <FormGroup text="createedit.card.red.max">
-            <Input keyboardType="numeric" value={lockRedMax.toString()} onChange={(e: any) => e.target.value !== '' && lockSetRedMax(parseInt(e.target.value))} />
+            <NumberSelection value={lockRedMax} onChange={num => lockSetRedMax(num)} min={cardBoundaries.red.min} max={cardBoundaries.red.max} />
+          </FormGroup>
+          <FormGroup text="createedit.card.red.min">
+            <NumberSelection value={lockRedMin} onChange={num => lockSetRedMin(num)} min={cardBoundaries.red.min} max={lockRedMax} />
+          </FormGroup>
+          {/* Yellow random */}
+          <FormGroup text="createedit.card.yellow_random.max">
+            <NumberSelection value={lockYellowRandomMax} onChange={num => lockSetYellowRandomMax(num)} min={cardBoundaries.yellow_random.min} max={cardBoundaries.yellow_random.max} />
+          </FormGroup>
+          <FormGroup text="createedit.card.yellow_random.min">
+            <NumberSelection value={lockYellowRandomMin} onChange={num => lockSetYellowRandomMin(num)} min={cardBoundaries.yellow_random.min} max={lockYellowRandomMax} />
+          </FormGroup>
+          {/* Yellow remove */}
+          <FormGroup text="createedit.card.yellow_remove.max">
+            <NumberSelection value={lockYellowRemoveMax} onChange={num => lockSetYellowRemoveMax(num)} min={cardBoundaries.yellow_remove.min} max={cardBoundaries.yellow_remove.max} />
+          </FormGroup>
+          <FormGroup text="createedit.card.yellow_remove.min">
+            <NumberSelection value={lockYellowRemoveMin} onChange={num => lockSetYellowRemoveMin(num)} min={cardBoundaries.yellow_remove.min} max={lockYellowRemoveMax} />
+          </FormGroup>
+          {/* Yellow add */}
+          <FormGroup text="createedit.card.yellow_add.max">
+            <NumberSelection value={lockYellowAddMax} onChange={num => lockSetYellowAddMax(num)} min={cardBoundaries.yellow_add.min} max={cardBoundaries.yellow_add.max} />
+          </FormGroup>
+          <FormGroup text="createedit.card.yellow_add.min">
+            <NumberSelection value={lockYellowAddMin} onChange={num => lockSetYellowAddMin(num)} min={cardBoundaries.yellow_add.min} max={lockYellowAddMax} />
           </FormGroup>
         </TitleGroup>
       </Layout>
