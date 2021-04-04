@@ -22,7 +22,8 @@ export const ButtonSelection = (props: ButtonSelectionProps): React.ReactElement
       {
         props.options.map(option => <Button
           style={ { backgroundColor: option.value === props.selected ? theme['color-primary-active'] : theme['color-primary-default'] }}
-          onPress={() => props.onSelect(option)}>
+          onPress={() => props.onSelect(option)}
+          key={option.text}>
           {props.translate === true ? translate(option.text) : option.text}
         </Button>)
       }
