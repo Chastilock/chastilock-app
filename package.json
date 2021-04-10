@@ -38,11 +38,11 @@
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
-    "@types/react": "^17.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@types/moment": "^2.13.0",
     "@types/moment-duration-format": "^2.2.2",
+    "@types/react": "^17.0.0",
     "@types/react-native": "^0.63.36",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@ui-kitten/metro-config": "^5.0.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "cross-env": "^7.0.2",

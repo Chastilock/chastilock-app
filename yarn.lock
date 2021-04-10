@@ -3366,7 +3366,7 @@ chardet@^0.7.0:
 
 "chastilock-cardgame@https://github.com/Chastilock/chastilock-cardgame/archive/v1.1.1.tar.gz":
   version "1.0.0"
-  resolved "https://github.com/Chastilock/chastilock-cardgame/archive/v1.1.1.tar.gz#ccddfb76c50408622bd4d5cb4fea88036f9595c9"
+  resolved "https://github.com/Chastilock/chastilock-cardgame/archive/v1.1.1.tar.gz#dad6db2693f224abd604422b0f6897616ca12a46"
 
 chokidar@^2.1.8:
   version "2.1.8"
