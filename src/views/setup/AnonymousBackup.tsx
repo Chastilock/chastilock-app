@@ -1,26 +1,45 @@
 import React from 'react'
-import { TopNavigation, Divider, Text, Button } from '@ui-kitten/components'
+import { TopNavigation, Divider, Button, Input } from '@ui-kitten/components'
 import { SafeAreaView, View } from 'react-native'
 
+import { Text, TextType, useTranslation } from '@chastilock/components'
+import { useTrackedState, useDispatch } from '@chastilock/state'
+import { actions as accountActions, User } from '@chastilock/state/sections/account'
+import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
+
 export interface AnonymousBackupProps {
-  onOkay: () => void
+  isInitial?: boolean
+  onClose?: () => void
 }
-const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement => {
+export const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement => {
+  const state = useTrackedState()
+  const dispatch = useDispatch()
+  const [translate] = useTranslation()
+
+  const complete = (): void => {
+    if (props.isInitial === true) {
+      dispatch(accountActions.signIn(state.account.temporaryUser as User))
+    }
+    props.onClose?.()
+  }
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222B45' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
       <TopNavigation
-        title="Chastilock - Backup"
+        title={() => <Text category={TextType.HEADING6} translationKey='setup.backup.title' />}
         alignment="center"
       />
       <Divider/>
       <View style={{ padding: 20 }}>
-        <Text style={{ textAlign: 'center', fontSize: 30 }}>Anonymous Account: Backup</Text>
-        <Text style={{ textAlign: 'center' }}>We allow the creation of anonymous accounts. Those are just accounts, that are only identified by you by a random key.
-        There is no automatic recovery option available, therefore you will need to make sure on your own that you back up your user id in a safe space.</Text>
-        <Text style={{ textAlign: 'center' }}>You can also always upgrade your account later on by adding an email or connecting it to a social account.</Text>
-        <Text style={{ textAlign: 'center' }}>We also recommend to take a screenshot of your code. You can also always show this page again in the app settings.</Text>
+        <Text translationKey="setup.backup.title" category={TextType.HEADING4} center />
+        <Text translationKey="setup.backup.info" center />
+        <Text translationKey="setup.backup.info_upgrade_later" center />
+        <Text translationKey="setup.backup.info_screenshot" center />
 
-        <Button style={{ marginTop: 10 }} onPress={props.onOkay}>Okay!</Button>
+        <Text translationKey="setup.backup.your_id" category={TextType.HEADING4} center />
+        <Input value={props.isInitial === true ? state.account.temporaryUser?.uuid : state.account.user?.uuid} />
+
+        <Button style={{ marginTop: 10 }} onPress={complete}>{translate('setup.backup.ok')}</Button>
       </View>
     </SafeAreaView>
   )

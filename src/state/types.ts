@@ -16,7 +16,13 @@ export enum Confirmation {
 
 export enum Account {
   signIn = 'account/sign_in',
-  signOut = 'account/sign_out'
+  signOut = 'account/sign_out',
+  setup = 'account/setup'
+}
+
+export enum I18n {
+  setLanguage = 'i18n/set_language',
+  initialLoad = 'i18n/initial_load'
 }
 
 export default {

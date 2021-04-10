@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native'
 import { Icon, Divider, TopNavigation, TopNavigationAction } from '@ui-kitten/components'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 
+import { Text, TextType } from '@chastilock/components'
 import HomeNavigator from './home/HomeNavigator'
 
 const SettingsIcon = (props: any): React.ReactElement => (
@@ -33,7 +34,7 @@ const Home = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title="Chastilock"
+        title={() => <Text category={TextType.HEADING6} translationKey='main.title' />}
         alignment="center"
         accessoryLeft={CreateLockAction}
         accessoryRight={SettingsAction}

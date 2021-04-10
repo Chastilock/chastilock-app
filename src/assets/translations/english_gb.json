@@ -1,0 +1,126 @@
+{
+  "main.title": "Chastilock",
+
+  "general.connection_failed.title": "Unable to connect to server",
+  "general.connection_failed.text": "The connection to the server could not be established. A raccoon broke into the wiring and caused mayhem. And since all our operations are server-based, the app cannot be used right now.",
+  "general.connecting.title": "Connecting to the server...",
+
+  "confirmation.ok": "Ok",
+  "confirmation.cancel": "Cancel",
+
+  "formgroup.min": "Min",
+  "formgroup.max": "Max",
+
+  "settings.title": "Settings",
+
+  "settings.appearance": "Appearance",
+  "settings.appearance.dark_mode": "Dark mode",
+
+  "settings.account": "Account",
+  "settings.account.username": "Username",
+  "settings.account.username.placeholder": "Only on regular",
+  "settings.account.type": "Account type",
+  "settings.account.type.anonymous": "Anonymous",
+  "settings.account.show_user_id": "Show my user id",
+  "settings.account.upgrade": "Upgrade account",
+  "settings.account.ck_migrate": "Start migration from ChastiKey",
+  "settings.account.sign_out": "Sign out",
+
+  "settings.notifications": "Notifications",
+
+  "settings.security": "Security",
+
+  "settings.privacy": "Privacy",
+  "settings.privacy.show_public_stats": "Show public stats on my profile",
+
+  "settings.confirm.logout_anonymous.title": "Anonymous account",
+  "settings.confirm.logout_anonymous.content": "IMPORTANT: You are trying to sign out of an anonymous account. If you have not backed up your user id, you will never be able to log in to that account again. Are you sure?",
+
+  "settings.anonymous_warning.title": "Anonymous account",
+  "settings.anonymous_warning.content": "An anonymous account will be created for you. You should really back up your unique id that is presented to you next (preferably in cloud storage). You can also always upgrade the account later on.",
+
+  "setup.backup.title": "Anonymous Account Backup",
+  "setup.backup.info": "We allow the creation of anonymous accounts. Those are just accounts, that are only identified by you by a random key. There is no automatic recovery option available, therefore you will need to make sure on your own that you back up your user id in a safe space.",
+  "setup.backup.info_upgrade_later": "You can also always upgrade your account later on by adding an email or connecting it to a social account.",
+  "setup.backup.info_screenshot": "We also recommend to take a screenshot of your code. You can also always show this page again in the app settings.",
+  "setup.backup.your_id": "Your User ID:",
+  "setup.backup.ok": "Ok!",
+
+  "setup.login.title": "Login",
+  "setup.login.info": "Please sign in using your username and password.",
+  "setup.login.username": "Username",
+  "setup.login.password": "Password",
+  "setup.login.ok": "Sign in",
+  "setup.login.error": "Login error",
+
+  "setup.register.title": "Register",
+  "setup.register.info": "This will allow you to create a regular account. This allows for easier recovery. Please note that all the information you enter is kept confidential and only used for identification purposes.",
+  "setup.register.username": "Username",
+  "setup.register.password": "Password",
+  "setup.register.email": "Email",
+  "setup.register.ok": "Create account",
+
+  "setup.recover.title": "Recover Account",
+  "setup.recover.info": "It is possible to recover your anonymous account using your user id (which is in UUID format). Please note that recover by UUID will stop working once you upgrade your account.",
+  "setup.recover.your_id": "Your id:",
+  "setup.recover.your_id.placeholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "setup.recover.ok": "Ok!",
+
+  "setup.ck_migrate.title": "ChastiKey Migration",
+  "setup.ck_migrate.info": "Welcome ChastiKey Users!\n\nWe're excited to share with you that we have closely worked together with the ChastiKey app to allow a seamless transition.\nTo import your data, you need to enter your ChastiKey username, and a one time transfer code that you can fetch inside the app.",
+  "setup.ck_migrate.ck_username": "Your ChastiKey username",
+  "setup.ck_migrate.transfer_code": "Your 8-digit transfer code",
+  "setup.ck_migrate": "Migrate!",
+
+  "setup.ck_migrate.selection.title": "ChastiKey Migration Selection",
+  "setup.ck_migrate.selection.info": "Here you can select exactly what data you want to import from ChastiKey. Please make sure you read the notes so you understand how the process works with keyheld locks.",
+  "setup.ck_migrate.selection.lockee": "Lockee",
+  "setup.ck_migrate.selection.keyholder": "Keyholder",
+  "setup.ck_migrate.selection.kh_lock_info": "[TODO] Info on how the process works with KH-locks",
+  "setup.ck_migrate.selection.ok": "Finish migration from ChastiKey!",
+
+  "setup.finish.title": "Welcome!",
+  "setup.finish.info": "Welcome to Chastilock!\n\nIf you are coming from ChastiKey, you can use the button below to migrate your data! You can still migrate from a latter stage from the settings page.",
+  "setup.finish.ck_migrate": "I want to migrate from ChastiKey!",
+  "setup.finish.ok": "Let me in!",
+
+  "createedit.create_title": "Create Lock",
+  "createedit.edit_title": "Edit Lock",
+  "createedit.warning_unsaved.title": "You have unsaved changes!",
+  "createedit.warning_unsaved.text": "You have not yet saved this lock. If you close it now without saving, you may loose the settings.",
+
+  "createedit.lock_type.title": "Lock type",
+  "createedit.lock_type.label": "Type",
+  "createedit.lock_type.type_info": "Variable (only supported)",
+  "createedit.lock_type.name": "Name",
+  "createedit.lock_type.test": "Is this a test lock? (Will not count towards stats)",
+  "createedit.lock_type.shared": "Do you intend to share this lock with others?",
+  "createedit.lock_type.combination_digits": "Number of digits in combination lock:",
+
+  "createedit.shared.title": "Shared lock settings",
+  "createedit.shared.require_dm": "Require DM check",
+  "createedit.shared.require_trusted": "Require trusted",
+  "createedit.shared.block_stats_hidden": "Block users with stats hidden",
+
+  "createedit.card.title": "Card settings",
+  "createedit.card.chance_regularity.label": "Chance regularity",
+  "createedit.card.chance_regularity.option.24h": "24h",
+  "createedit.card.chance_regularity.option.12h": "12h",
+  "createedit.card.chance_regularity.option.6h": "6h",
+  "createedit.card.chance_regularity.option.3h": "3h",
+  "createedit.card.chance_regularity.option.1h": "1h",
+  "createedit.card.chance_regularity.option.30m": "30m",
+  "createedit.card.chance_regularity.option.15m": "15m",
+  "createedit.card.chance_regularity.option.1m": "1m",
+  "createedit.card.cumulative": "Should drawing chances be cumulated?",
+  "createedit.card.red": "Red cards",
+  "createedit.card.yellow_random": "Random yellow cards",
+  "createedit.card.yellow_remove": "Yellow cards that remove red cards",
+  "createedit.card.yellow_add": "Yellow cards that add reds cards",
+  "createedit.card.sticky": "Sticky cards",
+  "createedit.card.freeze": "Freeze cards",
+  "createedit.card.double": "Double cards",
+  "createedit.card.reset": "Reset cards",
+  "createedit.card.multiple_greens_required": "Mutliple greens required",
+  "createedit.card.green": "Green cards"
+}

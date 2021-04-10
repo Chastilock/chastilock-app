@@ -5,6 +5,7 @@ import moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
 
 import { CardLockModel } from './LockModel'
+import Emoji, { EMOJI_TYPE } from '@chastilock/components/Emoji'
 
 momentDurationFormatSetup(moment)
 
@@ -33,6 +34,7 @@ const CardLock = (props: CardLockProps): React.ReactElement => {
       {!canDraw && <View style={{ flexDirection: 'row' }}>
         <Text>Next draw in: </Text>
         <Text>{countdown.format('HH:mm:ss')}</Text>
+        <Emoji name="emoji4" type={EMOJI_TYPE.YELLOW} size={32} />
       </View>}
     </View>
   )
