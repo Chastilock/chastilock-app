@@ -70,7 +70,7 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
   const [lockGreenMin, lockSetGreenMin] = React.useState(1)
   const [lockGreenMax, lockSetGreenMax] = React.useState(1)
   const [lockMultipleGreensRequired, lockSetMultipleGreensRequired] = React.useState(false)
-  const [lockHideCardInformation, lockSetHideCardInformation] = React.useState(false)
+  /* const [lockHideCardInformation, lockSetHideCardInformation] = React.useState(false)
   const [lockAllowFakeCopies, lockSetAllowFakeCopies] = React.useState(false)
   const [lockFakeCopiesMin, lockSetFakeCopiesMin] = React.useState(0)
   const [lockFakeCopiesMax, lockSetFakeCopiesMax] = React.useState(0)
@@ -88,7 +88,7 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
   const [lockBlockTest, lockSetBlockTest] = React.useState(false)
   const [lockBlockLowRating, lockSetBlockLowRating] = React.useState(false)
   const [lockMinRatingRequired, lockSetMinRatingRequired] = React.useState(1)
-  const [lockBlockAlreadyLocked, lockSetBlockAlreadyLocked] = React.useState(false)
+  const [lockBlockAlreadyLocked, lockSetBlockAlreadyLocked] = React.useState(false) */
 
   const closeSettings = (): void => {
     dispatch(confirmationActions.showConfirmation({
