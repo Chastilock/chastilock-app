@@ -6,6 +6,10 @@
   "general.connecting.title": "Connecting to the server...",
 
   "confirmation.ok": "Ok",
+  "confirmation.cancel": "Cancel",
+
+  "formgroup.min": "Min",
+  "formgroup.max": "Max",
 
   "settings.title": "Settings",
 
@@ -109,12 +113,14 @@
   "createedit.card.chance_regularity.option.15m": "15m",
   "createedit.card.chance_regularity.option.1m": "1m",
   "createedit.card.cumulative": "Should drawing chances be cumulated?",
-  "createedit.card.red.min": "Red minimum:",
-  "createedit.card.red.max": "Red maximum:",
-  "createedit.card.yellow_random.min": "Yellow random minimum:",
-  "createedit.card.yellow_random.max": "Yellow random maximum:",
-  "createedit.card.yellow_remove.min": "Yellow that remove reds minimum:",
-  "createedit.card.yellow_remove.max": "Yellow that remove reds maximum:",
-  "createedit.card.yellow_add.min": "Yellow that add reds minimum:",
-  "createedit.card.yellow_add.max": "Yellow that add reds maximum:"
+  "createedit.card.red": "Red cards",
+  "createedit.card.yellow_random": "Random yellow cards",
+  "createedit.card.yellow_remove": "Yellow cards that remove red cards",
+  "createedit.card.yellow_add": "Yellow cards that add reds cards",
+  "createedit.card.sticky": "Sticky cards",
+  "createedit.card.freeze": "Freeze cards",
+  "createedit.card.double": "Double cards",
+  "createedit.card.reset": "Reset cards",
+  "createedit.card.multiple_greens_required": "Mutliple greens required",
+  "createedit.card.green": "Green cards"
 }

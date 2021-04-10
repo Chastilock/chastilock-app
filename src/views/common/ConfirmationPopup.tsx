@@ -15,6 +15,7 @@ export interface ConfirmationPopupProps {
   onDismiss?: () => void
   onOk?: () => void
   onClose?: () => void
+  onCancel?: () => void
 }
 const ConfirmationPopup = (props: ConfirmationPopupProps): React.ReactElement => {
   const dispatch = useDispatch()
@@ -23,6 +24,11 @@ const ConfirmationPopup = (props: ConfirmationPopupProps): React.ReactElement =>
   const close = (): void => {
     props.onClose?.()
     dispatch(actions.closeConfirmation())
+  }
+
+  const cancel = (): void => {
+    close()
+    props.onCancel?.()
   }
 
   /* const yes = (): void => {
@@ -62,6 +68,7 @@ const ConfirmationPopup = (props: ConfirmationPopupProps): React.ReactElement =>
         <Text category={TextType.HEADING5} center>{props.title}</Text>
         {props.text !== undefined && <Text center>{props.text}</Text>}
         {props.onOk !== undefined && <Button onPress={ok} style={{ marginTop: 10 }}>{translator('confirmation.ok')}</Button>}
+        {props.onCancel !== undefined && <Button status="basic" onPress={cancel} style={{ marginTop: 10 }}>{translator('confirmation.cancel')}</Button>}
       </Card>
     </Modal>
   )

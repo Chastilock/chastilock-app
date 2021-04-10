@@ -1,6 +1,6 @@
 export { default as Text, TextType } from './Text'
 export { default as useTranslation } from './useTranslation'
-export { FormGroup, FormButton, TitleGroup } from './Forms'
+export { FormGroup, FormButton, TitleGroup, MaxMinFormGroup } from './Forms'
 export { default as ButtonSelection } from './ButtonSelection'
 export { default as SelectionMenu } from './SelectionMenu'
 export { default as NumberSelection } from './NumberSelection'
