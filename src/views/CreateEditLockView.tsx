@@ -27,13 +27,14 @@ const boundaries = {
   checkin_frequency: { min: 0.5, max: 168 },
   checkin_window: { min: 1, max: 24 },
   max_users: { min: 1, max: 1000 },
-  min_rating: { min: 1, max: 5 }
+  min_rating: { min: 1, max: 5 },
+  fake_copies: { min: 1, max: 10 }
 }
 
-const CardPicker = React.memo((props: { max: number, min: number, setMax: (n: number) => void, setMin: (n: number) => void, cardName: string }): React.ReactElement => (
-  <MaxMinFormGroup text={`createedit.card.${props.cardName}`}>
-    <NumberSelection value={props.max} onChange={props.setMax} min={(boundaries as any)[props.cardName].min} max={(boundaries as any)[props.cardName].max} />
-    <NumberSelection value={props.min} onChange={props.setMin} min={(boundaries as any)[props.cardName].min} max={props.max} />
+const CardPicker = React.memo((props: { max: number, min: number, setMax: (n: number) => void, setMin: (n: number) => void, name: string, title: string }): React.ReactElement => (
+  <MaxMinFormGroup text={props.title}>
+    <NumberSelection value={props.max} onChange={props.setMax} min={(boundaries as any)[props.name].min} max={(boundaries as any)[props.name].max} />
+    <NumberSelection value={props.min} onChange={props.setMin} min={(boundaries as any)[props.name].min} max={props.max} />
   </MaxMinFormGroup>
 ))
 
@@ -52,18 +53,34 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
   const dispatch = useDispatch()
   const [translate] = useTranslation()
 
-  // Lock state
-  const [lockChanceRegularity, lockSetChanceRegularity] = React.useState(lockChanceRegularities[0])
-  // const [lockDigits, lockSetDigits] = React.useState(4)
-
-  // const [lockIsTest, lockSetIsTest] = React.useState(false)
-  const [lockIsCumulative, lockSetIsCumulative] = React.useState(true)
+  // General
   const [lockName, lockSetName] = React.useState('')
   const [lockIsShared, lockSetIsShared] = React.useState(false)
 
+  // General shared
   const [lockBlockStatsHidden, lockSetBlockStatsHidden] = React.useState(false)
   const [lockRequireTrusted, lockSetRequireTrusted] = React.useState(false)
   const [lockRequireDm, lockSetRequireDm] = React.useState(false)
+  const [lockAllowFakeCopies, lockSetAllowFakeCopies] = React.useState(false)
+  const [lockFakeCopiesMin, lockSetFakeCopiesMin] = React.useState(0)
+  const [lockFakeCopiesMax, lockSetFakeCopiesMax] = React.useState(0)
+  const [lockBlockTest, lockSetBlockTest] = React.useState(false)
+  const [lockBlockAlreadyLocked, lockSetBlockAlreadyLocked] = React.useState(false)
+
+  const [lockRequireCheckins, lockSetRequireCheckins] = React.useState(false)
+  const [lockCheckinFrequency, lockSetCheckinFrequency] = React.useState(1)
+  const [lockCheckinWindow, lockSetCheckinWindow] = React.useState(1)
+
+  const [lockLimitUsers, lockSetLimitUsers] = React.useState(false)
+  const [lockMaxUsers, lockSetMaxUsers] = React.useState(5)
+
+  const [lockBlockLowRating, lockSetBlockLowRating] = React.useState(false)
+  const [lockMinRatingRequired, lockSetMinRatingRequired] = React.useState(1)
+
+  // Card specific
+  const [lockChanceRegularity, lockSetChanceRegularity] = React.useState(lockChanceRegularities[0])
+  const [lockIsCumulative, lockSetIsCumulative] = React.useState(true)
+
   const [lockRedMin, lockSetRedMin] = React.useState(0)
   const [lockRedMax, lockSetRedMax] = React.useState(0)
   const [lockYellowRandomMin, lockSetYellowRandomMin] = React.useState(0)
@@ -83,25 +100,15 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
   const [lockGreenMin, lockSetGreenMin] = React.useState(1)
   const [lockGreenMax, lockSetGreenMax] = React.useState(1)
   const [lockMultipleGreensRequired, lockSetMultipleGreensRequired] = React.useState(false)
-  /* const [lockHideCardInformation, lockSetHideCardInformation] = React.useState(false)
-  const [lockAllowFakeCopies, lockSetAllowFakeCopies] = React.useState(false)
-  const [lockFakeCopiesMin, lockSetFakeCopiesMin] = React.useState(0)
-  const [lockFakeCopiesMax, lockSetFakeCopiesMax] = React.useState(0)
+  const [lockHideCardInformation, lockSetHideCardInformation] = React.useState(false)
+  const [lockStartFrozen, lockSetStartFrozen] = React.useState(false)
+  /*
   const [lockAutoResets, lockSetAutoResets] = React.useState(false)
   const [lockAutoResetEveryXDays, lockSetAutoResetEveryXDays] = React.useState(2)
   const [lockAutoResetMax, lockSetAutoResetMax] = React.useState(1)
-  const [lockRequireCheckins, lockSetRequireCheckins] = React.useState(false)
-  const [lockCheckinFrequency, lockSetCheckinFrequency] = React.useState(1)
-  const [lockCheckinWindow, lockSetCheckinWindow] = React.useState(1)
-  const [lockEnableBuyout, lockSetEnableBuyout] = React.useState(true)
-  const [lockStartFrozen, lockSetStartFrozen] = React.useState(false)
   const [lockDisableKHDecision, lockSetDisableKHDecision] = React.useState(false)
-  const [lockLimitUsers, lockSetLimitUsers] = React.useState(false)
-  const [lockMaxUsers, lockSetMaxUsers] = React.useState(5)
-  const [lockBlockTest, lockSetBlockTest] = React.useState(false)
-  const [lockBlockLowRating, lockSetBlockLowRating] = React.useState(false)
-  const [lockMinRatingRequired, lockSetMinRatingRequired] = React.useState(1)
-  const [lockBlockAlreadyLocked, lockSetBlockAlreadyLocked] = React.useState(false) */
+
+  const [lockEnableBuyout, lockSetEnableBuyout] = React.useState(true) */
 
   const closeSettings = (): void => {
     dispatch(confirmationActions.showConfirmation({
@@ -133,15 +140,9 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
             <FormGroup text="createedit.lock_type.name">
               <Input value={lockName} onChange={(e: any) => e.target.value !== '' && lockSetName(e.target.value)} />
             </FormGroup>
-            {/* <FormGroup text="createedit.lock_type.test">
-              <Toggle checked={lockIsTest} onChange={() => lockSetIsTest(!lockIsTest)} />
-    </FormGroup> */}
             <FormGroup text="createedit.lock_type.shared">
               <Toggle checked={lockIsShared} onChange={() => lockSetIsShared(!lockIsShared)} />
             </FormGroup>
-            {/* <FormGroup text="createedit.lock_type.combination_digits">
-              <NumberSelection value={lockDigits} onChange={num => lockSetDigits(num)} min={0} max={16} />
-  </FormGroup> */}
           </TitleGroup>
           {lockIsShared && <TitleGroup title="createedit.shared.title">
             <FormGroup text="createedit.shared.require_dm">
@@ -153,6 +154,45 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
             <FormGroup text="createedit.shared.block_stats_hidden">
               <Toggle checked={lockBlockStatsHidden} onChange={() => lockSetBlockStatsHidden(!lockBlockStatsHidden)} />
             </FormGroup>
+            <FormGroup text="createedit.shared.block_test">
+              <Toggle checked={lockBlockTest} onChange={() => lockSetBlockTest(!lockBlockTest)} />
+            </FormGroup>
+            <FormGroup text="createedit.shared.block_already_locked">
+              <Toggle checked={lockBlockAlreadyLocked} onChange={() => lockSetBlockAlreadyLocked(!lockBlockAlreadyLocked)} />
+            </FormGroup>
+            <FormGroup text="createedit.shared.fake_copies">
+              <Toggle checked={lockAllowFakeCopies} onChange={() => lockSetAllowFakeCopies(!lockAllowFakeCopies)} />
+            </FormGroup>
+            {lockAllowFakeCopies && <>
+              <CardPicker title="createedit.shared.fake_copies.number" max={lockFakeCopiesMax} min={lockFakeCopiesMin} setMax={lockSetFakeCopiesMax} setMin={lockSetFakeCopiesMin} name='fake_copies' />
+            </>}
+            <FormGroup text="createedit.shared.require_checkins">
+              <Toggle checked={lockRequireCheckins} onChange={() => lockSetRequireCheckins(!lockRequireCheckins)} />
+            </FormGroup>
+            {lockRequireCheckins && <>
+              <FormGroup text="createedit.shared.checkins.frequency">
+                <NumberSelection value={lockCheckinFrequency} onChange={lockSetCheckinFrequency} />
+              </FormGroup>
+              <FormGroup text="createedit.shared.checkins.window">
+                <NumberSelection value={lockCheckinWindow} onChange={lockSetCheckinWindow} />
+              </FormGroup>
+            </>}
+            <FormGroup text="createedit.shared.limit_users">
+              <Toggle checked={lockLimitUsers} onChange={() => lockSetLimitUsers(!lockLimitUsers)} />
+            </FormGroup>
+            {lockLimitUsers && <>
+              <FormGroup text="createedit.shared.limit_users_num">
+                <NumberSelection value={lockMaxUsers} onChange={lockSetMaxUsers} min={boundaries.max_users.min} max={boundaries.max_users.max} />
+              </FormGroup>
+            </>}
+            <FormGroup text="createedit.shared.block_low_rating">
+              <Toggle checked={lockBlockLowRating} onChange={() => lockSetBlockLowRating(!lockBlockLowRating)} />
+            </FormGroup>
+            {lockBlockLowRating && <>
+              <FormGroup text="createedit.shared.block_low_rating.min">
+                <NumberSelection value={lockMinRatingRequired} onChange={lockSetMinRatingRequired} min={boundaries.min_rating.min} max={boundaries.min_rating.max} />
+              </FormGroup>
+            </>}
           </TitleGroup>}
           <TitleGroup title="createedit.card.title">
             <ChanceRegularity value={lockChanceRegularity.value} set={lockSetChanceRegularity} />
@@ -160,26 +200,32 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
               <Toggle checked={lockIsCumulative} onChange={() => lockSetIsCumulative(!lockIsCumulative)} />
             </FormGroup>
             {/* Red */}
-            <CardPicker max={lockRedMax} min={lockRedMin} setMax={lockSetRedMax} setMin={lockSetRedMin} cardName='red' />
+            <CardPicker title='createedit.card.red' max={lockRedMax} min={lockRedMin} setMax={lockSetRedMax} setMin={lockSetRedMin} name='red' />
             {/* Yellow random */}
-            <CardPicker max={lockYellowRandomMax} min={lockYellowRandomMin} setMax={lockSetYellowRandomMax} setMin={lockSetYellowRandomMin} cardName='yellow_random' />
+            <CardPicker title='createedit.card.yellow_random' max={lockYellowRandomMax} min={lockYellowRandomMin} setMax={lockSetYellowRandomMax} setMin={lockSetYellowRandomMin} name='yellow_random' />
             {/* Yellow remove */}
-            <CardPicker max={lockYellowRemoveMax} min={lockYellowRemoveMin} setMax={lockSetYellowRemoveMax} setMin={lockSetYellowRemoveMin} cardName='yellow_remove' />
+            <CardPicker title='createedit.card.yellow_remove' max={lockYellowRemoveMax} min={lockYellowRemoveMin} setMax={lockSetYellowRemoveMax} setMin={lockSetYellowRemoveMin} name='yellow_remove' />
             {/* Yellow add */}
-            <CardPicker max={lockYellowAddMax} min={lockYellowAddMin} setMax={lockSetYellowAddMax} setMin={lockSetYellowAddMin} cardName='yellow_add' />
+            <CardPicker title='createedit.card.yellow_add' max={lockYellowAddMax} min={lockYellowAddMin} setMax={lockSetYellowAddMax} setMin={lockSetYellowAddMin} name='yellow_add' />
             {/* Sticky */}
-            <CardPicker max={lockStickyMax} min={lockStickyMin} setMax={lockSetStickyMax} setMin={lockSetStickyMin} cardName='sticky' />
+            <CardPicker title='createedit.card.sticky' max={lockStickyMax} min={lockStickyMin} setMax={lockSetStickyMax} setMin={lockSetStickyMin} name='sticky' />
             {/* Freeze */}
-            <CardPicker max={lockFreezeMax} min={lockFreezeMin} setMax={lockSetFreezeMax} setMin={lockSetFreezeMin} cardName='freeze' />
+            <CardPicker title='createedit.card.freeze' max={lockFreezeMax} min={lockFreezeMin} setMax={lockSetFreezeMax} setMin={lockSetFreezeMin} name='freeze' />
             {/* Double */}
-            <CardPicker max={lockDoubleMax} min={lockDoubleMin} setMax={lockSetDoubleMax} setMin={lockSetDoubleMin} cardName='double' />
+            <CardPicker title='createedit.card.double' max={lockDoubleMax} min={lockDoubleMin} setMax={lockSetDoubleMax} setMin={lockSetDoubleMin} name='double' />
             {/* Reset */}
-            <CardPicker max={lockResetMax} min={lockResetMin} setMax={lockSetResetMax} setMin={lockSetResetMin} cardName='reset' />
+            <CardPicker title='createedit.card.reset' max={lockResetMax} min={lockResetMin} setMax={lockSetResetMax} setMin={lockSetResetMin} name='reset' />
             {/* Green */}
             <FormGroup text="createedit.card.multiple_greens_required">
               <Toggle checked={lockMultipleGreensRequired} onChange={() => lockSetMultipleGreensRequired(!lockMultipleGreensRequired)} />
             </FormGroup>
-            <CardPicker max={lockGreenMax} min={lockGreenMin} setMax={lockSetGreenMax} setMin={lockSetGreenMin} cardName='green' />
+            <CardPicker title='createedit.card.green' max={lockGreenMax} min={lockGreenMin} setMax={lockSetGreenMax} setMin={lockSetGreenMin} name='green' />
+            <FormGroup text="createedit.card.hide_info">
+              <Toggle checked={lockHideCardInformation} onChange={() => lockSetHideCardInformation(!lockHideCardInformation)} />
+            </FormGroup>
+            <FormGroup text="createedit.card.start_frozen">
+              <Toggle checked={lockStartFrozen} onChange={() => lockSetStartFrozen(!lockStartFrozen)} />
+            </FormGroup>
           </TitleGroup>
         </Layout>
       </ScrollView>
