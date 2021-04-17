@@ -11,16 +11,48 @@ const CloseIcon = (props: any): React.ReactElement => (
   <Icon {...props} name="close-outline" />
 )
 
+// Min / max boundaries
+const boundaries = {
+  red: { min: 0, max: 599 },
+  yellow_random: { min: 0, max: 299 },
+  yellow_remove: { min: 0, max: 299 },
+  yellow_add: { min: 0, max: 299 },
+  sticky: { min: 0, max: 100 },
+  freeze: { min: 0, max: 100 },
+  double: { min: 0, max: 100 },
+  reset: { min: 0, max: 100 },
+  green: { min: 1, max: 100 },
+  auto_reset_regularity: { min: 2, max: 399 },
+  auto_reset_max: { min: 1, max: 20 },
+  checkin_frequency: { min: 0.5, max: 168 },
+  checkin_window: { min: 1, max: 24 },
+  max_users: { min: 1, max: 1000 },
+  min_rating: { min: 1, max: 5 }
+}
+
+const CardPicker = React.memo((props: { max: number, min: number, setMax: (n: number) => void, setMin: (n: number) => void, cardName: string }): React.ReactElement => (
+  <MaxMinFormGroup text={`createedit.card.${props.cardName}`}>
+    <NumberSelection value={props.max} onChange={props.setMax} min={(boundaries as any)[props.cardName].min} max={(boundaries as any)[props.cardName].max} />
+    <NumberSelection value={props.min} onChange={props.setMin} min={(boundaries as any)[props.cardName].min} max={props.max} />
+  </MaxMinFormGroup>
+))
+
+const lockChanceRegularities = [['24h', 86400], ['12h', 43200], ['6h', 21600], ['3h', 10800], ['1h', 3600], ['30m', 1800], ['15m', 900], ['1m', 60]].map(regularity => ({
+  value: regularity[0] as string,
+  text: `createedit.card.chance_regularity.option.${regularity[0]}`,
+  time: regularity[1]
+}))
+const ChanceRegularity = React.memo((props: { value: string, set: (a: any) => void }): React.ReactElement => (
+  <FormGroup text="createedit.card.chance_regularity.label" centered>
+    <ButtonSelection selected={props.value} options={lockChanceRegularities} onSelect={props.set} translate compact />
+  </FormGroup>
+))
+
 const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
   const dispatch = useDispatch()
   const [translate] = useTranslation()
 
   // Lock state
-  const lockChanceRegularities = [['24h', 86400], ['12h', 43200], ['6h', 21600], ['3h', 10800], ['1h', 3600], ['30m', 1800], ['15m', 900], ['1m', 60]].map(regularity => ({
-    value: regularity[0] as string,
-    text: `createedit.card.chance_regularity.option.${regularity[0]}`,
-    time: regularity[1]
-  }))
   const [lockChanceRegularity, lockSetChanceRegularity] = React.useState(lockChanceRegularities[0])
   // const [lockDigits, lockSetDigits] = React.useState(4)
 
@@ -28,25 +60,6 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
   const [lockIsCumulative, lockSetIsCumulative] = React.useState(true)
   const [lockName, lockSetName] = React.useState('')
   const [lockIsShared, lockSetIsShared] = React.useState(false)
-
-  // Min / max boundaries
-  const boundaries = {
-    red: { min: 0, max: 599 },
-    yellow_random: { min: 0, max: 299 },
-    yellow_remove: { min: 0, max: 299 },
-    yellow_add: { min: 0, max: 299 },
-    sticky: { min: 0, max: 100 },
-    freeze: { min: 0, max: 100 },
-    double: { min: 0, max: 100 },
-    reset: { min: 0, max: 100 },
-    green: { min: 1, max: 100 },
-    auto_reset_regularity: { min: 2, max: 399 },
-    auto_reset_max: { min: 1, max: 20 },
-    checkin_frequency: { min: 0.5, max: 168 },
-    checkin_window: { min: 1, max: 24 },
-    max_users: { min: 1, max: 1000 },
-    min_rating: { min: 1, max: 5 }
-  }
 
   const [lockBlockStatsHidden, lockSetBlockStatsHidden] = React.useState(false)
   const [lockRequireTrusted, lockSetRequireTrusted] = React.useState(false)
@@ -142,60 +155,31 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
             </FormGroup>
           </TitleGroup>}
           <TitleGroup title="createedit.card.title">
-            <FormGroup text="createedit.card.chance_regularity.label" centered>
-              <ButtonSelection selected={lockChanceRegularity.value} options={lockChanceRegularities} onSelect={option => lockSetChanceRegularity(option)} translate compact />
-            </FormGroup>
+            <ChanceRegularity value={lockChanceRegularity.value} set={lockSetChanceRegularity} />
             <FormGroup text="createedit.card.cumulative">
               <Toggle checked={lockIsCumulative} onChange={() => lockSetIsCumulative(!lockIsCumulative)} />
             </FormGroup>
             {/* Red */}
-            <MaxMinFormGroup text="createedit.card.red">
-              <NumberSelection value={lockRedMax} onChange={num => lockSetRedMax(num)} min={boundaries.red.min} max={boundaries.red.max} />
-              <NumberSelection value={lockRedMin} onChange={num => lockSetRedMin(num)} min={boundaries.red.min} max={lockRedMax} />
-            </MaxMinFormGroup>
+            <CardPicker max={lockRedMax} min={lockRedMin} setMax={lockSetRedMax} setMin={lockSetRedMin} cardName='red' />
             {/* Yellow random */}
-            <MaxMinFormGroup text="createedit.card.yellow_random">
-              <NumberSelection value={lockYellowRandomMax} onChange={num => lockSetYellowRandomMax(num)} min={boundaries.yellow_random.min} max={boundaries.yellow_random.max} />
-              <NumberSelection value={lockYellowRandomMin} onChange={num => lockSetYellowRandomMin(num)} min={boundaries.yellow_random.min} max={lockYellowRandomMax} />
-            </MaxMinFormGroup>
+            <CardPicker max={lockYellowRandomMax} min={lockYellowRandomMin} setMax={lockSetYellowRandomMax} setMin={lockSetYellowRandomMin} cardName='yellow_random' />
             {/* Yellow remove */}
-            <MaxMinFormGroup text="createedit.card.yellow_remove">
-              <NumberSelection value={lockYellowRemoveMax} onChange={num => lockSetYellowRemoveMax(num)} min={boundaries.yellow_remove.min} max={boundaries.yellow_remove.max} />
-              <NumberSelection value={lockYellowRemoveMin} onChange={num => lockSetYellowRemoveMin(num)} min={boundaries.yellow_remove.min} max={lockYellowRemoveMax} />
-            </MaxMinFormGroup>
+            <CardPicker max={lockYellowRemoveMax} min={lockYellowRemoveMin} setMax={lockSetYellowRemoveMax} setMin={lockSetYellowRemoveMin} cardName='yellow_remove' />
             {/* Yellow add */}
-            <MaxMinFormGroup text="createedit.card.yellow_add">
-              <NumberSelection value={lockYellowAddMax} onChange={num => lockSetYellowAddMax(num)} min={boundaries.yellow_add.min} max={boundaries.yellow_add.max} />
-              <NumberSelection value={lockYellowAddMin} onChange={num => lockSetYellowAddMin(num)} min={boundaries.yellow_add.min} max={lockYellowAddMax} />
-            </MaxMinFormGroup>
+            <CardPicker max={lockYellowAddMax} min={lockYellowAddMin} setMax={lockSetYellowAddMax} setMin={lockSetYellowAddMin} cardName='yellow_add' />
             {/* Sticky */}
-            <MaxMinFormGroup text="createedit.card.sticky">
-              <NumberSelection value={lockStickyMax} onChange={num => lockSetStickyMax(num)} min={boundaries.sticky.min} max={boundaries.sticky.max} />
-              <NumberSelection value={lockStickyMin} onChange={num => lockSetStickyMin(num)} min={boundaries.sticky.min} max={lockStickyMax} />
-            </MaxMinFormGroup>
+            <CardPicker max={lockStickyMax} min={lockStickyMin} setMax={lockSetStickyMax} setMin={lockSetStickyMin} cardName='sticky' />
             {/* Freeze */}
-            <MaxMinFormGroup text="createedit.card.freeze">
-              <NumberSelection value={lockFreezeMax} onChange={num => lockSetFreezeMax(num)} min={boundaries.freeze.min} max={boundaries.freeze.max} />
-              <NumberSelection value={lockFreezeMin} onChange={num => lockSetFreezeMin(num)} min={boundaries.freeze.min} max={lockFreezeMax} />
-            </MaxMinFormGroup>
+            <CardPicker max={lockFreezeMax} min={lockFreezeMin} setMax={lockSetFreezeMax} setMin={lockSetFreezeMin} cardName='freeze' />
             {/* Double */}
-            <MaxMinFormGroup text="createedit.card.double">
-              <NumberSelection value={lockDoubleMax} onChange={num => lockSetDoubleMax(num)} min={boundaries.double.min} max={boundaries.double.max} />
-              <NumberSelection value={lockDoubleMin} onChange={num => lockSetDoubleMin(num)} min={boundaries.double.min} max={lockDoubleMax} />
-            </MaxMinFormGroup>
+            <CardPicker max={lockDoubleMax} min={lockDoubleMin} setMax={lockSetDoubleMax} setMin={lockSetDoubleMin} cardName='double' />
             {/* Reset */}
-            <MaxMinFormGroup text="createedit.card.reset">
-              <NumberSelection value={lockResetMax} onChange={num => lockSetResetMax(num)} min={boundaries.reset.min} max={boundaries.reset.max} />
-              <NumberSelection value={lockResetMin} onChange={num => lockSetResetMin(num)} min={boundaries.reset.min} max={lockResetMax} />
-            </MaxMinFormGroup>
+            <CardPicker max={lockResetMax} min={lockResetMin} setMax={lockSetResetMax} setMin={lockSetResetMin} cardName='reset' />
             {/* Green */}
             <FormGroup text="createedit.card.multiple_greens_required">
               <Toggle checked={lockMultipleGreensRequired} onChange={() => lockSetMultipleGreensRequired(!lockMultipleGreensRequired)} />
             </FormGroup>
-            <MaxMinFormGroup text="createedit.card.green">
-              <NumberSelection value={lockGreenMax} onChange={num => lockSetGreenMax(num)} min={boundaries.green.min} max={boundaries.green.max} />
-              <NumberSelection value={lockGreenMin} onChange={num => lockSetGreenMin(num)} min={boundaries.green.min} max={lockGreenMax} />
-            </MaxMinFormGroup>
+            <CardPicker max={lockGreenMax} min={lockGreenMin} setMax={lockSetGreenMax} setMin={lockSetGreenMin} cardName='green' />
           </TitleGroup>
         </Layout>
       </ScrollView>
