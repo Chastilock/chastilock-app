@@ -135,5 +135,7 @@
   "createedit.card.multiple_greens_required": "Mutliple greens required",
   "createedit.card.green": "Green cards",
   "createedit.card.hide_info": "Hide card information?",
-  "createedit.card.start_frozen": "Lock starts frozen?"
+  "createedit.card.start_frozen": "Lock starts frozen?",
+
+  "createedit.create": "Create lock!"
 }

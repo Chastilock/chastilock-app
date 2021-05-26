@@ -4,8 +4,9 @@ import { Divider, Layout, Icon, TopNavigation, TopNavigationAction, Toggle, Inpu
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
-import { Text, TextType, FormGroup, TitleGroup, useTranslation, ButtonSelection, NumberSelection, MaxMinFormGroup } from '@chastilock/components'
+import { Text, TextType, FormGroup, TitleGroup, useTranslation, ButtonSelection, NumberSelection, MaxMinFormGroup, FormButton } from '@chastilock/components'
 import { useDispatch } from '@chastilock/state'
+import createOriginalLock, { CreateLockRequest } from '@chastilock/api/actions/createOriginalLock'
 
 const CloseIcon = (props: any): React.ReactElement => (
   <Icon {...props} name="close-outline" />
@@ -41,7 +42,7 @@ const CardPicker = React.memo((props: { max: number, min: number, setMax: (n: nu
 const lockChanceRegularities = [['24h', 86400], ['12h', 43200], ['6h', 21600], ['3h', 10800], ['1h', 3600], ['30m', 1800], ['15m', 900], ['1m', 60]].map(regularity => ({
   value: regularity[0] as string,
   text: `createedit.card.chance_regularity.option.${regularity[0]}`,
-  time: regularity[1]
+  time: regularity[1] as number
 }))
 const ChanceRegularity = React.memo((props: { value: string, set: (a: any) => void }): React.ReactElement => (
   <FormGroup text="createedit.card.chance_regularity.label" centered>
@@ -117,6 +118,56 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
       onOk: () => navigation.goBack(),
       onCancel: () => {}
     }))
+  }
+
+  const createLock = (): void => {
+    const lockRequest: CreateLockRequest = {
+      LockName: lockName,
+      Shared: lockIsShared,
+      Variable_Max_Greens: lockGreenMax,
+      Variable_Max_Reds: lockRedMax,
+      Variable_Max_Freezes: lockFreezeMax,
+      Variable_Max_Doubles: lockDoubleMax,
+      Variable_Max_Stickies: lockStickyMax,
+      Variable_Max_AddRed: lockYellowAddMax,
+      Variable_Max_RemoveRed: lockYellowRemoveMax,
+      Variable_Max_RandomRed: lockYellowRandomMax,
+      Variable_Min_Greens: lockGreenMin,
+      Variable_Min_Reds: lockRedMin,
+      Variable_Min_Freezes: lockFreezeMin,
+      Variable_Min_Doubles: lockDoubleMin,
+      Variable_Min_Stickies: lockStickyMin,
+      Variable_Min_AddRed: lockYellowAddMin,
+      Variable_Min_RemoveRed: lockYellowRemoveMin,
+      Variable_Min_RandomRed: lockYellowRandomMin,
+      Chance_Period: lockChanceRegularity.time,
+      Cumulative: lockIsCumulative,
+      Multiple_Greens_Required: lockMultipleGreensRequired,
+      Hide_Card_Info: lockHideCardInformation,
+      Allow_Fakes: lockAllowFakeCopies,
+      Min_Fakes: lockFakeCopiesMin,
+      Max_Fakes: lockFakeCopiesMax,
+      Auto_Resets_Enabled: false,
+      Reset_Frequency: 0,
+      Max_Resets: 0,
+      Checkins_Enabled: lockRequireCheckins,
+      Checkins_Frequency: lockCheckinFrequency,
+      Checkins_Window: lockCheckinWindow,
+      Allow_Buyout: false,
+      Start_Lock_Frozen: lockStartFrozen,
+      Disable_Keyholder_Decision: false,
+      Limit_Users: lockLimitUsers,
+      User_Limit_Amount: lockMaxUsers,
+      Block_Test_Locks: lockBlockTest,
+      Block_User_Rating_Enabled: lockBlockLowRating,
+      Block_User_Rating: lockMinRatingRequired,
+      Block_Already_Locked: lockBlockAlreadyLocked,
+      Block_Stats_Hidden: lockBlockStatsHidden,
+      Only_Accept_Trusted: lockRequireTrusted,
+      Require_DM: lockRequireDm
+    }
+
+    dispatch(createOriginalLock(lockRequest).execute)
   }
 
   const CloseAction = (): React.ReactElement => (
@@ -227,6 +278,7 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
               <Toggle checked={lockStartFrozen} onChange={() => lockSetStartFrozen(!lockStartFrozen)} />
             </FormGroup>
           </TitleGroup>
+          <FormButton onPress={createLock}>{translate('createedit.create')}</FormButton>
         </Layout>
       </ScrollView>
     </SafeAreaView>
