@@ -12,7 +12,9 @@ export const sendAction = (action: ActionType, newState: any): void => {
   if (devTools === null) { return }
 
   // Redact translations, since they only clutter in debug view
-  newState.i18n.translations = {}
+  newState.i18n.translations = {
+    info: 'translations are redacted in dev tools'
+  }
 
   devTools.send(action, newState)
 }
