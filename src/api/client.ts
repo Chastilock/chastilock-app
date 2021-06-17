@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import Constants from 'expo-constants'
 
@@ -10,7 +10,6 @@ export const AUTH_VARIABLES = {
 export const httpLink = createHttpLink({
   uri: Constants.manifest.extra.backendEndpoint,
   fetch: async function (): Promise<Response> {
-    console.log(arguments)
     const parsedBody = JSON.parse(arguments[1].body)
     parsedBody.APIKey = AUTH_VARIABLES.apiKey
     parsedBody.APISecret = AUTH_VARIABLES.apiSecret
@@ -19,6 +18,20 @@ export const httpLink = createHttpLink({
 
     return await fetch.apply(null, arguments as any)
   }
+})
+
+const authLink = new ApolloLink((operation, forward) => {
+  const accessToken = operation.getContext().accessToken as string
+
+  operation.setContext((_: any) => {
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        authorization: accessToken !== undefined ? `Bearer ${accessToken}` : ''
+      }
+    }
+  })
+  return forward(operation)
 })
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -35,7 +48,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 export const client = new ApolloClient({
-  link: errorLink.concat(httpLink),
+  link: errorLink.concat(authLink.concat(httpLink)),
   cache: new InMemoryCache()
 })
 

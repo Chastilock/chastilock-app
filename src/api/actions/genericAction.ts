@@ -41,16 +41,17 @@ export const createAction = (options: ApiActionOptions): ApiAction => {
       })
 
       const variables = JSON.parse(JSON.stringify(options.getVariables !== undefined ? options.getVariables() : {}))
+      const context: any = {}
 
       if (state?.account.token !== undefined) {
-        console.log('Access token set')
-        variables._ACCESS_TOKEN = state.account.token
+        context.accessToken = state.account.token
       }
 
       try {
         const response = await client.mutate({
           mutation: gql(options.query),
-          variables
+          variables,
+          context
         })
 
         options.handleResponse({
