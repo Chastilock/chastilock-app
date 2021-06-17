@@ -7,6 +7,7 @@ export default (username?: string, password?: string): ApiAction => createAction
   query: `
     mutation Login($username: String!, $password: String!) {
       login(Username: $username, Password: $password) {
+        Token,
         User { UUID, User_ID }
       }
     }
@@ -24,6 +25,7 @@ export default (username?: string, password?: string): ApiAction => createAction
     options.dispatch({
       type: options.KEY_RECEIVE,
       response: options.response,
+      token: options.response.data.login.Token,
       user
     })
   }

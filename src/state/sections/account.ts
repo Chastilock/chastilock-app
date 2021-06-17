@@ -7,6 +7,7 @@ export interface AccountState {
   isSetUp: boolean
   user?: User
   temporaryUser?: User
+  token?: String
   signInError?: string
 }
 
@@ -46,12 +47,14 @@ const accountReducer = (action: ActionType, state: AccountState = initialState):
     case apiActions.loginAnon().KEY_RECEIVE:
       return {
         ...state,
-        user: action.user
+        user: action.user,
+        token: action.token
       }
     case apiActions.login().KEY_RECEIVE:
       return {
         ...state,
-        user: action.user
+        user: action.user,
+        token: action.token
       }
     case apiActions.login().KEY_ERROR:
       return {

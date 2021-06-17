@@ -6,6 +6,7 @@ export default (uuid?: string): ApiAction => createAction({
   query: `
     mutation LoginAnon($uuid: String!) {
       loginAnon(UUID: $uuid) {
+        Token,
         User { UUID, User_ID }
       }
     }
@@ -22,6 +23,7 @@ export default (uuid?: string): ApiAction => createAction({
     options.dispatch({
       type: options.KEY_RECEIVE,
       response: options.response,
+      token: options.response.data.loginAnon.Token,
       user
     })
   }

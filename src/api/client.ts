@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import Constants from 'expo-constants'
 
@@ -20,6 +20,20 @@ export const httpLink = createHttpLink({
   }
 })
 
+const authLink = new ApolloLink((operation, forward) => {
+  const accessToken = operation.getContext().accessToken as string
+
+  operation.setContext((_: any) => {
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        authorization: accessToken !== undefined ? `Bearer ${accessToken}` : ''
+      }
+    }
+  })
+  return forward(operation)
+})
+
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors !== undefined) {
     graphQLErrors.forEach(({ message, locations, path }) =>
@@ -34,7 +48,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 export const client = new ApolloClient({
-  link: errorLink.concat(httpLink),
+  link: errorLink.concat(authLink.concat(httpLink)),
   cache: new InMemoryCache()
 })
 
