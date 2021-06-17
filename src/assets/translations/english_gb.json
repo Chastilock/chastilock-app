@@ -137,5 +137,6 @@
   "createedit.card.hide_info": "Hide card information?",
   "createedit.card.start_frozen": "Lock starts frozen?",
 
-  "createedit.create": "Create lock!"
+  "createedit.create": "Create lock!",
+  "createedit.error.title": "Error"
 }
