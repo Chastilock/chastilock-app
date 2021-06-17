@@ -43,10 +43,11 @@ export const StateProvider = (props: StateProviderProps): React.ReactElement => 
 
 const useDispatch = (): (action: any) => any => {
   const dispatch = useUpdate()
+  const state = useTrackedState()
 
   const dispatchProxy = React.useMemo(() => (action: ActionType | DispatchType): void => {
     if (typeof action === 'function') {
-      return action(dispatchProxy)
+      return action(dispatchProxy, state)
     } else {
       return (dispatch as any)(action)
     }

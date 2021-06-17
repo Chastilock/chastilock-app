@@ -13,7 +13,8 @@ export const getStoredState = (state: StateType): any => ({
   settings: state.settings,
   account: {
     user: state.account.user,
-    isSetUp: state.account.isSetUp
+    isSetUp: state.account.isSetUp,
+    token: state.account.token
   }
 })
 
