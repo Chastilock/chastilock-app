@@ -39,7 +39,7 @@ const CardPicker = React.memo((props: { max: number, min: number, setMax: (n: nu
   </MaxMinFormGroup>
 ))
 
-const lockChanceRegularities = [['24h', 86400], ['12h', 43200], ['6h', 21600], ['3h', 10800], ['1h', 3600], ['30m', 1800], ['15m', 900], ['1m', 60]].map(regularity => ({
+const lockChanceRegularities = [['24h', 1440], ['12h', 720], ['6h', 360], ['3h', 180], ['1h', 60], ['30m', 30], ['15m', 15], ['1m', 1]].map(regularity => ({
   value: regularity[0] as string,
   text: `createedit.card.chance_regularity.option.${regularity[0]}`,
   time: regularity[1] as number
