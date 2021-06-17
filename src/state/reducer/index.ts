@@ -71,7 +71,10 @@ const rootReducer = (state: any = { status: 'initializing' }, action: any = { ty
     })
     newState.status = StateStatus.CONNECTING
   }
-  Storage.store(newState).then(() => {}).catch(e => console.log('Failed to store data', e))
+  // Only save state if we get to ready state
+  if (newState.status === StateStatus.READY) {
+    Storage.store(newState).then(() => {}).catch(e => console.log('Failed to store data', e))
+  }
 
   // After network is connected
   if (action.type === apiActions.checkStatus().KEY_RECEIVE) {
