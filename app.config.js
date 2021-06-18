@@ -1,17 +1,19 @@
 import 'dotenv/config'
 
+const version = '1.0.0'
+
 export default {
   name: 'Chastilock',
   icon: './images/logo.png',
-  version: '1.0.0',
+  version,
   slug: 'chastilock',
   ios: {
-    bundleIdentifier: 'com.github.chastilock',
-    buildNumber: '1.0.0'
+    bundleIdentifier: 'org.chastilock',
+    buildNumber: process.env.GITHUB_RUN_NUMBER ? process.env.GITHUB_RUN_NUMBER : 1
   },
   android: {
-    package: 'com.github.chastilock',
-    versionCode: 1
+    package: 'org.chastilock',
+    versionCode: process.env.GITHUB_RUN_NUMBER ? process.env.GITHUB_RUN_NUMBER : 1
   },
   extra: {
     backendEndpoint: process.env.BACKEND_ENDPOINT,
