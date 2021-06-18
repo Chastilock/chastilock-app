@@ -1,7 +1,7 @@
 import React from 'react'
-import { ActionType } from './reducer'
+import { ActionType, StateType } from './reducer'
 
-export type DispatchType = (action: ActionType | DispatchType) => void
+export type DispatchType = (action: ActionType | DispatchType, state?: StateType) => void
 
 const useAsyncReducer = (reducer: any, initialState: any): [any, (action: any) => void] => {
   const [state, dispatch] = React.useReducer(reducer, initialState)

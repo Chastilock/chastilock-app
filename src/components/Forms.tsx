@@ -45,7 +45,7 @@ export const FormButton = (props: any): React.ReactElement => (
 
 interface SettingsGroupProps {
   title: string
-  children?: React.ReactElement | React.ReactElement[]
+  children?: React.ReactNode
 }
 export const TitleGroup = (props: SettingsGroupProps): React.ReactElement => (
   <View>

@@ -1,4 +1,5 @@
 import { FetchResult, gql } from '@apollo/client'
+import { StateType } from '@chastilock/state/reducer'
 
 import { DispatchType } from '@chastilock/state/useAsyncReducer'
 import client from '../client'
@@ -9,7 +10,7 @@ export interface ApiAction {
   KEY_RECEIVE: string
   KEY_ERROR: string
 
-  execute: (dispatch: DispatchType) => Promise<any>
+  execute: (dispatch: DispatchType, getState?: any) => Promise<any>
 }
 
 export interface ApiActionOptions {
@@ -34,15 +35,23 @@ export const createAction = (options: ApiActionOptions): ApiAction => {
     KEY_RECEIVE,
     KEY_ERROR,
 
-    execute: async (dispatch: DispatchType) => {
+    execute: async (dispatch: DispatchType, state: StateType) => {
       dispatch({
         type: KEY_REQUEST
       })
 
+      const variables = JSON.parse(JSON.stringify(options.getVariables !== undefined ? options.getVariables() : {}))
+      const context: any = {}
+
+      if (state?.account.token !== undefined) {
+        context.accessToken = state.account.token
+      }
+
       try {
         const response = await client.mutate({
           mutation: gql(options.query),
-          variables: options.getVariables !== undefined ? options.getVariables() : undefined
+          variables,
+          context
         })
 
         options.handleResponse({

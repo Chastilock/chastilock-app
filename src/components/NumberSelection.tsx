@@ -42,7 +42,7 @@ export const NumberSelection = (props: NumberSelectionProps): React.ReactElement
   return (
     <View style={{ flexDirection: 'row' }}>
       <Button size="tiny" style={{ height: 40 }} onPress={() => updateNumber(number - 1)} disabled={props.min !== undefined ? number === props.min : false}>-</Button>
-      <Input style={{ width: 60, textAlign: 'center' }} keyboardType="numeric" value={isEmpty ? '' : number.toString()} onChange={e => {
+      <Input textStyle={{ textAlign: 'center', width: 40, marginLeft: 0, marginRight: 0 }} style={{ width: 60, height: 40, textAlign: 'center' }} keyboardType="numeric" value={isEmpty ? '' : number.toString()} onChange={e => {
         const newValue = (e as any).target.value
 
         if (newValue === '') {

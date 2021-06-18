@@ -64,3 +64,5 @@ web-build/
 
 # TypeScript
 *.tsbuildinfo
+
+/.env
