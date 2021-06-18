@@ -9,7 +9,7 @@ export default {
   slug: 'chastilock',
   ios: {
     bundleIdentifier: 'org.chastilock',
-    buildNumber: `${version}-${process.env.GITHUB_RUN_NUMBER ? parseInt(process.env.GITHUB_RUN_NUMBER) : 1}`
+    buildNumber: `${version}.${process.env.GITHUB_RUN_NUMBER ? parseInt(process.env.GITHUB_RUN_NUMBER) : 1}`
   },
   android: {
     package: 'org.chastilock',
