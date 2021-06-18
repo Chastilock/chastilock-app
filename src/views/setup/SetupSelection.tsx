@@ -3,8 +3,6 @@ import { TopNavigation, Divider, Button } from '@ui-kitten/components'
 import { SafeAreaView, View } from 'react-native'
 
 import { Text, TextType } from '@chastilock/components'
-import { useTrackedState } from '@chastilock/state'
-import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
 
 export interface SetupSelectionProps {
   onRegister: () => void
@@ -13,10 +11,8 @@ export interface SetupSelectionProps {
   onRecover: () => void
 }
 const SetupSelection = (props: SetupSelectionProps): React.ReactElement => {
-  const state = useTrackedState()
-
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: settingsSelectors.getThemeBackground(state.settings) }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
         title={() => <Text category={TextType.HEADING6} translationKey='main.title' />}
         alignment="center"

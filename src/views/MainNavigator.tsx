@@ -10,11 +10,8 @@ import { useTrackedState } from '@chastilock/state'
 
 const { Navigator, Screen } = createStackNavigator()
 
-interface HomeNavigatorProps {
-  backgroundColor: string
-}
-const HomeNavigator = (props: HomeNavigatorProps): React.ReactElement => (
-  <View style={{ flex: 1, backgroundColor: props.backgroundColor }}>
+const HomeNavigator = (): React.ReactElement => (
+  <View style={{ flex: 1 }}>
     <Navigator headerMode='none' mode='modal'>
       <Screen name='Home' component={Home}/>
       <Screen name='Settings' component={Settings}/>
@@ -29,7 +26,7 @@ const AppNavigator = (): React.ReactElement => {
 
   return (
     <NavigationContainer theme={theme}>
-      <HomeNavigator backgroundColor={state.settings.theme === 'dark' ? '#222B45' : '#FFFFFF'} />
+      <HomeNavigator />
     </NavigationContainer>
   )
 }

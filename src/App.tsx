@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react'
-import { StatusBar, Text, Platform } from 'react-native'
+import { StatusBar, Text, Platform, ScrollView, View } from 'react-native'
 import * as eva from '@eva-design/eva'
 import { ApplicationProvider, IconRegistry, ThemeType } from '@ui-kitten/components'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
@@ -14,6 +14,7 @@ import ConfirmationPopup, { ConfirmationPopupProps } from '@chastilock/views/com
 import SetupView from '@chastilock/views/setup/SetupView'
 import customMapping from './mapping.json'
 import { useTranslation } from './components'
+import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
 
 interface AppContentProps {
   isSetUp: boolean
@@ -21,13 +22,15 @@ interface AppContentProps {
   modalVisible: boolean
 }
 const AppContent = memo((props: AppContentProps): React.ReactElement => {
+  const state = useTrackedState()
+
   return (
-    <>
+    <ScrollView style={{ backgroundColor: settingsSelectors.getThemeBackground(state.settings) }} contentContainerStyle={{ minHeight: '100%' }} >
       <StatusBar backgroundColor="black" barStyle="light-content" />
-      {props.isSetUp && <MainNavigator />}
+      {props.isSetUp && <View style={{ flex: 1 }}><MainNavigator /></View>}
       {!props.isSetUp && <SetupView />}
       <ConfirmationPopup {...props.modalProps} isVisible={props.modalVisible} />
-    </>
+    </ScrollView>
   )
 })
 
