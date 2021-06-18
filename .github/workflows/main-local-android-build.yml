@@ -41,6 +41,9 @@ jobs:
           EXPO_ANDROID_KEY_PASSWORD: ${{ secrets.EXPO_ANDROID_KEY_PASSWORD }}
           EXPO_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
           EXPO_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
+          BACKEND_ENDPOINT: ${{ secrets.CFG_BACKEND_ENDPOINT }}
+          BACKEND_API_KEY: ${{ secrets.CFG_BACKEND_API_KEY }}
+          BACKEND_API_SECRET: ${{ secrets.CFG_BACKEND_API_SECRET }}
       - uses: actions/upload-artifact@v2
         with:
           name: chastilock
