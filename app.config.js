@@ -13,7 +13,8 @@ export default {
   },
   android: {
     package: 'org.chastilock',
-    versionCode: process.env.GITHUB_RUN_NUMBER ? parseInt(process.env.GITHUB_RUN_NUMBER) : 1
+    versionCode: process.env.GITHUB_RUN_NUMBER ? parseInt(process.env.GITHUB_RUN_NUMBER) : 1,
+    permissions: []
   },
   extra: {
     backendEndpoint: process.env.BACKEND_ENDPOINT,
