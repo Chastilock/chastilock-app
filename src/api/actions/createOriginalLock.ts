@@ -1,5 +1,4 @@
 import { createAction, ApiAction } from './genericAction'
-import { User } from '@chastilock/state/sections/account'
 
 export interface CreateLockRequest {
   LockName: string
@@ -12,6 +11,7 @@ export interface CreateLockRequest {
   Variable_Max_AddRed: number
   Variable_Max_RemoveRed: number
   Variable_Max_RandomRed: number
+  Variable_Max_Resets: number
   Variable_Min_Greens: number
   Variable_Min_Reds: number
   Variable_Min_Freezes: number
@@ -20,6 +20,7 @@ export interface CreateLockRequest {
   Variable_Min_AddRed: number
   Variable_Min_RemoveRed: number
   Variable_Min_RandomRed: number
+  Variable_Min_Resets: number
   Chance_Period: number
   Cumulative: boolean
   Multiple_Greens_Required: boolean
@@ -61,6 +62,7 @@ export default (request: CreateLockRequest): ApiAction => createAction({
       $Variable_Max_AddRed: Int!,
       $Variable_Max_RemoveRed: Int!,
       $Variable_Max_RandomRed: Int!,
+      $Variable_Max_Resets: Int!,
       $Variable_Min_Greens: Int!,
       $Variable_Min_Reds: Int!,
       $Variable_Min_Freezes: Int!,
@@ -69,6 +71,7 @@ export default (request: CreateLockRequest): ApiAction => createAction({
       $Variable_Min_AddRed: Int!,
       $Variable_Min_RemoveRed: Int!,
       $Variable_Min_RandomRed: Int!,
+      $Variable_Min_Resets: Int!,
       $Chance_Period: Int!,
       $Cumulative: Boolean!,
       $Multiple_Greens_Required: Boolean!,
@@ -80,8 +83,8 @@ export default (request: CreateLockRequest): ApiAction => createAction({
       $Reset_Frequency: Int,
       $Max_Resets: Int,
       $Checkins_Enabled: Boolean!,
-      $Checkins_Frequency: Int,
-      $Checkins_Window: Int,
+      $Checkins_Frequency: Float,
+      $Checkins_Window: Float,
       $Allow_Buyout: Boolean!,
       $Start_Lock_Frozen: Boolean!,
       $Disable_Keyholder_Decision: Boolean!,
@@ -106,6 +109,7 @@ export default (request: CreateLockRequest): ApiAction => createAction({
         Variable_Max_AddRed: $Variable_Max_AddRed,
         Variable_Max_RemoveRed: $Variable_Max_RemoveRed,
         Variable_Max_RandomRed: $Variable_Max_RandomRed,
+        Variable_Max_Resets: $Variable_Max_Resets,
         Variable_Min_Greens: $Variable_Min_Greens,
         Variable_Min_Reds: $Variable_Min_Reds,
         Variable_Min_Freezes: $Variable_Min_Freezes,
@@ -114,6 +118,7 @@ export default (request: CreateLockRequest): ApiAction => createAction({
         Variable_Min_AddRed: $Variable_Min_AddRed,
         Variable_Min_RemoveRed: $Variable_Min_RemoveRed,
         Variable_Min_RandomRed: $Variable_Min_RandomRed,
+        Variable_Min_Resets: $Variable_Min_Resets,
         Chance_Period: $Chance_Period,
         Cumulative: $Cumulative,
         Multiple_Greens_Required: $Multiple_Greens_Required,
@@ -146,15 +151,12 @@ export default (request: CreateLockRequest): ApiAction => createAction({
   `,
   getVariables: () => request,
   handleResponse: (options) => {
-    const user: User = {
-      userId: options.response.data.loginAnon.User.User_ID,
-      uuid: options.response.data.loginAnon.User.UUID
-    }
+    const loadedLock: any = options.response.data.createOriginalLock
 
     options.dispatch({
       type: options.KEY_RECEIVE,
       response: options.response,
-      user
+      loadedLock
     })
   }
 })

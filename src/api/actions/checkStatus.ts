@@ -3,13 +3,13 @@ import { createAction, ApiAction } from './genericAction'
 export default (userId?: number, token?: string): ApiAction => createAction({
   actionName: 'status',
   query: `
-    query${userId !== undefined ? '($userId: Int!)' : ''} {
+    query {
       __schema {
         queryType {
           name
         }
       }${userId !== undefined ? `,
-      User(id: $userId) {
+      me {
         User_ID,
         UUID
       }` : ''},
@@ -21,7 +21,6 @@ export default (userId?: number, token?: string): ApiAction => createAction({
     })
   },
   getVariables: () => ({
-    userId,
     _authToken: token
   })
 })
