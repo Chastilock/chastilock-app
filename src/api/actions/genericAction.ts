@@ -40,11 +40,15 @@ export const createAction = (options: ApiActionOptions): ApiAction => {
         type: KEY_REQUEST
       })
 
-      const variables = JSON.parse(JSON.stringify(options.getVariables !== undefined ? options.getVariables() : {}))
+      const variables = options.getVariables !== undefined ? options.getVariables() : {}
       const context: any = {}
 
       if (state?.account.token !== undefined) {
         context.accessToken = state.account.token
+      }
+
+      if (variables._authToken !== undefined) {
+        context.accessToken = variables._authToken
       }
 
       try {

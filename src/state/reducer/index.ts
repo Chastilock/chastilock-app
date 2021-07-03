@@ -39,12 +39,13 @@ export const reducers = [
   global
 ]
 
-export const initializeAction = async (dispatch: (action: any) => void): Promise<void> => {
-  dispatch({ type: ActionTypes.Global.initialize })
-
+export const initializeAction = async (dispatch: (action: any) => void): Promise<StateType> => {
   const state = await Storage.load()
   dispatch({ type: ActionTypes.Global.loadState, state })
+
+  dispatch({ type: ActionTypes.Global.initialize })
   dispatch(i18nActions.initialLoad())
+  return state
 }
 
 const rootReducer = (state: any = { status: 'initializing' }, action: any = { type: '' }): StateType => {

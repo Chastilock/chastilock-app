@@ -7,7 +7,7 @@ export interface AccountState {
   isSetUp: boolean
   user?: User
   temporaryUser?: User
-  token?: String
+  token?: string
   signInError?: string
 }
 

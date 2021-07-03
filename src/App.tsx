@@ -6,7 +6,7 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons'
 import { useFonts } from 'expo-font'
 
 import { useDispatch, useTrackedState } from '@chastilock/state'
-import { initializeAction, StateStatus } from '@chastilock/state/reducer'
+import { initializeAction, StateStatus, StateType } from '@chastilock/state/reducer'
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
 import apiActions from '@chastilock/api/actions'
 import MainNavigator from '@chastilock/views/MainNavigator'
@@ -38,10 +38,12 @@ const App = (): React.ReactElement | null => {
 
   useEffect(() => {
     if (state.status === StateStatus.UNINITIALIZED) {
-      dispatch(initializeAction)
-      apiActions.checkStatus().execute(dispatch) as any
+      dispatch(initializeAction).then((result: StateType) => {
+        console.log(result)
+        apiActions.checkStatus(parseInt(result.account.user?.userId ?? '0'), result.account.token).execute(dispatch) as any
+      })
     }
-  })
+  }, [state.status])
 
   useEffect(() => {
     if (state.status === StateStatus.NETWORK_ERROR) {
