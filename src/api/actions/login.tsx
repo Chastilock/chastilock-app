@@ -8,7 +8,15 @@ export default (username?: string, password?: string): ApiAction => createAction
     mutation Login($username: String!, $password: String!) {
       login(Username: $username, Password: $password) {
         Token,
-        User { UUID, User_ID }
+        User {
+          User_ID,
+          UUID,
+          Email,
+          Username,
+          Keyholder,
+          Lockee,
+          Emergency_Keys
+        }
       }
     }
   `,
@@ -19,7 +27,12 @@ export default (username?: string, password?: string): ApiAction => createAction
   handleResponse: (options) => {
     const user: User = {
       userId: options.response.data.login.User.User_ID,
-      uuid: options.response.data.login.User.UUID
+      uuid: options.response.data.login.User.UUID,
+      email: options.response.data.login.User.Email,
+      username: options.response.data.login.User.Username,
+      isKeyholder: options.response.data.login.User.Keyholder,
+      isLockee: options.response.data.login.User.Lockee,
+      emergencyKeys: options.response.data.login.User.Emergency_Keys
     }
 
     options.dispatch({

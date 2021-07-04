@@ -7,7 +7,13 @@ export default (uuid?: string): ApiAction => createAction({
     mutation LoginAnon($uuid: String!) {
       loginAnon(UUID: $uuid) {
         Token,
-        User { UUID, User_ID }
+        User {
+          User_ID,
+          UUID,
+          Keyholder,
+          Lockee,
+          Emergency_Keys
+        }
       }
     }
   `,
@@ -16,8 +22,11 @@ export default (uuid?: string): ApiAction => createAction({
   }),
   handleResponse: (options) => {
     const user: User = {
-      userId: options.response.data.loginAnon.User.User_ID,
-      uuid: options.response.data.loginAnon.User.UUID
+      userId: options.response.data.me.User_ID,
+      uuid: options.response.data.me.UUID,
+      isKeyholder: options.response.data.me.Keyholder,
+      isLockee: options.response.data.me.Lockee,
+      emergencyKeys: options.response.data.me.Emergency_Keys
     }
 
     options.dispatch({

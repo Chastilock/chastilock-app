@@ -18,9 +18,10 @@
 
   "settings.account": "Account",
   "settings.account.username": "Username",
-  "settings.account.username.placeholder": "Only on regular",
+  "settings.account.username.placeholder": "Username",
   "settings.account.type": "Account type",
   "settings.account.type.anonymous": "Anonymous",
+  "settings.account.type.regular": "Regular",
   "settings.account.show_user_id": "Show my user id",
   "settings.account.upgrade": "Upgrade account",
   "settings.account.ck_migrate": "Start migration from ChastiKey",

@@ -16,7 +16,9 @@ export interface User {
   uuid: string
   email?: string
   username?: string
-  token?: string
+  isKeyholder: boolean
+  isLockee: boolean
+  emergencyKeys: number
 }
 
 export const initialState: AccountState = {
@@ -60,6 +62,11 @@ const accountReducer = (action: ActionType, state: AccountState = initialState):
       return {
         ...state,
         signInError: action.error.message
+      }
+    case apiActions.checkStatus().KEY_RECEIVE:
+      return {
+        ...state,
+        user: action.user
       }
   }
   return state

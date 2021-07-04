@@ -7,14 +7,21 @@ export default createAction({
   query: `
     mutation CreateUserAnon {
       createUserAnon {
-        UUID, User_ID
+        User_ID,
+        UUID,
+        Keyholder,
+        Lockee,
+        Emergency_Keys
       }
     }
   `,
   handleResponse: (options) => {
     const user: User = {
-      userId: options.response.data.createUserAnon.User_ID,
-      uuid: options.response.data.createUserAnon.UUID
+      userId: options.response.data.me.User_ID,
+      uuid: options.response.data.me.UUID,
+      isKeyholder: options.response.data.me.Keyholder,
+      isLockee: options.response.data.me.Lockee,
+      emergencyKeys: options.response.data.me.Emergency_Keys
     }
 
     options.dispatch({
