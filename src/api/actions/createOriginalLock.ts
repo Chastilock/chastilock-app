@@ -1,3 +1,4 @@
+import { CreatedLock } from '@chastilock/state/sections/createdlock'
 import { createAction, ApiAction } from './genericAction'
 
 export interface CreateLockDTO {
@@ -31,32 +32,6 @@ export interface CreateLockDTO {
   Auto_Resets_Enabled: boolean
   Reset_Frequency: number
   Max_Resets: number
-  Checkins_Enabled: boolean
-  Checkins_Frequency: number
-  Checkins_Window: number
-  Allow_Buyout: boolean
-  Start_Lock_Frozen: boolean
-  Disable_Keyholder_Decision: boolean
-  Limit_Users: boolean
-  User_Limit_Amount: number
-  Block_Test_Locks: boolean
-  Block_User_Rating_Enabled: boolean
-  Block_User_Rating: number
-  Block_Already_Locked: boolean
-  Block_Stats_Hidden: boolean
-  Only_Accept_Trusted: boolean
-  Require_DM: boolean
-}
-
-export interface CreatedLockDTO {
-  Lock_ID: string
-  Shared: boolean
-  Shared_Code: string
-  Lock_Name: string
-  Disabled: boolean
-  Allow_Fakes: boolean
-  Min_Fakes: number
-  Max_Fakes: number
   Checkins_Enabled: boolean
   Checkins_Frequency: number
   Checkins_Window: number
@@ -199,7 +174,7 @@ export default (request: CreateLockDTO): ApiAction => createAction({
   `,
   getVariables: () => request,
   handleResponse: (options) => {
-    const loadedLock: CreatedLockDTO = options.response.data.createOriginalLock
+    const loadedLock: CreatedLock = options.response.data.createOriginalLock
 
     options.dispatch({
       type: options.KEY_RECEIVE,

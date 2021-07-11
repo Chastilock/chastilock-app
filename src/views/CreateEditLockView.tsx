@@ -7,6 +7,7 @@ import { actions as confirmationActions } from '@chastilock/state/sections/confi
 import { Text, TextType, FormGroup, TitleGroup, useTranslation, ButtonSelection, NumberSelection, MaxMinFormGroup, FormButton } from '@chastilock/components'
 import { useDispatch } from '@chastilock/state'
 import createOriginalLock, { CreateLockDTO } from '@chastilock/api/actions/createOriginalLock'
+import { actions as createdLockActions, CreatedLock } from '@chastilock/state/sections/createdlock'
 
 const CloseIcon = (props: any): React.ReactElement => (
   <Icon {...props} name="close-outline" />
@@ -169,8 +170,28 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
       Require_DM: lockRequireDm
     }
 
-    dispatch(createOriginalLock(lockRequest).execute).then((e: any) => {
-      console.log(e)
+    dispatch(createOriginalLock(lockRequest).execute).then((lock: CreatedLock) => {
+      dispatch(createdLockActions.add(lock))
+
+      const navigateAndHighlight = (): void => {
+        navigation.goBack()
+        navigation.navigate('MyLocks')
+      }
+
+      if (!lockRequest.Shared) {
+        dispatch(confirmationActions.showConfirmation({
+          title: translate('createedit.load_now.title'),
+          text: translate('createedit.load_now.text'),
+          onYes: () => {
+            navigation.goBack()
+          },
+          onNo: () => {
+            navigateAndHighlight()
+          }
+        }))
+      } else {
+        navigateAndHighlight()
+      }
     }).catch((e: Error) => {
       dispatch(confirmationActions.showConfirmation({
         title: translate('createedit.error.title'),

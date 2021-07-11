@@ -31,7 +31,7 @@ const ConfirmationPopup = (props: ConfirmationPopupProps): React.ReactElement =>
     props.onCancel?.()
   }
 
-  /* const yes = (): void => {
+  const yes = (): void => {
     close()
     props.onYes?.()
   }
@@ -39,7 +39,7 @@ const ConfirmationPopup = (props: ConfirmationPopupProps): React.ReactElement =>
   const no = (): void => {
     close()
     props.onNo?.()
-  } */
+  }
 
   const ok = (): void => {
     close()
@@ -68,6 +68,8 @@ const ConfirmationPopup = (props: ConfirmationPopupProps): React.ReactElement =>
         <Text category={TextType.HEADING5} center>{props.title}</Text>
         {props.text !== undefined && <Text center>{props.text}</Text>}
         {props.onOk !== undefined && <Button onPress={ok} style={{ marginTop: 10 }}>{translator('confirmation.ok')}</Button>}
+        {props.onYes !== undefined && <Button onPress={yes} style={{ marginTop: 10 }}>{translator('confirmation.yes')}</Button>}
+        {props.onNo !== undefined && <Button onPress={no} style={{ marginTop: 10 }}>{translator('confirmation.no')}</Button>}
         {props.onCancel !== undefined && <Button status="basic" onPress={cancel} style={{ marginTop: 10 }}>{translator('confirmation.cancel')}</Button>}
       </Card>
     </Modal>
