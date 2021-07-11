@@ -206,5 +206,7 @@ export default (request: CreateLockDTO): ApiAction => createAction({
       response: options.response,
       loadedLock
     })
+
+    return loadedLock
   }
 })

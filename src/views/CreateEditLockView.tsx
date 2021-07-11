@@ -169,7 +169,9 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
       Require_DM: lockRequireDm
     }
 
-    dispatch(createOriginalLock(lockRequest).execute).catch((e: Error) => {
+    dispatch(createOriginalLock(lockRequest).execute).then((e: any) => {
+      console.log(e)
+    }).catch((e: Error) => {
       dispatch(confirmationActions.showConfirmation({
         title: translate('createedit.error.title'),
         text: e.message,
