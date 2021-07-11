@@ -1,6 +1,6 @@
 import { createAction, ApiAction } from './genericAction'
 
-export interface CreateLockRequest {
+export interface CreateLockDTO {
   LockName: string
   Shared: boolean
   Variable_Max_Greens: number
@@ -48,7 +48,33 @@ export interface CreateLockRequest {
   Require_DM: boolean
 }
 
-export default (request: CreateLockRequest): ApiAction => createAction({
+export interface CreatedLockDTO {
+  Lock_ID: string
+  Shared: boolean
+  Shared_Code: string
+  Lock_Name: string
+  Disabled: boolean
+  Allow_Fakes: boolean
+  Min_Fakes: number
+  Max_Fakes: number
+  Checkins_Enabled: boolean
+  Checkins_Frequency: number
+  Checkins_Window: number
+  Allow_Buyout: boolean
+  Start_Lock_Frozen: boolean
+  Disable_Keyholder_Decision: boolean
+  Limit_Users: boolean
+  User_Limit_Amount: number
+  Block_Test_Locks: boolean
+  Block_User_Rating_Enabled: boolean
+  Block_User_Rating: number
+  Block_Already_Locked: boolean
+  Block_Stats_Hidden: boolean
+  Only_Accept_Trusted: boolean
+  Require_DM: boolean
+}
+
+export default (request: CreateLockDTO): ApiAction => createAction({
   actionName: 'create_original_lock',
   query: `
     mutation CreateOriginalLock(
@@ -145,13 +171,35 @@ export default (request: CreateLockRequest): ApiAction => createAction({
         Only_Accept_Trusted: $Only_Accept_Trusted,
         Require_DM: $Require_DM
       ) {
-        Lock_ID
+        Lock_ID,
+        Shared,
+        Shared_Code,
+        Lock_Name,
+        Disabled,
+        Allow_Fakes,
+        Min_Fakes,
+        Max_Fakes,
+        Checkins_Enabled,
+        Checkins_Frequency,
+        Checkins_Window,
+        Allow_Buyout,
+        Start_Lock_Frozen,
+        Disable_Keyholder_Decision,
+        Limit_Users,
+        User_Limit_Amount,
+        Block_Test_Locks,
+        Block_User_Rating_Enabled,
+        Block_User_Rating,
+        Block_Already_Locked,
+        Block_Stats_Hidden,
+        Only_Accept_Trusted,
+        Require_DM
       }
     }
   `,
   getVariables: () => request,
   handleResponse: (options) => {
-    const loadedLock: any = options.response.data.createOriginalLock
+    const loadedLock: CreatedLockDTO = options.response.data.createOriginalLock
 
     options.dispatch({
       type: options.KEY_RECEIVE,

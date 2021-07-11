@@ -6,7 +6,7 @@ import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
 import { Text, TextType, FormGroup, TitleGroup, useTranslation, ButtonSelection, NumberSelection, MaxMinFormGroup, FormButton } from '@chastilock/components'
 import { useDispatch } from '@chastilock/state'
-import createOriginalLock, { CreateLockRequest } from '@chastilock/api/actions/createOriginalLock'
+import createOriginalLock, { CreateLockDTO } from '@chastilock/api/actions/createOriginalLock'
 
 const CloseIcon = (props: any): React.ReactElement => (
   <Icon {...props} name="close-outline" />
@@ -121,7 +121,7 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
   }
 
   const createLock = (): void => {
-    const lockRequest: CreateLockRequest = {
+    const lockRequest: CreateLockDTO = {
       LockName: lockName,
       Shared: lockIsShared,
       Variable_Max_Greens: lockGreenMax,
