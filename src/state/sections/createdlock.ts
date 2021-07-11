@@ -49,7 +49,7 @@ const createdLockReducer = (action: ActionType, state: CreatedLockState = initia
     case CreatedLockType.set: {
       return {
         ...state,
-        locks: state.locks,
+        locks: action.locks,
         isLoaded: true
       }
     }
@@ -73,7 +73,7 @@ export const actions = {
     lock
   }),
   set: (locks: CreatedLock[]): SetLocksAction => ({
-    type: CreatedLockType.add,
+    type: CreatedLockType.set,
     locks
   })
 }
