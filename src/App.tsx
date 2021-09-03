@@ -39,8 +39,15 @@ const App = (): React.ReactElement | null => {
   useEffect(() => {
     if (state.status === StateStatus.UNINITIALIZED) {
       dispatch(initializeAction).then((result: StateType) => {
-        console.log(result)
-        apiActions.checkStatus(parseInt(result.account.user?.userId ?? '0'), result.account.token).execute(dispatch) as any
+        // Only check status if a token is available
+        if (result.account?.token !== undefined) {
+          apiActions.checkStatus(parseInt(result.account?.user?.userId ?? '0'), result.account?.token).execute(dispatch) as any
+        } else {
+          // Fake that the check was successful
+          dispatch({
+            type: apiActions.checkStatus().KEY_RECEIVE
+          })
+        }
       })
     }
   }, [state.status])

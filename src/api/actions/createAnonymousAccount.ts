@@ -17,11 +17,11 @@ export default createAction({
   `,
   handleResponse: (options) => {
     const user: User = {
-      userId: options.response.data.me.User_ID,
-      uuid: options.response.data.me.UUID,
-      isKeyholder: options.response.data.me.Keyholder,
-      isLockee: options.response.data.me.Lockee,
-      emergencyKeys: options.response.data.me.Emergency_Keys
+      userId: options.response.data.createUserAnon.User_ID,
+      uuid: options.response.data.createUserAnon.UUID,
+      isKeyholder: options.response.data.createUserAnon.Keyholder,
+      isLockee: options.response.data.createUserAnon.Lockee,
+      emergencyKeys: options.response.data.createUserAnon.Emergency_Keys
     }
 
     options.dispatch({

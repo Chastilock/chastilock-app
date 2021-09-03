@@ -22,11 +22,11 @@ export default (uuid?: string): ApiAction => createAction({
   }),
   handleResponse: (options) => {
     const user: User = {
-      userId: options.response.data.me.User_ID,
-      uuid: options.response.data.me.UUID,
-      isKeyholder: options.response.data.me.Keyholder,
-      isLockee: options.response.data.me.Lockee,
-      emergencyKeys: options.response.data.me.Emergency_Keys
+      userId: options.response.data.loginAnon.User.User_ID,
+      uuid: options.response.data.loginAnon.User.UUID,
+      isKeyholder: options.response.data.loginAnon.User.Keyholder,
+      isLockee: options.response.data.loginAnon.User.Lockee,
+      emergencyKeys: options.response.data.loginAnon.User.Emergency_Keys
     }
 
     options.dispatch({
