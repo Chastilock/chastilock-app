@@ -76,7 +76,7 @@ const rootReducer = (state: any = { status: 'initializing' }, action: any = { ty
     newState.status = StateStatus.CONNECTING
   }
   // Only save state if we get to ready state
-  if (newState.status === StateStatus.READY) {
+  if (newState.status === StateStatus.READY || action.type === 'account/sign_out') {
     Storage.store(newState).then(() => {}).catch(e => console.log('Failed to store data', e))
   }
 

@@ -8,6 +8,7 @@ import { useFonts } from 'expo-font'
 import { useDispatch, useTrackedState } from '@chastilock/state'
 import { initializeAction, StateStatus, StateType } from '@chastilock/state/reducer'
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
+import { actions as accountActions } from '@chastilock/state/sections/account'
 import apiActions from '@chastilock/api/actions'
 import MainNavigator from '@chastilock/views/MainNavigator'
 import ConfirmationPopup, { ConfirmationPopupProps } from '@chastilock/views/common/ConfirmationPopup'
@@ -40,8 +41,14 @@ const App = (): React.ReactElement | null => {
     if (state.status === StateStatus.UNINITIALIZED) {
       dispatch(initializeAction).then((result: StateType) => {
         // Only check status if a token is available
-        if (result.account?.token !== undefined) {
-          apiActions.checkStatus(parseInt(result.account?.user?.userId ?? '0'), result.account?.token).execute(dispatch) as any
+        if (!(result.account?.token === undefined || result.account?.token === null)) {
+          apiActions.checkStatus(parseInt(result.account?.user?.userId ?? '0'), result.account?.token).execute(dispatch).catch(() => {
+            // If an error happens here, we are going to sign the user off
+            dispatch(accountActions.signOut())
+            setTimeout(() => {
+              dispatch(confirmationActions.closeConfirmation())
+            }, 0)
+          })
         } else {
           // Fake that the check was successful
           dispatch({
