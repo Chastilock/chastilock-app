@@ -8,6 +8,7 @@ export interface CreateLockRequest {
   Variable_Max_Reds: number
   Variable_Max_Freezes: number
   Variable_Max_Doubles: number
+  Variable_Max_Resets: number
   Variable_Max_Stickies: number
   Variable_Max_AddRed: number
   Variable_Max_RemoveRed: number
@@ -16,6 +17,7 @@ export interface CreateLockRequest {
   Variable_Min_Reds: number
   Variable_Min_Freezes: number
   Variable_Min_Doubles: number
+  Variable_Min_Resets: number
   Variable_Min_Stickies: number
   Variable_Min_AddRed: number
   Variable_Min_RemoveRed: number
@@ -57,6 +59,7 @@ export default (request: CreateLockRequest): ApiAction => createAction({
       $Variable_Max_Reds: Int!,
       $Variable_Max_Freezes: Int!,
       $Variable_Max_Doubles: Int!,
+      $Variable_Max_Resets: Int!,
       $Variable_Max_Stickies: Int!,
       $Variable_Max_AddRed: Int!,
       $Variable_Max_RemoveRed: Int!,
@@ -65,6 +68,7 @@ export default (request: CreateLockRequest): ApiAction => createAction({
       $Variable_Min_Reds: Int!,
       $Variable_Min_Freezes: Int!,
       $Variable_Min_Doubles: Int!,
+      $Variable_Min_Resets: Int!,
       $Variable_Min_Stickies: Int!,
       $Variable_Min_AddRed: Int!,
       $Variable_Min_RemoveRed: Int!,
@@ -80,8 +84,8 @@ export default (request: CreateLockRequest): ApiAction => createAction({
       $Reset_Frequency: Int,
       $Max_Resets: Int,
       $Checkins_Enabled: Boolean!,
-      $Checkins_Frequency: Int,
-      $Checkins_Window: Int,
+      $Checkins_Frequency: Float,
+      $Checkins_Window: Float,
       $Allow_Buyout: Boolean!,
       $Start_Lock_Frozen: Boolean!,
       $Disable_Keyholder_Decision: Boolean!,
@@ -102,6 +106,7 @@ export default (request: CreateLockRequest): ApiAction => createAction({
         Variable_Max_Reds: $Variable_Max_Reds,
         Variable_Max_Freezes: $Variable_Max_Freezes,
         Variable_Max_Doubles: $Variable_Max_Doubles,
+        Variable_Max_Resets: $Variable_Max_Resets,
         Variable_Max_Stickies: $Variable_Max_Stickies,
         Variable_Max_AddRed: $Variable_Max_AddRed,
         Variable_Max_RemoveRed: $Variable_Max_RemoveRed,
@@ -110,6 +115,7 @@ export default (request: CreateLockRequest): ApiAction => createAction({
         Variable_Min_Reds: $Variable_Min_Reds,
         Variable_Min_Freezes: $Variable_Min_Freezes,
         Variable_Min_Doubles: $Variable_Min_Doubles,
+        Variable_Min_Resets: $Variable_Min_Resets,
         Variable_Min_Stickies: $Variable_Min_Stickies,
         Variable_Min_AddRed: $Variable_Min_AddRed,
         Variable_Min_RemoveRed: $Variable_Min_RemoveRed,
