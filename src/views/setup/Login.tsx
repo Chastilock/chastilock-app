@@ -19,7 +19,7 @@ export const Login = (props: LoginProps): React.ReactElement => {
   const [password, setPassword] = React.useState('')
 
   const complete = async (): Promise<void> => {
-      await dispatch(apiActions.login(username, password).execute)
+    await dispatch(apiActions.login(username, password).execute)
   }
 
   return (
