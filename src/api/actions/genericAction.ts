@@ -66,7 +66,7 @@ export const createAction = (options: ApiActionOptions): ApiAction => {
           type: KEY_ERROR,
           error
         })
-        throw error
+        return error
       }
     }
   }

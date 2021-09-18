@@ -36,10 +36,10 @@ export const Register = (props: RegisterProps): React.ReactElement => {
         <Text translationKey="setup.register.info" center style={{ marginBottom: 20 }} />
 
         <Input value={username} onChange={e => setUsername((e.target as any).value)} placeholder={translate('setup.register.username')} />
-        <Input value={password} onChange={e => setPassword((e.target as any).value)} textContentType="password" placeholder={translate('setup.register.password')} />
         <Input value={email} onChange={e => setEmail((e.target as any).value)} textContentType="emailAddress" placeholder={translate('setup.register.email')} />
+        <Input value={password} onChange={e => setPassword((e.target as any).value)} textContentType="password" placeholder={translate('setup.register.password')} />
 
-        {state.account.signInError !== undefined && <Text style={{ color: 'red' }}>{`${translate('setup.register.error')}: ${state.account.signInError}`}</Text>}
+        {state.account.registerError !== undefined && <Text style={{ color: 'red' }}>{`${translate('setup.register.error')}: ${state.account.registerError}`}</Text>}
 
         <Button style={{ marginTop: 10 }} onPress={complete}>{translate('setup.register.ok')}</Button>
       </View>

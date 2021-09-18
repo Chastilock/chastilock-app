@@ -9,6 +9,7 @@ export interface AccountState {
   temporaryUser?: User
   token?: String
   signInError?: string
+  registerError?: string
 }
 
 export interface User {
@@ -61,6 +62,17 @@ const accountReducer = (action: ActionType, state: AccountState = initialState):
         ...state,
         signInError: action.error.message
       }
+    case apiActions.register().KEY_RECEIVE:
+      return {
+        ...state,
+        user: action.user,
+        token: action.token
+      }
+    case apiActions.register().KEY_ERROR:
+      return {
+        ...state,
+        registerError: action.error.message
+      }
   }
   return state
 }
@@ -71,8 +83,17 @@ interface SignInAction {
   user: User
 }
 
+interface registerAction {
+  type: Account
+  user: User
+}
+
 export const actions = {
   signIn: (user: User): SignInAction => ({
+    type: Account.signIn,
+    user
+  }),
+  register: (user: User): registerAction => ({
     type: Account.signIn,
     user
   }),

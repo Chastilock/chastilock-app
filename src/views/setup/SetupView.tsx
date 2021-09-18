@@ -11,11 +11,13 @@ import AnonymousRecover from './AnonymousRecover'
 import Login from './Login'
 import FinishSetup from './FinishSetup'
 import CkMigration from './CkMigration'
+import Register from './Register'
 
 enum SetupState {
   SETUP_SELECTION,
   ANONYMOUS_ACCOUNT_BACKUP,
   SIGN_IN,
+  REGISTER,
   RECOVER,
   FINISHING,
   CK_MIGRATE,
@@ -37,6 +39,9 @@ const SetupView = (): React.ReactElement | null => {
     }))
   }, [setSetupState])
 
+  const register = (): void => {
+    setSetupState(SetupState.REGISTER)
+  }
   const signIn = (): void => {
     setSetupState(SetupState.SIGN_IN)
   }
@@ -65,12 +70,14 @@ const SetupView = (): React.ReactElement | null => {
     case SetupState.SETUP_SELECTION:
       return (
         <SetupSelection
-          onRegister={() => {}}
+          onRegister={register}
           onDirect={createAnonymousAccount}
           onSignIn={signIn}
           onRecover={recover}
         />
       )
+    case SetupState.REGISTER:
+      return <Register onBack={back} />
     case SetupState.SIGN_IN:
       return <Login onBack={back} />
     case SetupState.ANONYMOUS_ACCOUNT_BACKUP:

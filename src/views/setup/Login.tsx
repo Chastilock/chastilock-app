@@ -17,14 +17,9 @@ export const Login = (props: LoginProps): React.ReactElement => {
   const [translate] = useTranslation()
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
-  const [error, setError] = React.useState('')
 
   const complete = async (): Promise<void> => {
-    try {
       await dispatch(apiActions.login(username, password).execute)
-    } catch (e) {
-      setError(e.message)
-    }
   }
 
   return (
@@ -41,7 +36,7 @@ export const Login = (props: LoginProps): React.ReactElement => {
         <Input value={username} onChange={e => setUsername((e.target as any).value)} placeholder={translate('setup.login.username')} />
         <Input value={password} onChange={e => setPassword((e.target as any).value)} textContentType="password" placeholder={translate('setup.login.password')} />
 
-        {error !== '' && <Text style={{ color: 'red' }}>{error}</Text>}
+        {state.account.signInError !== undefined && <Text style={{ color: 'red' }}>{`${translate('setup.login.error')}: ${state.account.signInError}`}</Text>}
 
         <Button style={{ marginTop: 10 }} onPress={complete}>{translate('setup.login.ok')}</Button>
       </View>
