@@ -1,7 +1,7 @@
 import { ApiAction, createAction } from './genericAction'
 import { User } from '@chastilock/state/sections/account'
 
-export default (email: string, password: string, username: string): ApiAction => createAction({
+export default (email?: string, password?: string, username?: string): ApiAction => createAction({
   actionName: 'register',
   query: `
     mutation RegisterAccount($email: String!, $password: String!, $username: String!) {
@@ -17,8 +17,8 @@ export default (email: string, password: string, username: string): ApiAction =>
   }),
   handleResponse: (options) => {
     const user: User = {
-      userId: options.response.data.createUserAnon.User_ID,
-      uuid: options.response.data.createUserAnon.UUID
+      userId: options.response.data.createUser.User_ID,
+      uuid: options.response.data.createUser.UUID
     }
 
     options.dispatch({

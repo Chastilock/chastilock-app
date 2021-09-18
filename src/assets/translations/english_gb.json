@@ -59,6 +59,7 @@
   "setup.register.password": "Password",
   "setup.register.email": "Email",
   "setup.register.ok": "Create account",
+  "setup.register.error": "Register Error",
 
   "setup.recover.title": "Recover Account",
   "setup.recover.info": "It is possible to recover your anonymous account using your user id (which is in UUID format). Please note that recover by UUID will stop working once you upgrade your account.",
