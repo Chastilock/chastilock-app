@@ -12,6 +12,7 @@ import AnonymousBackup from './setup/AnonymousBackup'
 import Register from './setup/Register'
 import CkMigration from './setup/CkMigration'
 import { CloseButtonAccessory } from './common/Accessories'
+import apiActions from '@chastilock/api/actions'
 
 const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
   const state = useTrackedState()
@@ -31,17 +32,22 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
     dispatch(actions.setPublicStats(showPublicStats))
   }
 
-  const signOut = (): void => {
+  const actionSignOut = async (): Promise<void> => {
+    await dispatch(accountActions.signOut())
+    await dispatch(apiActions.logout().execute)
+  }
+
+  const signOut = async (): Promise<void> => {
     if (accountSelectors.isAnonymous(state.account)) {
       dispatch(confirmationActions.showConfirmation({
         title: translator('settings.confirm.logout_anonymous.title'),
         text: translator('settings.confirm.logout_anonymous.content'),
-        onOk: () => {
-          dispatch(accountActions.signOut())
+        onOk: async () => {
+          await actionSignOut()
         }
       }))
     } else {
-      dispatch(accountActions.signOut())
+      await actionSignOut()
     }
   }
 

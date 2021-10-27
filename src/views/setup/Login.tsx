@@ -24,7 +24,7 @@ export const Login = (props: LoginProps): React.ReactElement => {
     try {
       await dispatch(apiActions.login(username, password).execute)
       await dispatch(accountActions.setup())
-    } catch (e) {
+    } catch (e: any) {
       setError(e.message)
     }
   }
