@@ -1,5 +1,4 @@
 import { createAction, ApiAction } from './genericAction'
-import { User } from '@chastilock/state/sections/account'
 
 export interface CreateLockRequest {
   LockName: string
@@ -152,18 +151,9 @@ export default (request: CreateLockRequest): ApiAction => createAction({
   `,
   getVariables: () => request,
   handleResponse: (options) => {
-    const user: User = {
-      userId: options.response.data.loginAnon.User.User_ID,
-      uuid: options.response.data.loginAnon.User.UUID,
-      isKeyholder: options.response.data.loginAnon.User.isKeyholder,
-      isLockee: options.response.data.loginAnon.User.isLockee,
-      emergencyKeys: options.response.data.loginAnon.User.emergencyKeys
-    }
-
     options.dispatch({
       type: options.KEY_RECEIVE,
-      response: options.response,
-      user
+      response: options.response
     })
   }
 })
