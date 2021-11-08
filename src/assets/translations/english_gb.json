@@ -94,7 +94,7 @@
   "createedit.create_title": "Create Lock",
   "createedit.edit_title": "Edit Lock",
   "createedit.warning_unsaved.title": "You have unsaved changes!",
-  "createedit.warning_unsaved.text": "You have not yet saved this lock. If you close it now without saving, you may loose the settings.",
+  "createedit.warning_unsaved.text": "You have not yet saved changes to this lock. If you close it now without saving, you may loose them.",
 
   "createedit.lock_type.title": "Lock type",
   "createedit.lock_type.label": "Type",
@@ -145,5 +145,6 @@
   "createedit.card.start_frozen": "Lock starts frozen?",
 
   "createedit.create": "Create lock!",
+  "createedit.edit": "Edit lock!",
   "createedit.error.title": "Error"
 }

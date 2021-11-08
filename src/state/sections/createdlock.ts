@@ -30,6 +30,37 @@ export interface CreatedLock {
   Block_Stats_Hidden: boolean
   Only_Accept_Trusted: boolean
   Require_DM: boolean
+  OriginalLockType: OriginalLockType
+}
+
+export interface OriginalLockType {
+  Original_Deck_ID: number
+  Variable_Max_Greens: number
+  Variable_Max_Reds: number
+  Variable_Max_Freezes: number
+  Variable_Max_Doubles: number
+  Variable_Max_Resets: number
+  Variable_Max_Stickies: number
+  Variable_Max_AddRed: number
+  Variable_Max_RemoveRed: number
+  Variable_Max_RandomRed: number
+  Variable_Min_Greens: number
+  Variable_Min_Reds: number
+  Variable_Min_Freezes: number
+  Variable_Min_Doubles: number
+  Variable_Min_Resets: number
+  Variable_Min_Stickies: number
+  Variable_Min_AddRed: number
+  Variable_Min_RemoveRed: number
+  Variable_Min_RandomRed: number
+  Chance_Period: number
+  Cumulative: boolean
+  Multiple_Greens_Required: boolean
+  Hide_Card_Info: boolean
+  Auto_Resets_Enabled: boolean
+  Reset_Frequency: number
+  Max_Resets: number
+  Imported_From_CK: Boolean
 }
 
 export const initialState: CreatedLockState = {

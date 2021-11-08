@@ -7,6 +7,7 @@ import { actions as confirmationActions } from '@chastilock/state/sections/confi
 import { Text, TextType, FormGroup, TitleGroup, useTranslation, ButtonSelection, NumberSelection, MaxMinFormGroup, FormButton } from '@chastilock/components'
 import { useDispatch } from '@chastilock/state'
 import createOriginalLock, { CreateLockRequest } from '@chastilock/api/actions/createOriginalLock'
+import { CreatedLock } from '@chastilock/state/sections/createdlock'
 
 const CloseIcon = (props: any): React.ReactElement => (
   <Icon {...props} name="close-outline" />
@@ -50,59 +51,64 @@ const ChanceRegularity = React.memo((props: { value: string, set: (a: any) => vo
   </FormGroup>
 ))
 
-const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
+const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabBarProps['navigation'], route: any }): React.ReactElement => {
   const dispatch = useDispatch()
   const [translate] = useTranslation()
 
+  const isEdit = route.params?.lock !== undefined
+
+  const lock = route.params?.lock as CreatedLock
+
   // General
-  const [lockName, lockSetName] = React.useState('')
-  const [lockIsShared, lockSetIsShared] = React.useState(false)
+  const [lockName, lockSetName] = React.useState(isEdit ? lock.Lock_Name : '')
+  const [lockIsShared, lockSetIsShared] = React.useState(isEdit ? lock.Shared : false)
 
   // General shared
-  const [lockBlockStatsHidden, lockSetBlockStatsHidden] = React.useState(false)
-  const [lockRequireTrusted, lockSetRequireTrusted] = React.useState(false)
-  const [lockRequireDm, lockSetRequireDm] = React.useState(false)
-  const [lockAllowFakeCopies, lockSetAllowFakeCopies] = React.useState(false)
-  const [lockFakeCopiesMin, lockSetFakeCopiesMin] = React.useState(0)
-  const [lockFakeCopiesMax, lockSetFakeCopiesMax] = React.useState(0)
-  const [lockBlockTest, lockSetBlockTest] = React.useState(false)
-  const [lockBlockAlreadyLocked, lockSetBlockAlreadyLocked] = React.useState(false)
+  const [lockBlockStatsHidden, lockSetBlockStatsHidden] = React.useState(isEdit ? lock.Block_Stats_Hidden : false)
+  const [lockRequireTrusted, lockSetRequireTrusted] = React.useState(isEdit ? lock.Only_Accept_Trusted : false)
+  const [lockRequireDm, lockSetRequireDm] = React.useState(isEdit ? lock.Require_DM : false)
+  const [lockAllowFakeCopies, lockSetAllowFakeCopies] = React.useState(isEdit ? lock.Allow_Fakes : false)
+  const [lockFakeCopiesMin, lockSetFakeCopiesMin] = React.useState(isEdit ? lock.Min_Fakes : 0)
+  const [lockFakeCopiesMax, lockSetFakeCopiesMax] = React.useState(isEdit ? lock.Max_Fakes : 0)
+  const [lockBlockTest, lockSetBlockTest] = React.useState(isEdit ? lock.Block_Test_Locks : false)
+  const [lockBlockAlreadyLocked, lockSetBlockAlreadyLocked] = React.useState(isEdit ? lock.Block_Already_Locked : false)
 
-  const [lockRequireCheckins, lockSetRequireCheckins] = React.useState(false)
-  const [lockCheckinFrequency, lockSetCheckinFrequency] = React.useState(1)
-  const [lockCheckinWindow, lockSetCheckinWindow] = React.useState(1)
+  const [lockRequireCheckins, lockSetRequireCheckins] = React.useState(isEdit ? lock.Checkins_Enabled : false)
+  const [lockCheckinFrequency, lockSetCheckinFrequency] = React.useState(isEdit ? lock.Checkins_Frequency : 1)
+  const [lockCheckinWindow, lockSetCheckinWindow] = React.useState(isEdit ? lock.Checkins_Window : 1)
 
-  const [lockLimitUsers, lockSetLimitUsers] = React.useState(false)
-  const [lockMaxUsers, lockSetMaxUsers] = React.useState(5)
+  const [lockLimitUsers, lockSetLimitUsers] = React.useState(isEdit ? lock.Limit_Users : false)
+  const [lockMaxUsers, lockSetMaxUsers] = React.useState(isEdit ? lock.User_Limit_Amount : 5)
 
-  const [lockBlockLowRating, lockSetBlockLowRating] = React.useState(false)
-  const [lockMinRatingRequired, lockSetMinRatingRequired] = React.useState(1)
+  const [lockBlockLowRating, lockSetBlockLowRating] = React.useState(isEdit ? lock.Block_User_Rating_Enabled : false)
+  const [lockMinRatingRequired, lockSetMinRatingRequired] = React.useState(isEdit ? lock.Block_User_Rating : 1)
 
   // Card specific
-  const [lockChanceRegularity, lockSetChanceRegularity] = React.useState(lockChanceRegularities[0])
-  const [lockIsCumulative, lockSetIsCumulative] = React.useState(true)
+  // TODO
+  const [lockChanceRegularity, lockSetChanceRegularity] = React.useState(isEdit ? lockChanceRegularities.filter(reg => reg.time === lock.OriginalLockType.Chance_Period)[0] : lockChanceRegularities[0])
+  const [lockIsCumulative, lockSetIsCumulative] = React.useState(isEdit ? lock.OriginalLockType.Cumulative : false)
 
-  const [lockRedMin, lockSetRedMin] = React.useState(0)
-  const [lockRedMax, lockSetRedMax] = React.useState(0)
-  const [lockYellowRandomMin, lockSetYellowRandomMin] = React.useState(0)
-  const [lockYellowRandomMax, lockSetYellowRandomMax] = React.useState(0)
-  const [lockYellowRemoveMin, lockSetYellowRemoveMin] = React.useState(0)
-  const [lockYellowRemoveMax, lockSetYellowRemoveMax] = React.useState(0)
-  const [lockYellowAddMin, lockSetYellowAddMin] = React.useState(0)
-  const [lockYellowAddMax, lockSetYellowAddMax] = React.useState(0)
-  const [lockStickyMin, lockSetStickyMin] = React.useState(0)
-  const [lockStickyMax, lockSetStickyMax] = React.useState(0)
-  const [lockFreezeMin, lockSetFreezeMin] = React.useState(0)
-  const [lockFreezeMax, lockSetFreezeMax] = React.useState(0)
-  const [lockDoubleMin, lockSetDoubleMin] = React.useState(0)
-  const [lockDoubleMax, lockSetDoubleMax] = React.useState(0)
-  const [lockResetMin, lockSetResetMin] = React.useState(0)
-  const [lockResetMax, lockSetResetMax] = React.useState(0)
-  const [lockGreenMin, lockSetGreenMin] = React.useState(1)
-  const [lockGreenMax, lockSetGreenMax] = React.useState(1)
-  const [lockMultipleGreensRequired, lockSetMultipleGreensRequired] = React.useState(false)
-  const [lockHideCardInformation, lockSetHideCardInformation] = React.useState(false)
-  const [lockStartFrozen, lockSetStartFrozen] = React.useState(false)
+  const [lockRedMin, lockSetRedMin] = React.useState(isEdit ? lock.OriginalLockType.Variable_Min_Reds : 0)
+  const [lockRedMax, lockSetRedMax] = React.useState(isEdit ? lock.OriginalLockType.Variable_Max_Reds : 0)
+  const [lockYellowRandomMin, lockSetYellowRandomMin] = React.useState(isEdit ? lock.OriginalLockType.Variable_Min_RandomRed : 0)
+  const [lockYellowRandomMax, lockSetYellowRandomMax] = React.useState(isEdit ? lock.OriginalLockType.Variable_Max_RandomRed : 0)
+  const [lockYellowRemoveMin, lockSetYellowRemoveMin] = React.useState(isEdit ? lock.OriginalLockType.Variable_Min_RemoveRed : 0)
+  const [lockYellowRemoveMax, lockSetYellowRemoveMax] = React.useState(isEdit ? lock.OriginalLockType.Variable_Max_RemoveRed : 0)
+  const [lockYellowAddMin, lockSetYellowAddMin] = React.useState(isEdit ? lock.OriginalLockType.Variable_Min_AddRed : 0)
+  const [lockYellowAddMax, lockSetYellowAddMax] = React.useState(isEdit ? lock.OriginalLockType.Variable_Max_AddRed : 0)
+  const [lockStickyMin, lockSetStickyMin] = React.useState(isEdit ? lock.OriginalLockType.Variable_Min_Stickies : 0)
+  const [lockStickyMax, lockSetStickyMax] = React.useState(isEdit ? lock.OriginalLockType.Variable_Max_Stickies : 0)
+  const [lockFreezeMin, lockSetFreezeMin] = React.useState(isEdit ? lock.OriginalLockType.Variable_Min_Freezes : 0)
+  const [lockFreezeMax, lockSetFreezeMax] = React.useState(isEdit ? lock.OriginalLockType.Variable_Max_Freezes : 0)
+  const [lockDoubleMin, lockSetDoubleMin] = React.useState(isEdit ? lock.OriginalLockType.Variable_Min_Doubles : 0)
+  const [lockDoubleMax, lockSetDoubleMax] = React.useState(isEdit ? lock.OriginalLockType.Variable_Max_Doubles : 0)
+  const [lockResetMin, lockSetResetMin] = React.useState(isEdit ? lock.OriginalLockType.Variable_Min_Resets : 0)
+  const [lockResetMax, lockSetResetMax] = React.useState(isEdit ? lock.OriginalLockType.Variable_Max_Resets : 0)
+  const [lockGreenMin, lockSetGreenMin] = React.useState(isEdit ? lock.OriginalLockType.Variable_Min_Greens : 1)
+  const [lockGreenMax, lockSetGreenMax] = React.useState(isEdit ? lock.OriginalLockType.Variable_Max_Greens : 1)
+  const [lockMultipleGreensRequired, lockSetMultipleGreensRequired] = React.useState(isEdit ? lock.OriginalLockType.Multiple_Greens_Required : false)
+  const [lockHideCardInformation, lockSetHideCardInformation] = React.useState(isEdit ? lock.OriginalLockType.Hide_Card_Info : false)
+  const [lockStartFrozen, lockSetStartFrozen] = React.useState(isEdit ? lock.Start_Lock_Frozen : false)
   /*
   const [lockAutoResets, lockSetAutoResets] = React.useState(false)
   const [lockAutoResetEveryXDays, lockSetAutoResetEveryXDays] = React.useState(2)
@@ -119,7 +125,7 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
     }))
   }
 
-  const createLock = (): void => {
+  const createOrEditLock = (): void => {
     const lockRequest: CreateLockRequest = {
       LockName: lockName,
       Shared: lockIsShared,
@@ -168,17 +174,32 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
       Require_DM: lockRequireDm
     }
 
-    dispatch(createOriginalLock(lockRequest).execute).then(() => {
-      // close and navigate to my locks screen
-      navigation.goBack()
-      navigation.navigate('MyLocks')
-    }).catch((e: Error) => {
-      dispatch(confirmationActions.showConfirmation({
-        title: translate('createedit.error.title'),
-        text: e.message,
-        onOk: () => {}
-      }))
-    })
+    if (isEdit) {
+      // TODO make update request
+      dispatch(createOriginalLock(lockRequest).execute).then(() => {
+        // close and navigate to my locks screen
+        navigation.goBack()
+        navigation.navigate('MyLocks')
+      }).catch((e: Error) => {
+        dispatch(confirmationActions.showConfirmation({
+          title: translate('createedit.error.title'),
+          text: e.message,
+          onOk: () => {}
+        }))
+      })
+    } else {
+      dispatch(createOriginalLock(lockRequest).execute).then(() => {
+        // close and navigate to my locks screen
+        navigation.goBack()
+        navigation.navigate('MyLocks')
+      }).catch((e: Error) => {
+        dispatch(confirmationActions.showConfirmation({
+          title: translate('createedit.error.title'),
+          text: e.message,
+          onOk: () => {}
+        }))
+      })
+    }
   }
 
   const CloseAction = (): React.ReactElement => (
@@ -188,7 +209,7 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title={() => <Text category={TextType.HEADING6} translationKey='createedit.create_title' />}
+        title={() => <Text category={TextType.HEADING6} translationKey={isEdit ? 'createedit.edit_title' : 'createedit.create_title'} />}
         alignment='center'
         accessoryRight={CloseAction}
       />
@@ -289,7 +310,7 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
               <Toggle checked={lockStartFrozen} onChange={() => lockSetStartFrozen(!lockStartFrozen)} />
             </FormGroup>
           </TitleGroup>
-          <FormButton onPress={createLock}>{translate('createedit.create')}</FormButton>
+          <FormButton onPress={createOrEditLock}>{translate(isEdit ? 'createedit.edit' : 'createedit.create')}</FormButton>
         </Layout>
       </ScrollView>
     </SafeAreaView>
