@@ -34,8 +34,8 @@ const boundaries = {
 
 const CardPicker = React.memo((props: { max: number, min: number, setMax: (n: number) => void, setMin: (n: number) => void, name: string, title: string }): React.ReactElement => (
   <MaxMinFormGroup text={props.title}>
-    <NumberSelection value={props.max} onChange={props.setMax} min={(boundaries as any)[props.name].min} max={(boundaries as any)[props.name].max} />
     <NumberSelection value={props.min} onChange={props.setMin} min={(boundaries as any)[props.name].min} max={props.max} />
+    <NumberSelection value={props.max} onChange={props.setMax} min={(boundaries as any)[props.name].min} max={(boundaries as any)[props.name].max} />
   </MaxMinFormGroup>
 ))
 
