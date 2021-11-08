@@ -66,3 +66,5 @@ web-build/
 *.tsbuildinfo
 
 /.env
+
+.vscode/settings.json

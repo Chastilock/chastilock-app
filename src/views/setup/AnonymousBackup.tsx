@@ -4,8 +4,8 @@ import { SafeAreaView, ScrollView } from 'react-native'
 
 import { Text, TextType, useTranslation, TopNavigation } from '@chastilock/components'
 import { useTrackedState, useDispatch } from '@chastilock/state'
-import { actions as accountActions, User } from '@chastilock/state/sections/account'
 import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
+import apiActions from '@chastilock/api/actions'
 
 export interface AnonymousBackupProps {
   isInitial?: boolean
@@ -18,7 +18,7 @@ export const AnonymousBackup = (props: AnonymousBackupProps): React.ReactElement
 
   const complete = (): void => {
     if (props.isInitial === true) {
-      dispatch(accountActions.signIn(state.account.temporaryUser as User))
+      dispatch(apiActions.loginAnon(state.account.temporaryUser?.uuid).execute)
     }
     props.onClose?.()
   }

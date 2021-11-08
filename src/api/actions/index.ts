@@ -4,6 +4,7 @@ import login from './login'
 import checkStatus from './checkStatus'
 import upgradeAccount from './upgradeAccount'
 import register from './register'
+import logout from './logout'
 
 export default {
   createAnonymousAccount,
@@ -11,5 +12,6 @@ export default {
   login,
   checkStatus,
   upgradeAccount,
-  register
+  register,
+  logout
 }
