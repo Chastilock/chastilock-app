@@ -47,6 +47,11 @@ export const createAction = (options: ApiActionOptions): ApiAction => {
         context.accessToken = state.account.token
       }
 
+      // Allow overwrite
+      if (variables._authToken !== undefined) {
+        context.accessToken = variables._authToken
+      }
+
       try {
         const response = await client.mutate({
           mutation: gql(options.query),
