@@ -19,7 +19,12 @@ export default (username?: string, password?: string): ApiAction => createAction
   handleResponse: (options) => {
     const user: User = {
       userId: options.response.data.login.User.User_ID,
-      uuid: options.response.data.login.User.UUID
+      uuid: options.response.data.login.User.UUID,
+      email: options.response.data.login.User.Email,
+      username: options.response.data.login.User.Username,
+      isKeyholder: options.response.data.login.User.Keyholder,
+      isLockee: options.response.data.login.User.Lockee,
+      emergencyKeys: options.response.data.login.User.Emergency_Keys
     }
 
     options.dispatch({

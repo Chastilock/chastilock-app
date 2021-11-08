@@ -7,7 +7,7 @@ export interface AccountState {
   isSetUp: boolean
   user?: User
   temporaryUser?: User
-  token?: String
+  token?: string
   signInError?: string
 }
 
@@ -16,7 +16,9 @@ export interface User {
   uuid: string
   email?: string
   username?: string
-  token?: string
+  isKeyholder: boolean
+  isLockee: boolean
+  emergencyKeys: number
 }
 
 export const initialState: AccountState = {
@@ -61,6 +63,11 @@ const accountReducer = (action: ActionType, state: AccountState = initialState):
         ...state,
         signInError: action.error.message
       }
+    case apiActions.checkStatus().KEY_RECEIVE:
+      return {
+        ...state,
+        user: action.user
+      }
   }
   return state
 }
@@ -85,7 +92,7 @@ export const actions = {
 }
 
 export const selectors = {
-  isAnonymous: (state: AccountState): boolean => state.user?.email === undefined
+  isAnonymous: (state: AccountState): boolean => state.user?.email === undefined || state.user?.email === null
 }
 
 export default accountReducer

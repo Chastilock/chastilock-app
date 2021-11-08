@@ -6,6 +6,7 @@ import confirmation, { ConfirmationState } from '@chastilock/state/sections/conf
 import account, { AccountState } from '@chastilock/state/sections/account'
 import i18n, { I18nState, actions as i18nActions } from '@chastilock/state/sections/i18n'
 import global, { GlobalState } from '../sections/global'
+import createdLock, { CreatedLockState } from '../sections/createdlock'
 import { sendAction } from './devTools'
 import apiActions from '@chastilock/api/actions'
 
@@ -24,6 +25,7 @@ export interface StateType {
   account: AccountState
   i18n: I18nState
   global: GlobalState
+  createdLock: CreatedLockState
 }
 
 export interface ActionType {
@@ -36,15 +38,17 @@ export const reducers = [
   confirmation,
   account,
   i18n,
-  global
+  global,
+  createdLock
 ]
 
-export const initializeAction = async (dispatch: (action: any) => void): Promise<void> => {
-  dispatch({ type: ActionTypes.Global.initialize })
-
+export const initializeAction = async (dispatch: (action: any) => void): Promise<StateType> => {
   const state = await Storage.load()
   dispatch({ type: ActionTypes.Global.loadState, state })
+
+  dispatch({ type: ActionTypes.Global.initialize })
   dispatch(i18nActions.initialLoad())
+  return state
 }
 
 const rootReducer = (state: any = { status: 'initializing' }, action: any = { type: '' }): StateType => {

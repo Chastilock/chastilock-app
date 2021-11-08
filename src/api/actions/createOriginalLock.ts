@@ -154,7 +154,10 @@ export default (request: CreateLockRequest): ApiAction => createAction({
   handleResponse: (options) => {
     const user: User = {
       userId: options.response.data.loginAnon.User.User_ID,
-      uuid: options.response.data.loginAnon.User.UUID
+      uuid: options.response.data.loginAnon.User.UUID,
+      isKeyholder: options.response.data.loginAnon.User.isKeyholder,
+      isLockee: options.response.data.loginAnon.User.isLockee,
+      emergencyKeys: options.response.data.loginAnon.User.emergencyKeys
     }
 
     options.dispatch({

@@ -5,6 +5,7 @@ import { SafeAreaView, View } from 'react-native'
 import { Text, TextType, useTranslation } from '@chastilock/components'
 import { useTrackedState, useDispatch } from '@chastilock/state'
 import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
+import { actions as accountActions } from '@chastilock/state/sections/account'
 import apiActions from '@chastilock/api/actions'
 import { BackButtonAccessory } from '../common/Accessories'
 
@@ -22,6 +23,7 @@ export const Login = (props: LoginProps): React.ReactElement => {
   const complete = async (): Promise<void> => {
     try {
       await dispatch(apiActions.login(username, password).execute)
+      await dispatch(accountActions.setup())
     } catch (e) {
       setError(e.message)
     }

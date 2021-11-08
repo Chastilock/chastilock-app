@@ -80,7 +80,7 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
       <TopNavigation
         title={() => <Text category={TextType.HEADING6} translationKey="settings.title" />}
         alignment='center'
-        accessoryRight={() => <CloseButtonAccessory onPress={closeSettings} />}
+        accessoryLeft={() => <CloseButtonAccessory onPress={closeSettings} />}
       />
       <Divider/>
       <Layout style={{ flex: 1, padding: 20 }}>
@@ -90,21 +90,21 @@ const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElemen
           </FormGroup>
         </TitleGroup>
         <TitleGroup title="settings.account">
-          <FormGroup text="settings.account.username">
-            <Input value={name} disabled={isAnonymous} placeholder={translator('settings.account.username.placeholder')} onChange={e => setName((e.target as any).value)} />
-          </FormGroup>
+          {!isAnonymous && <FormGroup text="settings.account.username">
+            <Input value={name} placeholder={translator('settings.account.username.placeholder')} onChange={e => setName((e.target as any).value)} />
+          </FormGroup>}
           <FormGroup text="settings.account.type">
-            <Text category={TextType.SUBTITLE1} translationKey="settings.account.type.anonymous" />
+            <Text category={TextType.SUBTITLE1} translationKey={isAnonymous ? 'settings.account.type.anonymous' : 'settings.account.type.regular' } />
           </FormGroup>
-          <FormButton onPress={showBackup} appearance='outline'>
+          {isAnonymous && <FormButton onPress={showBackup} appearance='outline'>
             {translator('settings.account.show_user_id')}
-          </FormButton>
+          </FormButton>}
           <FormButton onPress={showCkMigrate} appearance='outline'>
             {translator('settings.account.ck_migrate')}
           </FormButton>
-          <FormButton onPress={showUpgrade} appearance='outline'>
+          {isAnonymous && <FormButton onPress={showUpgrade} appearance='outline'>
             {translator('settings.account.upgrade')}
-          </FormButton>
+          </FormButton>}
           <FormButton onPress={signOut} appearance='outline'>
             {translator('settings.account.sign_out')}
           </FormButton>

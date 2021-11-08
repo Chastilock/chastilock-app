@@ -17,7 +17,10 @@ export default (uuid?: string): ApiAction => createAction({
   handleResponse: (options) => {
     const user: User = {
       userId: options.response.data.loginAnon.User.User_ID,
-      uuid: options.response.data.loginAnon.User.UUID
+      uuid: options.response.data.loginAnon.User.UUID,
+      isKeyholder: options.response.data.loginAnon.User.Keyholder,
+      isLockee: options.response.data.loginAnon.User.Lockee,
+      emergencyKeys: options.response.data.loginAnon.User.Emergency_Keys
     }
 
     options.dispatch({

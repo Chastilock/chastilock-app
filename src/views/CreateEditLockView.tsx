@@ -115,8 +115,7 @@ const CreateEditLockView = ({ navigation }: MaterialTopTabBarProps): React.React
     dispatch(confirmationActions.showConfirmation({
       title: translate('createedit.warning_unsaved.title'),
       text: translate('createedit.warning_unsaved.text'),
-      onOk: () => navigation.goBack(),
-      onCancel: () => {}
+      onOk: () => navigation.goBack()
     }))
   }
 

@@ -25,6 +25,11 @@ export enum I18n {
   initialLoad = 'i18n/initial_load'
 }
 
+export enum CreatedLock {
+  add = 'created_lock/add',
+  set = 'created_lock/set'
+}
+
 export default {
   Global,
   Settings

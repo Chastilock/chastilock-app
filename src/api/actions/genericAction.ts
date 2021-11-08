@@ -17,7 +17,7 @@ export interface ApiActionOptions {
   actionName: string
   query: string
 
-  handleResponse: (options: { dispatch: DispatchType, KEY_RECEIVE: string, response: FetchResult<any, Record<string, any>, Record<string, any>>}) => void
+  handleResponse: (options: { dispatch: DispatchType, KEY_RECEIVE: string, response: FetchResult<any, Record<string, any>, Record<string, any>>}) => any
   getVariables?: () => {
     [name: string]: any
   }
@@ -54,13 +54,13 @@ export const createAction = (options: ApiActionOptions): ApiAction => {
           context
         })
 
-        options.handleResponse({
+        const changedResponse = options.handleResponse({
           dispatch,
           response,
           KEY_RECEIVE
         })
 
-        return response
+        return changedResponse !== undefined ? changedResponse : response
       } catch (error) {
         dispatch({
           type: KEY_ERROR,

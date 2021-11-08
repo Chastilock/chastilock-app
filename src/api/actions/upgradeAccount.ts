@@ -6,7 +6,13 @@ export default (email: string, password: string, username: string): ApiAction =>
   query: `
     mutation UpgradeAccount($email: String!, $password: String!, $username: String!) {
       upgradeAccount(Email: $email, Password: $password, Username: $username) {
-        UUID, User_ID
+        User_ID,
+        UUID,
+        Email,
+        Username,
+        Keyholder,
+        Lockee,
+        Emergency_Keys
       }
     }
   `,
@@ -17,8 +23,13 @@ export default (email: string, password: string, username: string): ApiAction =>
   }),
   handleResponse: (options) => {
     const user: User = {
-      userId: options.response.data.createUserAnon.User_ID,
-      uuid: options.response.data.createUserAnon.UUID
+      userId: options.response.data.me.User_ID,
+      uuid: options.response.data.me.UUID,
+      email: options.response.data.me.Email,
+      username: options.response.data.me.Username,
+      isKeyholder: options.response.data.me.Keyholder,
+      isLockee: options.response.data.me.Lockee,
+      emergencyKeys: options.response.data.me.Emergency_Keys
     }
 
     options.dispatch({
