@@ -1,5 +1,6 @@
 import { ActionType } from '@chastilock/state/reducer'
 import { CreatedLock as CreatedLockType } from '@chastilock/state/types'
+import * as apiActions from '@chastilock/api/actions'
 
 export interface CreatedLockState {
   locks: CreatedLock[]
@@ -82,6 +83,24 @@ const createdLockReducer = (action: ActionType, state: CreatedLockState = initia
         ...state,
         locks: action.locks,
         isLoaded: true
+      }
+    }
+    case apiActions.createOriginalLock().KEY_RECEIVE: {
+      return {
+        ...state,
+        locks: [
+          action.response.data.createOriginalLock,
+          ...state.locks
+        ]
+      }
+    }
+    case apiActions.editOriginalLock().KEY_RECEIVE: {
+      return {
+        ...state,
+        locks: [
+          action.response.data.editOriginalLock,
+          ...state.locks.filter(lock => lock.Lock_ID !== action.response.data.editOriginalLock.Lock_ID)
+        ]
       }
     }
   }

@@ -1,5 +1,5 @@
 import createAnonAccountAction from '@chastilock/api/actions/createAnonymousAccount'
-import apiActions from '@chastilock/api/actions'
+import * as apiActions from '@chastilock/api/actions'
 import { ActionType } from '@chastilock/state/reducer'
 import { Account } from '@chastilock/state/types'
 

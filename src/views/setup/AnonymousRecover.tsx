@@ -5,7 +5,7 @@ import { SafeAreaView, View } from 'react-native'
 import { Text, TextType, useTranslation } from '@chastilock/components'
 import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
 import { useTrackedState, useDispatch } from '@chastilock/state'
-import apiActions from '@chastilock/api/actions'
+import * as apiActions from '@chastilock/api/actions'
 import { BackButtonAccessory } from '../common/Accessories'
 
 interface AnonymousRecoverProps {

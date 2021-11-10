@@ -12,7 +12,7 @@ import AnonymousBackup from './setup/AnonymousBackup'
 import Register from './setup/Register'
 import CkMigration from './setup/CkMigration'
 import { CloseButtonAccessory } from './common/Accessories'
-import apiActions from '@chastilock/api/actions'
+import * as apiActions from '@chastilock/api/actions'
 
 const SettingsView = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => {
   const state = useTrackedState()

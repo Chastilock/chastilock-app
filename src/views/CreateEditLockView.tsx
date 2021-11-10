@@ -6,7 +6,7 @@ import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
 import { Text, TextType, FormGroup, TitleGroup, useTranslation, ButtonSelection, NumberSelection, MaxMinFormGroup, FormButton } from '@chastilock/components'
 import { useDispatch } from '@chastilock/state'
-import createOriginalLock, { CreateLockRequest } from '@chastilock/api/actions/createOriginalLock'
+import { createOriginalLock, CreateLockRequest, editOriginalLock, EditLockRequest } from '@chastilock/api/actions'
 import { CreatedLock } from '@chastilock/state/sections/createdlock'
 
 const CloseIcon = (props: any): React.ReactElement => (
@@ -175,8 +175,11 @@ const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabB
     }
 
     if (isEdit) {
-      // TODO make update request
-      dispatch(createOriginalLock(lockRequest).execute).then(() => {
+      const editLockRequest: EditLockRequest = {
+        Lock_ID: parseInt(lock.Lock_ID, 10),
+        ...lockRequest
+      }
+      dispatch(editOriginalLock(editLockRequest).execute).then(() => {
         // close and navigate to my locks screen
         navigation.goBack()
         navigation.navigate('MyLocks')

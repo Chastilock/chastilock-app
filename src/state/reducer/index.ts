@@ -8,7 +8,7 @@ import i18n, { I18nState, actions as i18nActions } from '@chastilock/state/secti
 import global, { GlobalState } from '../sections/global'
 import createdLock, { CreatedLockState } from '../sections/createdlock'
 import { sendAction } from './devTools'
-import apiActions from '@chastilock/api/actions'
+import * as apiActions from '@chastilock/api/actions'
 
 export enum StateStatus {
   UNINITIALIZED = 'uninitialized',

@@ -5,7 +5,7 @@ import { SafeAreaView, ScrollView } from 'react-native'
 import { Text, TextType, useTranslation, TopNavigation } from '@chastilock/components'
 import { useTrackedState, useDispatch } from '@chastilock/state'
 import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
-import apiActions from '@chastilock/api/actions'
+import * as apiActions from '@chastilock/api/actions'
 
 export interface AnonymousBackupProps {
   isInitial?: boolean

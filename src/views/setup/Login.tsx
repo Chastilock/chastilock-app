@@ -6,7 +6,7 @@ import { Text, TextType, useTranslation } from '@chastilock/components'
 import { useTrackedState, useDispatch } from '@chastilock/state'
 import { selectors as settingsSelectors } from '@chastilock/state/sections/settings'
 import { actions as accountActions } from '@chastilock/state/sections/account'
-import apiActions from '@chastilock/api/actions'
+import * as apiActions from '@chastilock/api/actions'
 import { BackButtonAccessory } from '../common/Accessories'
 
 interface LoginProps {

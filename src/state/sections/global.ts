@@ -1,5 +1,5 @@
 import { ActionType } from '@chastilock/state/reducer'
-import apiActions from '@chastilock/api/actions'
+import * as apiActions from '@chastilock/api/actions'
 
 export interface GlobalState {
   connectionError: string

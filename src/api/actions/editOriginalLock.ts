@@ -1,58 +1,16 @@
+import { CreateLockRequest } from './createOriginalLock'
 import { createAction, ApiAction } from './genericAction'
 import { CreatedLockSegment } from './segments'
 
-export interface CreateLockRequest {
-  LockName: string
-  Shared: boolean
-  Variable_Max_Greens: number
-  Variable_Max_Reds: number
-  Variable_Max_Freezes: number
-  Variable_Max_Doubles: number
-  Variable_Max_Resets: number
-  Variable_Max_Stickies: number
-  Variable_Max_AddRed: number
-  Variable_Max_RemoveRed: number
-  Variable_Max_RandomRed: number
-  Variable_Min_Greens: number
-  Variable_Min_Reds: number
-  Variable_Min_Freezes: number
-  Variable_Min_Doubles: number
-  Variable_Min_Resets: number
-  Variable_Min_Stickies: number
-  Variable_Min_AddRed: number
-  Variable_Min_RemoveRed: number
-  Variable_Min_RandomRed: number
-  Chance_Period: number
-  Cumulative: boolean
-  Multiple_Greens_Required: boolean
-  Hide_Card_Info: boolean
-  Allow_Fakes: boolean
-  Min_Fakes: number
-  Max_Fakes: number
-  Auto_Resets_Enabled: boolean
-  Reset_Frequency: number
-  Max_Resets: number
-  Checkins_Enabled: boolean
-  Checkins_Frequency: number
-  Checkins_Window: number
-  Allow_Buyout: boolean
-  Start_Lock_Frozen: boolean
-  Disable_Keyholder_Decision: boolean
-  Limit_Users: boolean
-  User_Limit_Amount: number
-  Block_Test_Locks: boolean
-  Block_User_Rating_Enabled: boolean
-  Block_User_Rating: number
-  Block_Already_Locked: boolean
-  Block_Stats_Hidden: boolean
-  Only_Accept_Trusted: boolean
-  Require_DM: boolean
+export interface EditLockRequest extends CreateLockRequest {
+  Lock_ID: number
 }
 
-export default (request?: CreateLockRequest): ApiAction => createAction({
-  actionName: 'create_original_lock',
+export default (request?: EditLockRequest): ApiAction => createAction({
+  actionName: 'edit_original_lock',
   query: `
-    mutation CreateOriginalLock(
+    mutation EditOriginalLock(
+      $Lock_ID: Int!,
       $LockName: String,
       $Shared: Boolean!,
       $Variable_Max_Greens: Int!,
@@ -99,7 +57,8 @@ export default (request?: CreateLockRequest): ApiAction => createAction({
       $Only_Accept_Trusted: Boolean!,
       $Require_DM: Boolean!
     ) {
-      createOriginalLock(
+      editOriginalLock(
+        Lock_ID: $Lock_ID,
         LockName: $LockName,
         Shared: $Shared,
         Variable_Max_Greens: $Variable_Max_Greens,

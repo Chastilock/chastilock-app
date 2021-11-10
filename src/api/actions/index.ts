@@ -5,13 +5,19 @@ import checkStatus from './checkStatus'
 import upgradeAccount from './upgradeAccount'
 import register from './register'
 import logout from './logout'
+import createOriginalLock, { CreateLockRequest } from './createOriginalLock'
+import editOriginalLock, { EditLockRequest } from './editOriginalLock'
 
-export default {
+export {
   createAnonymousAccount,
   loginAnon,
   login,
   checkStatus,
   upgradeAccount,
   register,
-  logout
+  logout,
+  createOriginalLock,
+  editOriginalLock,
+  CreateLockRequest,
+  EditLockRequest
 }
