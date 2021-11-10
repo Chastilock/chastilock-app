@@ -33,10 +33,16 @@ const boundaries = {
   fake_copies: { min: 1, max: 10 }
 }
 
-const CardPicker = React.memo((props: { max: number, min: number, setMax: (n: number) => void, setMin: (n: number) => void, name: string, title: string }): React.ReactElement => (
+const CardPicker = React.memo((props: { max: number, min: number, setMax: (n: number) => void, setMin: (n: number) => void, name: string, title: string, dirty: () => void }): React.ReactElement => (
   <MaxMinFormGroup text={props.title}>
-    <NumberSelection value={props.min} onChange={props.setMin} min={(boundaries as any)[props.name].min} max={props.max} />
-    <NumberSelection value={props.max} onChange={props.setMax} min={(boundaries as any)[props.name].min} max={(boundaries as any)[props.name].max} />
+    <NumberSelection value={props.min} onChange={num => {
+      props.setMin(num)
+      props.dirty()
+    }} min={(boundaries as any)[props.name].min} max={props.max} />
+    <NumberSelection value={props.max} onChange={num => {
+      props.setMax(num)
+      props.dirty()
+    }} min={(boundaries as any)[props.name].min} max={(boundaries as any)[props.name].max} />
   </MaxMinFormGroup>
 ))
 
@@ -58,6 +64,12 @@ const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabB
   const isEdit = route.params?.lock !== undefined
 
   const lock = route.params?.lock as CreatedLock
+
+  const [isDirty, setDirty] = React.useState(false)
+
+  const dirty = (): void => {
+    setDirty(true)
+  }
 
   // General
   const [lockName, lockSetName] = React.useState(isEdit ? lock.Lock_Name : '')
@@ -118,11 +130,15 @@ const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabB
   const [lockEnableBuyout, lockSetEnableBuyout] = React.useState(true) */
 
   const closeSettings = (): void => {
-    dispatch(confirmationActions.showConfirmation({
-      title: translate('createedit.warning_unsaved.title'),
-      text: translate('createedit.warning_unsaved.text'),
-      onOk: () => navigation.goBack()
-    }))
+    if (isDirty) {
+      dispatch(confirmationActions.showConfirmation({
+        title: translate('createedit.warning_unsaved.title'),
+        text: translate('createedit.warning_unsaved.text'),
+        onOk: () => navigation.goBack()
+      }))
+    } else {
+      navigation.goBack()
+    }
   }
 
   const createOrEditLock = (): void => {
@@ -224,93 +240,155 @@ const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabB
               <Text translationKey="createedit.lock_type.type_info" category={TextType.SUBTITLE1} />
             </FormGroup>
             <FormGroup text="createedit.lock_type.name">
-              <Input value={lockName} onChange={(e: any) => e.target.value !== '' && lockSetName(e.target.value)} />
+              <Input value={lockName} onChange={(e: any) => {
+                if (e.target.value !== '') {
+                  lockSetName(e.target.value)
+                  dirty()
+                }
+              }} />
             </FormGroup>
             <FormGroup text="createedit.lock_type.shared">
-              <Toggle checked={lockIsShared} onChange={() => lockSetIsShared(!lockIsShared)} />
+              <Toggle checked={lockIsShared} onChange={() => {
+                lockSetIsShared(!lockIsShared)
+                dirty()
+              }} />
             </FormGroup>
           </TitleGroup>
           {lockIsShared && <TitleGroup title="createedit.shared.title">
             <FormGroup text="createedit.shared.require_dm">
-              <Toggle checked={lockRequireDm} onChange={() => lockSetRequireDm(!lockRequireDm)} />
+              <Toggle checked={lockRequireDm} onChange={() => {
+                lockSetRequireDm(!lockRequireDm)
+                dirty()
+              }} />
             </FormGroup>
             <FormGroup text="createedit.shared.require_trusted">
-              <Toggle checked={lockRequireTrusted} onChange={() => lockSetRequireTrusted(!lockRequireTrusted)} />
+              <Toggle checked={lockRequireTrusted} onChange={() => {
+                lockSetRequireTrusted(!lockRequireTrusted)
+                dirty()
+              }} />
             </FormGroup>
             <FormGroup text="createedit.shared.block_stats_hidden">
-              <Toggle checked={lockBlockStatsHidden} onChange={() => lockSetBlockStatsHidden(!lockBlockStatsHidden)} />
+              <Toggle checked={lockBlockStatsHidden} onChange={() => {
+                lockSetBlockStatsHidden(!lockBlockStatsHidden)
+                dirty()
+              }} />
             </FormGroup>
             <FormGroup text="createedit.shared.block_test">
-              <Toggle checked={lockBlockTest} onChange={() => lockSetBlockTest(!lockBlockTest)} />
+              <Toggle checked={lockBlockTest} onChange={() => {
+                lockSetBlockTest(!lockBlockTest)
+                dirty()
+              }} />
             </FormGroup>
             <FormGroup text="createedit.shared.block_already_locked">
-              <Toggle checked={lockBlockAlreadyLocked} onChange={() => lockSetBlockAlreadyLocked(!lockBlockAlreadyLocked)} />
+              <Toggle checked={lockBlockAlreadyLocked} onChange={() => {
+                lockSetBlockAlreadyLocked(!lockBlockAlreadyLocked)
+                dirty()
+              }} />
             </FormGroup>
             <FormGroup text="createedit.shared.fake_copies">
-              <Toggle checked={lockAllowFakeCopies} onChange={() => lockSetAllowFakeCopies(!lockAllowFakeCopies)} />
+              <Toggle checked={lockAllowFakeCopies} onChange={() => {
+                lockSetAllowFakeCopies(!lockAllowFakeCopies)
+                dirty()
+              }} />
             </FormGroup>
             {lockAllowFakeCopies && <>
-              <CardPicker title="createedit.shared.fake_copies.number" max={lockFakeCopiesMax} min={lockFakeCopiesMin} setMax={lockSetFakeCopiesMax} setMin={lockSetFakeCopiesMin} name='fake_copies' />
+              <CardPicker title="createedit.shared.fake_copies.number" max={lockFakeCopiesMax} min={lockFakeCopiesMin} setMax={lockSetFakeCopiesMax} setMin={lockSetFakeCopiesMin} name='fake_copies' dirty={dirty} />
             </>}
             <FormGroup text="createedit.shared.require_checkins">
-              <Toggle checked={lockRequireCheckins} onChange={() => lockSetRequireCheckins(!lockRequireCheckins)} />
+              <Toggle checked={lockRequireCheckins} onChange={() => {
+                lockSetRequireCheckins(!lockRequireCheckins)
+                dirty()
+              }} />
             </FormGroup>
             {lockRequireCheckins && <>
               <FormGroup text="createedit.shared.checkins.frequency">
-                <NumberSelection value={lockCheckinFrequency} onChange={lockSetCheckinFrequency} />
+                <NumberSelection value={lockCheckinFrequency} onChange={num => {
+                  lockSetCheckinFrequency(num)
+                  dirty()
+                }} />
               </FormGroup>
               <FormGroup text="createedit.shared.checkins.window">
-                <NumberSelection value={lockCheckinWindow} onChange={lockSetCheckinWindow} />
+                <NumberSelection value={lockCheckinWindow} onChange={num => {
+                  lockSetCheckinWindow(num)
+                  dirty()
+                }} />
               </FormGroup>
             </>}
             <FormGroup text="createedit.shared.limit_users">
-              <Toggle checked={lockLimitUsers} onChange={() => lockSetLimitUsers(!lockLimitUsers)} />
+              <Toggle checked={lockLimitUsers} onChange={() => {
+                lockSetLimitUsers(!lockLimitUsers)
+                dirty()
+              }} />
             </FormGroup>
             {lockLimitUsers && <>
               <FormGroup text="createedit.shared.limit_users_num">
-                <NumberSelection value={lockMaxUsers} onChange={lockSetMaxUsers} min={boundaries.max_users.min} max={boundaries.max_users.max} />
+                <NumberSelection value={lockMaxUsers} onChange={num => {
+                  lockSetMaxUsers(num)
+                  dirty()
+                }} min={boundaries.max_users.min} max={boundaries.max_users.max} />
               </FormGroup>
             </>}
             <FormGroup text="createedit.shared.block_low_rating">
-              <Toggle checked={lockBlockLowRating} onChange={() => lockSetBlockLowRating(!lockBlockLowRating)} />
+              <Toggle checked={lockBlockLowRating} onChange={() => {
+                lockSetBlockLowRating(!lockBlockLowRating)
+                dirty()
+              }} />
             </FormGroup>
             {lockBlockLowRating && <>
               <FormGroup text="createedit.shared.block_low_rating.min">
-                <NumberSelection value={lockMinRatingRequired} onChange={lockSetMinRatingRequired} min={boundaries.min_rating.min} max={boundaries.min_rating.max} />
+                <NumberSelection value={lockMinRatingRequired} onChange={num => {
+                  lockSetMinRatingRequired(num)
+                  dirty()
+                }} min={boundaries.min_rating.min} max={boundaries.min_rating.max} />
               </FormGroup>
             </>}
           </TitleGroup>}
           <TitleGroup title="createedit.card.title">
-            <ChanceRegularity value={lockChanceRegularity.value} set={lockSetChanceRegularity} />
+            <ChanceRegularity value={lockChanceRegularity.value} set={value => {
+              lockSetChanceRegularity(value)
+              dirty()
+            }} />
             <FormGroup text="createedit.card.cumulative">
-              <Toggle checked={lockIsCumulative} onChange={() => lockSetIsCumulative(!lockIsCumulative)} />
+              <Toggle checked={lockIsCumulative} onChange={() => {
+                lockSetIsCumulative(!lockIsCumulative)
+                dirty()
+              }} />
             </FormGroup>
             {/* Red */}
-            <CardPicker title='createedit.card.red' max={lockRedMax} min={lockRedMin} setMax={lockSetRedMax} setMin={lockSetRedMin} name='red' />
+            <CardPicker title='createedit.card.red' max={lockRedMax} min={lockRedMin} setMax={lockSetRedMax} setMin={lockSetRedMin} name='red' dirty={dirty} />
             {/* Yellow random */}
-            <CardPicker title='createedit.card.yellow_random' max={lockYellowRandomMax} min={lockYellowRandomMin} setMax={lockSetYellowRandomMax} setMin={lockSetYellowRandomMin} name='yellow_random' />
+            <CardPicker title='createedit.card.yellow_random' max={lockYellowRandomMax} min={lockYellowRandomMin} setMax={lockSetYellowRandomMax} setMin={lockSetYellowRandomMin} name='yellow_random' dirty={dirty} />
             {/* Yellow remove */}
-            <CardPicker title='createedit.card.yellow_remove' max={lockYellowRemoveMax} min={lockYellowRemoveMin} setMax={lockSetYellowRemoveMax} setMin={lockSetYellowRemoveMin} name='yellow_remove' />
+            <CardPicker title='createedit.card.yellow_remove' max={lockYellowRemoveMax} min={lockYellowRemoveMin} setMax={lockSetYellowRemoveMax} setMin={lockSetYellowRemoveMin} name='yellow_remove' dirty={dirty} />
             {/* Yellow add */}
-            <CardPicker title='createedit.card.yellow_add' max={lockYellowAddMax} min={lockYellowAddMin} setMax={lockSetYellowAddMax} setMin={lockSetYellowAddMin} name='yellow_add' />
+            <CardPicker title='createedit.card.yellow_add' max={lockYellowAddMax} min={lockYellowAddMin} setMax={lockSetYellowAddMax} setMin={lockSetYellowAddMin} name='yellow_add' dirty={dirty} />
             {/* Sticky */}
-            <CardPicker title='createedit.card.sticky' max={lockStickyMax} min={lockStickyMin} setMax={lockSetStickyMax} setMin={lockSetStickyMin} name='sticky' />
+            <CardPicker title='createedit.card.sticky' max={lockStickyMax} min={lockStickyMin} setMax={lockSetStickyMax} setMin={lockSetStickyMin} name='sticky' dirty={dirty} />
             {/* Freeze */}
-            <CardPicker title='createedit.card.freeze' max={lockFreezeMax} min={lockFreezeMin} setMax={lockSetFreezeMax} setMin={lockSetFreezeMin} name='freeze' />
+            <CardPicker title='createedit.card.freeze' max={lockFreezeMax} min={lockFreezeMin} setMax={lockSetFreezeMax} setMin={lockSetFreezeMin} name='freeze' dirty={dirty} />
             {/* Double */}
-            <CardPicker title='createedit.card.double' max={lockDoubleMax} min={lockDoubleMin} setMax={lockSetDoubleMax} setMin={lockSetDoubleMin} name='double' />
+            <CardPicker title='createedit.card.double' max={lockDoubleMax} min={lockDoubleMin} setMax={lockSetDoubleMax} setMin={lockSetDoubleMin} name='double' dirty={dirty} />
             {/* Reset */}
-            <CardPicker title='createedit.card.reset' max={lockResetMax} min={lockResetMin} setMax={lockSetResetMax} setMin={lockSetResetMin} name='reset' />
+            <CardPicker title='createedit.card.reset' max={lockResetMax} min={lockResetMin} setMax={lockSetResetMax} setMin={lockSetResetMin} name='reset' dirty={dirty} />
             {/* Green */}
             <FormGroup text="createedit.card.multiple_greens_required">
-              <Toggle checked={lockMultipleGreensRequired} onChange={() => lockSetMultipleGreensRequired(!lockMultipleGreensRequired)} />
+              <Toggle checked={lockMultipleGreensRequired} onChange={() => {
+                lockSetMultipleGreensRequired(!lockMultipleGreensRequired)
+                dirty()
+              }} />
             </FormGroup>
-            <CardPicker title='createedit.card.green' max={lockGreenMax} min={lockGreenMin} setMax={lockSetGreenMax} setMin={lockSetGreenMin} name='green' />
+            <CardPicker title='createedit.card.green' max={lockGreenMax} min={lockGreenMin} setMax={lockSetGreenMax} setMin={lockSetGreenMin} name='green' dirty={dirty} />
             <FormGroup text="createedit.card.hide_info">
-              <Toggle checked={lockHideCardInformation} onChange={() => lockSetHideCardInformation(!lockHideCardInformation)} />
+              <Toggle checked={lockHideCardInformation} onChange={() => {
+                lockSetHideCardInformation(!lockHideCardInformation)
+                dirty()
+              }} />
             </FormGroup>
             <FormGroup text="createedit.card.start_frozen">
-              <Toggle checked={lockStartFrozen} onChange={() => lockSetStartFrozen(!lockStartFrozen)} />
+              <Toggle checked={lockStartFrozen} onChange={() => {
+                lockSetStartFrozen(!lockStartFrozen)
+                dirty()
+              }} />
             </FormGroup>
           </TitleGroup>
           <FormButton onPress={createOrEditLock}>{translate(isEdit ? 'createedit.edit' : 'createedit.create')}</FormButton>
