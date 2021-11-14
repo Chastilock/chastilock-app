@@ -28,7 +28,7 @@ const MyLocks = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Layout style={{ flex: 1, padding: 10 }}>
-        {state.createdLock.locks.map(lock => <CreatedLockView createdLock={lock} editLock={editLock} />)}
+        {state.createdLock.locks.map(lock => <CreatedLockView key={lock.Lock_ID} createdLock={lock} editLock={editLock} />)}
       </Layout>
     </SafeAreaView>
   )
