@@ -146,5 +146,11 @@
 
   "createedit.create": "Create lock!",
   "createedit.edit": "Edit lock!",
-  "createedit.error.title": "Error"
+  "createedit.error.title": "Error",
+  "createedit.delete": "Delete lock!",
+  "createedit.delete.title": "Are you sure?",
+  "createedit.delete.text": "Are you sure you want to delete this lock?",
+  "createedit.question_load.title": "Lock created! Load now?",
+  "createedit.question_load.text": "The lock has been successfully created. Do you want to load the lock yourself now?",
+  "createedit.load": "Load lock!"
 }

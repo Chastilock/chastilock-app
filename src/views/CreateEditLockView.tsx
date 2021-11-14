@@ -190,15 +190,20 @@ const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabB
       Require_DM: lockRequireDm
     }
 
+    const reopenInEdit = (lock: CreatedLock): void => {
+      navigation.goBack()
+      navigation.navigate('CreateLock', {
+        lock
+      })
+    }
+
     if (isEdit) {
       const editLockRequest: EditLockRequest = {
         Lock_ID: parseInt(lock.Lock_ID, 10),
         ...lockRequest
       }
       dispatch(editOriginalLock(editLockRequest).execute).then(() => {
-        // close and navigate to my locks screen
-        navigation.goBack()
-        navigation.navigate('MyLocks')
+        setDirty(false)
       }).catch((e: Error) => {
         dispatch(confirmationActions.showConfirmation({
           title: translate('createedit.error.title'),
@@ -207,10 +212,18 @@ const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabB
         }))
       })
     } else {
-      dispatch(createOriginalLock(lockRequest).execute).then(() => {
-        // close and navigate to my locks screen
-        navigation.goBack()
-        navigation.navigate('MyLocks')
+      dispatch(createOriginalLock(lockRequest).execute).then((response: { data: { createOriginalLock: CreatedLock}}) => {
+        console.log(response)
+        // display popup if want to load
+        dispatch(confirmationActions.showConfirmation({
+          title: translate('createedit.question_load.title'),
+          text: translate('createedit.question_load.text'),
+          onYes: () => {
+            loadLock()
+          },
+          onDismiss: () => reopenInEdit(response.data.createOriginalLock),
+          onNo: () => reopenInEdit(response.data.createOriginalLock)
+        }))
       }).catch((e: Error) => {
         dispatch(confirmationActions.showConfirmation({
           title: translate('createedit.error.title'),
@@ -219,6 +232,23 @@ const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabB
         }))
       })
     }
+  }
+
+  const loadLock = (): void => {
+    closeSettings()
+
+    // TODO go to load lock screen
+  }
+
+  const deleteLock = (): void => {
+    dispatch(confirmationActions.showConfirmation({
+      title: translate('createedit.delete.title'),
+      text: translate('createedit.delete.text'),
+      onOk: () => {
+        // delete TODO backend
+      },
+      onCancel: () => {}
+    }))
   }
 
   const CloseAction = (): React.ReactElement => (
@@ -391,7 +421,9 @@ const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabB
               }} />
             </FormGroup>
           </TitleGroup>
-          <FormButton onPress={createOrEditLock}>{translate(isEdit ? 'createedit.edit' : 'createedit.create')}</FormButton>
+          <FormButton disabled={isEdit && !isDirty} onPress={createOrEditLock}>{translate(isEdit ? 'createedit.edit' : 'createedit.create')}</FormButton>
+          {isEdit && <FormButton status="info" onPress={loadLock}>{translate('createedit.load')}</FormButton>}
+          {isEdit && <FormButton status="danger" onPress={deleteLock}>{translate('createedit.delete')}</FormButton>}
         </Layout>
       </ScrollView>
     </SafeAreaView>
