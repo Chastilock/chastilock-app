@@ -6,7 +6,6 @@ export default {
   name: 'Chastilock',
   icon: './images/logo.png',
   version,
-  sdkVersion: '43.0.0',
   slug: 'chastilock',
   ios: {
     bundleIdentifier: 'org.chastilock',
