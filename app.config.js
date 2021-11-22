@@ -14,11 +14,21 @@ export default {
   android: {
     package: 'org.chastilock',
     versionCode: process.env.GITHUB_RUN_NUMBER ? parseInt(process.env.GITHUB_RUN_NUMBER) : 1,
-    permissions: []
+    permissions: ['RECEIVE_BOOT_COMPLETED']
   },
   extra: {
     backendEndpoint: process.env.BACKEND_ENDPOINT,
     backendApiKey: process.env.BACKEND_API_KEY,
     backendApiSecret: process.env.BACKEND_API_SECRET
-  }
+  },
+  plugins: [
+    [
+      'expo-notifications',
+      {
+        icon: '',
+        color: '#1e81b0',
+        mode: 'production'
+      }
+    ]
+  ]
 }
