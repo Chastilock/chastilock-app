@@ -7,16 +7,27 @@
     "rootDir": "./src",
     "baseUrl": "./",
     "paths": {
-      "@chastilock/*": ["src/*/index", "src/*"]
+      "@chastilock/*": [
+        "src/*/index",
+        "src/*"
+      ]
     },
     "allowSyntheticDefaultImports": true,
     "jsx": "react-native",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "moduleResolution": "node",
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true
   },
-  "include": ["src/declaration.d.ts", "src/**/*.ts", "src/**/*.tsx"]
+  "include": [
+    "src/declaration.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "extends": "expo/tsconfig.base"
 }
