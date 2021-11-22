@@ -24,6 +24,7 @@ export const Login = (props: LoginProps): React.ReactElement => {
     try {
       await dispatch(apiActions.login(username, password).execute)
       await dispatch(accountActions.setup())
+      await dispatch(apiActions.registerNotifications('testify').execute) // <--- this doesn't send a token for some reason...
     } catch (e: any) {
       setError(e.message)
     }
