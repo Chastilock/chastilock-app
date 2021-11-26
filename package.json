@@ -43,7 +43,7 @@
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
-    "@ui-kitten/metro-config": "^5.0.0",
+    "@ui-kitten/metro-config": "^5.1.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "cross-env": "^7.0.2",
     "eslint": "7",
