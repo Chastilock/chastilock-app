@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, ScrollView } from 'react-native'
 import { Layout } from '@ui-kitten/components'
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 import { useTrackedState, useDispatch } from '@chastilock/state'
@@ -27,9 +27,11 @@ const MyLocks = ({ navigation }: MaterialTopTabBarProps): React.ReactElement => 
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Layout style={{ flex: 1, padding: 10 }}>
-        {state.createdLock.locks.map(lock => <CreatedLockView key={lock.Lock_ID} createdLock={lock} editLock={editLock} />)}
-      </Layout>
+      <ScrollView>
+        <Layout style={{ flex: 1, padding: 10 }}>
+          {state.createdLock.locks.map(lock => <CreatedLockView key={lock.Lock_ID} createdLock={lock} editLock={editLock} />)}
+        </Layout>
+      </ScrollView>
     </SafeAreaView>
   )
 }

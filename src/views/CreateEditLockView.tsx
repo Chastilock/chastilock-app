@@ -6,8 +6,10 @@ import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs'
 import { actions as confirmationActions } from '@chastilock/state/sections/confirmation'
 import { Text, TextType, FormGroup, TitleGroup, useTranslation, ButtonSelection, NumberSelection, MaxMinFormGroup, FormButton } from '@chastilock/components'
 import { useDispatch } from '@chastilock/state'
-import { createOriginalLock, CreateLockRequest, editOriginalLock, EditLockRequest } from '@chastilock/api/actions'
+import { createOriginalLock, editOriginalLock } from '@chastilock/api/actions'
 import { CreatedLock } from '@chastilock/state/sections/createdlock'
+import { EditLockRequest } from '@chastilock/api/actions/editOriginalLock'
+import { CreateLockRequest } from '@chastilock/api/actions/createOriginalLock'
 
 const CloseIcon = (props: any): React.ReactElement => (
   <Icon {...props} name="close-outline" />
@@ -63,7 +65,7 @@ const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabB
 
   const isEdit = route.params?.lock !== undefined
 
-  const lock = route.params?.lock as CreatedLock
+  let lock = route.params?.lock as CreatedLock
 
   const [isDirty, setDirty] = React.useState(false)
 
@@ -214,6 +216,7 @@ const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabB
     } else {
       dispatch(createOriginalLock(lockRequest).execute).then((response: { data: { createOriginalLock: CreatedLock}}) => {
         console.log(response)
+        lock = response.data.createOriginalLock
         // display popup if want to load
         dispatch(confirmationActions.showConfirmation({
           title: translate('createedit.question_load.title'),
@@ -235,9 +238,15 @@ const CreateEditLockView = ({ route, navigation }: { navigation: MaterialTopTabB
   }
 
   const loadLock = (): void => {
+    if (lock === undefined) {
+      return
+    }
+
     closeSettings()
 
-    // TODO go to load lock screen
+    navigation.navigate('LoadLock', {
+      lock
+    })
   }
 
   const deleteLock = (): void => {
