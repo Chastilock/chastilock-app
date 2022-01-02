@@ -7,6 +7,7 @@ import register from './register'
 import logout from './logout'
 import createOriginalLock from './createOriginalLock'
 import editOriginalLock from './editOriginalLock'
+import resetPassword from './resetPassword'
 
 export {
   createAnonymousAccount,
@@ -17,5 +18,6 @@ export {
   register,
   logout,
   createOriginalLock,
-  editOriginalLock
+  editOriginalLock,
+  resetPassword
 }
