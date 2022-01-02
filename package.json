@@ -34,6 +34,7 @@
     "react-native-ui-kitten": "^4.4.1",
     "react-native-web": "0.17.1",
     "react-tracked": "^1.4.2",
+    "sharp": "^0.29.3",
     "use-reducer-async": "^2.0.1"
   },
   "devDependencies": {

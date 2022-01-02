@@ -8,6 +8,7 @@ import { selectors as settingsSelectors } from '@chastilock/state/sections/setti
 import { actions as accountActions } from '@chastilock/state/sections/account'
 import * as apiActions from '@chastilock/api/actions'
 import { BackButtonAccessory } from '../common/Accessories'
+import { actions as confirmActions } from '@chastilock/state/sections/confirmation'
 
 interface LoginProps {
   onBack: () => void
@@ -24,6 +25,20 @@ export const Login = (props: LoginProps): React.ReactElement => {
     try {
       await dispatch(apiActions.login(username, password).execute)
       await dispatch(accountActions.setup())
+    } catch (e: any) {
+      setError(e.message)
+    }
+  }
+
+  const forgotPassword = async (): Promise<void> => {
+    try {
+      await dispatch(apiActions.resetPassword(username).execute)
+      dispatch(confirmActions.showConfirmation({
+        title: translate('settings.password_reset.title'), // These 2 need translating to german
+        text: translate('settings.password_reset.content'), // These 2 need translating to german
+        onOk: () => {
+        }
+      }))
     } catch (e: any) {
       setError(e.message)
     }
@@ -46,9 +61,11 @@ export const Login = (props: LoginProps): React.ReactElement => {
         {error !== '' && <Text style={{ color: 'red' }}>{error}</Text>}
 
         <Button style={{ marginTop: 10 }} onPress={complete}>{translate('setup.login.ok')}</Button>
+        <Button style={{ marginTop: 10 }} onPress={forgotPassword}>{translate('setup.login.forgotpassword')}</Button>
       </View>
     </SafeAreaView>
   )
+  // TODO: German translation for setup.login.forgotpassword needs adding
 }
 
 export default Login

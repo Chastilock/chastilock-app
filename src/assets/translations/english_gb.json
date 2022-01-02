@@ -45,7 +45,8 @@
 
   "settings.anonymous_warning.title": "Anonymous account",
   "settings.anonymous_warning.content": "An anonymous account will be created for you. You should really back up your unique id that is presented to you next (preferably in cloud storage). You can also always upgrade the account later on.",
-
+  "settings.password_reset.title": "Password Reset",
+  "settings.password_reset.content": "An email has been sent to your email address. Please follow the link there to reset your password. Once reset, return to the app and login",
   "setup.backup.title": "Anonymous Account Backup",
   "setup.backup.info": "We allow the creation of anonymous accounts. Those are just accounts, that are only identified by you by a random key. There is no automatic recovery option available, therefore you will need to make sure on your own that you back up your user id in a safe space.",
   "setup.backup.info_upgrade_later": "You can also always upgrade your account later on by adding an email or connecting it to a social account.",
@@ -59,6 +60,7 @@
   "setup.login.password": "Password",
   "setup.login.ok": "Sign in",
   "setup.login.error": "Login error",
+  "setup.login.forgotpassword": "Forgotten password",
 
   "setup.register.title": "Register",
   "setup.register.info": "This will allow you to create a regular account. This allows for easier recovery. Please note that all the information you enter is kept confidential and only used for identification purposes.",
