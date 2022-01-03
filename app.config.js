@@ -25,9 +25,8 @@ export default {
     [
       'expo-notifications',
       {
-        icon: '',
-        color: '#1e81b0',
-        mode: 'production'
+        icon: './images/logo-android-noti.png',
+        color: '#1e81b0'
       }
     ]
   ]

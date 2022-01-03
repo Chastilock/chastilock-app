@@ -1,6 +1,6 @@
 import { createAction, ApiAction } from './genericAction'
 
-export default (notificationToken?: string): ApiAction => createAction({
+export default (notificationToken: string): ApiAction => createAction({
   actionName: 'register_notifications',
   query: `
     mutation registerNotifictions($notificationToken: String!) {
@@ -20,6 +20,5 @@ export default (notificationToken?: string): ApiAction => createAction({
       response: options.response,
       token
     })
-    return token
   }
 })
